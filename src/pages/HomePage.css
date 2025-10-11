@@ -1,0 +1,11 @@
+.div-text {
+    margin: 10%;
+    text-align: center;
+}
+.div-text > h1 {
+    margin: 0px;
+}
+.div-text > p {
+    color: #929292;
+    font-size: 1.5rem;
+}
