@@ -1,0 +1,106 @@
+.container  {
+    padding: 50px;
+    max-width: 500px;
+    border-radius: 8px;
+    margin: 0px auto;
+    text-align: center;
+    background-color: #FFFFFF;
+}
+h1 {
+    font-size: 4rem;
+}
+
+
+
+form {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+form > .div-username {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 0px 20px;
+    width: 100%;
+}
+form > .div-username > .icon-username {
+    color: #d4d4d4;
+    font-size: 40px;
+    padding-right: 10px;
+}
+form > .div-username > .input-username {
+    width: 70%;
+    border-radius: 10px;
+    border: 3px solid #d4d4d4;
+    padding: 15px 20px;
+    color: #848484;
+    font-size: 20px;
+    caret-color: transparent;
+}
+form > .div-username > .input-username:focus {
+    border-color: #d4d4d4;
+    outline: none;
+    caret-color: auto;
+}
+
+
+
+form > .div-password {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 0px 20px;
+    width: 100%;
+}
+form > .div-password > .icon-password {
+    color: #d4d4d4;
+    font-size: 40px;
+    padding-right: 10px;
+}
+form > .div-password > .input-password {
+    width: 70%;
+    border-radius: 10px;
+    border: 3px solid #d4d4d4;
+    padding: 15px 20px;
+    color: #848484;
+    font-size: 20px;
+    caret-color: transparent;
+}
+form > .div-password > .input-password:focus {
+    border-color: #d4d4d4;
+    outline: none;
+    caret-color: auto;
+}
+
+
+
+form > .div-forget-account {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+form > .div-forget-account > .forget, .account {
+    text-decoration: none;
+    color: #848484;
+    padding: 0px 0px 10px 0px;
+}
+
+
+
+form > .button-submit {
+  font-size: 1.5rem;
+  color: #ffffff; 
+  padding: 10px 25px;
+  background-color: #53B2FF;
+  letter-spacing: 0.8px;
+  font-weight: 400;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
