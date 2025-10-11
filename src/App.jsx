@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-
+import SignUp from './pages/Sign-up';
 import './index.css';
 import './app.css';
 
@@ -33,6 +33,8 @@ function App() {
 
           {/* 2. หน้า Login: แสดงผล LoginPage Component */}
           <Route path="/login" element={<LoginPage onAuthAction={handleAuthAction} />} />
+          <Route path="/SignUp" element={<SignUp onAuthAction={handleAuthAction} />} />
+          
           
           {/* 3. หน้า 404 Fallback */}
           <Route path="*" element={<h1>404 | Page Not Found</h1>} />

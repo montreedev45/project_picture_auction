@@ -16,7 +16,7 @@ function Navbar({ isLoggedIn, onAuthAction }) {
       <Link to="/login" className="nav-button sign-in-text">
         sign in
       </Link>
-      <Link to="/register" className="nav-button sign-up-btn" style={{backgroundColor: 'white', color: 'blue'}}>
+      <Link to="/SignUp" className="nav-button sign-up-btn" style={{backgroundColor: 'white', color: 'blue'}}>
         sign up
       </Link>
     </div>
@@ -32,6 +32,7 @@ function Navbar({ isLoggedIn, onAuthAction }) {
         <div className="search-input-wrapper">
           <input type="text" className="navbar-search" />
           <Icon icon="mdi:magnify" className="search-icon-overlay" />
+         
         </div>
       </div>
       
