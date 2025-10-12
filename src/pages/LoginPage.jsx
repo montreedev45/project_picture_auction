@@ -25,7 +25,7 @@ function LoginPage({ onAuthAction }) {
   };
 
   return (
-    <div className="container">
+    <div className="login-container">
       <h1>Welcome Back</h1>
       
       <form onSubmit={handleSubmit} >
@@ -38,7 +38,7 @@ function LoginPage({ onAuthAction }) {
         <div className="div-password" >
           <Icon className='icon-password' icon='mdi:lock-outline' />
           <input className="input-password" type="password" placeholder='Password' id="password" name="password" value={formData.password} onChange={handleChange} required />
-         <span><Icon className="showeyes" icon="material-symbols-light:eye-tracking-outline"></Icon></span>
+         <span><Icon className="showeyeslog" icon="material-symbols-light:eye-tracking-outline"></Icon></span>
         </div>
 
         <div className="div-forget-account" ><Link className='forget'>Forget Password</Link><Link className='account'>Don't have an account</Link></div>

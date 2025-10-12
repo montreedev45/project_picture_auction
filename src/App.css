@@ -91,3 +91,22 @@ nav {
   letter-spacing: 2px;
 }
 
+
+
+.footer-container {
+  background-color: #53B2FF;
+  display: flex;
+  justify-content: center;
+  text-align: left;
+  gap: 3rem;
+}
+
+.footer-container-about, .footer-container-contact, .footer-container-social {
+  max-width: 300px;
+  min-width: 300px;
+  font-size: 20px;
+  color: #ffffff;
+  padding: 20px;
+  line-height: 1.8rem;
+  letter-spacing: 0.1rem;
+}

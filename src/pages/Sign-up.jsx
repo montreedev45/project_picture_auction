@@ -27,7 +27,7 @@ function SignUp({ onAuthAction }) {
   };
 
   return (
-    <div className="container">
+    <div className="container-regis">
       <h2>Join Our Community</h2>
       
       <form onSubmit={handleSubmit} >
@@ -40,13 +40,13 @@ function SignUp({ onAuthAction }) {
         <div className="div-password" >
           <Icon className='icon-password' icon='mdi:lock-outline' />
           <input className="input-password" type="password" placeholder='Password' id="password" name="password" value={formData.password} onChange={handleChange} required />
-          <span><Icon icon="material-symbols-light:eye-tracking-outline"></Icon></span>
+          <span><Icon className='eyeregis' icon="material-symbols-light:eye-tracking-outline"></Icon></span>
         </div>
         
         <div className="div-password" >
           <Icon className='icon-password' icon='mdi:lock-outline' />
           <input className="input-password" type="password" placeholder='Confirm Password' id="password-2" name="password-2"  required />
-         <span><Icon className="showeyes" icon="material-symbols-light:eye-tracking-outline"></Icon></span>
+         <span><Icon className='eyeregis' icon="material-symbols-light:eye-tracking-outline"></Icon></span>
         </div>
 
         
