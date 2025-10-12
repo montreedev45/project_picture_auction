@@ -1,4 +1,4 @@
-.container  {
+.login-container  {
     padding: 50px;
     max-width: 500px;
     border-radius: 8px;
@@ -103,4 +103,17 @@ form > .button-submit {
   border-radius: 10px;
   border: none;
   cursor: pointer;
+}
+
+.div-password .showeyeslog{
+    font-size: 25px;
+    position: absolute;
+    right: 55px; /* เว้นระยะห่างจากขอบขวา 15px */
+    top: 50%; /* เลื่อนลงมา 50% ของความสูง */
+    transform: translateY(-50%); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+
+    color: #9a9898;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
 }

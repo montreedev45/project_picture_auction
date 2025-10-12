@@ -1,4 +1,4 @@
-.container h2{
+.container-regis h2{
    display: flex;
    align-items: center;
    justify-content: center;
@@ -7,16 +7,22 @@
    margin-left: 30px;
    
 }
-.container{
+.container-regis{
     padding: 20px;
     max-width: 700px;
+    margin: 0 auto;
 }
 .button-submit{
     margin-top: 25px;
 }
 
+.div-password {
+    position: relative;
+    width: 70%;
+
+}
 .div-password input{
-     width: 70%;
+    width: 100%;
     border-radius: 10px;
     border: 3px solid #d4d4d4;
     padding: 15px 20px;
@@ -29,10 +35,13 @@
     justify-content: end;
 
 }
-.div-password span{
+.div-password .eyeregis {
     font-size: 25px;
     position: absolute;
-    left: 66%;
+    right: 85px; /* เว้นระยะห่างจากขอบขวา 15px */
+    top: 50%; /* เลื่อนลงมา 50% ของความสูง */
+    transform: translateY(-50%); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+
     color: #9a9898;
     font-weight: bold;
     cursor: pointer;
