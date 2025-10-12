@@ -3,16 +3,11 @@ import { Link } from 'react-router-dom';
 import './HomePage.css'
 import view1 from '../assets/view1-ai-gen.png'
 import view2 from '../assets/view2-ai-gen.png'
+import { initialProducts } from '../components/MockData';
+
 
 // Tech Stack: Mock Data (เพิ่ม property 'isLiked' เริ่มต้น)
-const initialProducts = [
-    { id: 1, title: "the forest of par", price: "100$", time: "02:00", isLiked: false, imageUrl: '' },
-    { id: 2, title: "Desert Sunset", price: "250$", time: "01:30", isLiked: false, imageUrl: '' },
-    { id: 3, title: "Abstract Serenity", price: "80$", time: "03:45", isLiked: false, imageUrl: '' },
-    { id: 4, title: "the forest of par", price: "100$", time: "02:00", isLiked: false, imageUrl: '' },
-    { id: 5, title: "Desert Sunset", price: "250$", time: "01:30", isLiked: false, imageUrl: '' },
-    { id: 6, title: "Abstract Serenity", price: "80$", time: "03:45", isLiked: false, imageUrl: '' },
-];
+
 
 function HomePage() {
     // ✅ Tech Stack: State Management สำหรับรายการ (Array State)
