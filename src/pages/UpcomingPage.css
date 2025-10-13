@@ -72,10 +72,10 @@ flex-grow: 1; /* ส่วนรายละเอียดขยายเต็
 margin: 4px 0;
 }
 
-.card-button {
+.card-button-upcoming {
 display: flex;
-justify-content: end;
 align-items: center;
+justify-content: end;
 margin-top: 15px;
 padding-top: 10px;
 border-top: 1px dashed #eee;

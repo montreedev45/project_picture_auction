@@ -82,7 +82,7 @@ function UpcomingPage() {
                                     <p>bid price : {product.price}</p>
                                     <p>time remanding : {product.time}</p>
                                 </div>
-                                <div className="card-button">
+                                <div className="card-button-upcoming">
                                     <button onClick={(e) => handleLikeToggle(e, product.id)} style={{ background: 'none', border: 'none', padding: 0 }}>
                                         <HeartIcon 
                                             size="30" 
