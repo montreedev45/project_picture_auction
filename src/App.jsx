@@ -10,6 +10,7 @@ import SignUp from './pages/Sign-up';
 import './index.css';
 import './app.css';
 import UpcomingPage from './pages/UpcomingPage';
+import EndedPage from './pages/EndedPage';
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
           <Route path="/login" element={<LoginPage onAuthAction={handleAuthAction} />} />
           <Route path="/SignUp" element={<SignUp onAuthAction={handleAuthAction} />} />
           <Route path="/upcoming" element={<UpcomingPage onAuthAction={handleAuthAction} />} />
-          
+          <Route path="/ended" element={<EndedPage onAuthAction={handleAuthAction} />} />
           
           {/* 3. หน้า 404 Fallback */}
           <Route path="*" element={<h1>404 | Page Not Found</h1>} />
