@@ -10,6 +10,8 @@ import SignUp from './pages/Sign-up';
 import UpcomingPage from './pages/UpcomingPage';
 import EndedPage from './pages/EndedPage';
 import MybidPage from './pages/MybidPage';
+import Page404 from './pages/PageError404';
+import Page500 from './pages/PageError500'
 import './index.css';
 import './app.css';
 
@@ -42,9 +44,15 @@ function App() {
           <Route path="/mybid" element={<MybidPage onAuthAction={handleAuthAction} />} />
           
           {/* 3. หน้า 404 Fallback */}
-          <Route path="*" element={<h1>404 | Page Not Found</h1>} />
+          <Route path='/Page404' element={<Page404/>}></Route>
+          <Route path='/Page500' element={<Page500/>}></Route>
+          <Route path='/HomePage' element={<HomePage/>}></Route>
+          
         </Routes>
+        
       </Layout>
+
+
     </BrowserRouter>
   );
 }
