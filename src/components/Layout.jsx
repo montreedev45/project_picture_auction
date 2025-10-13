@@ -9,14 +9,15 @@ function Layout({ children, isLoggedIn, onAuthAction  }) {
   const location = useLocation();
   console.log(location)
   const NavbarError2 = location.pathname.startsWith("/Page404")
+  const NavbarError3 = location.pathname.startsWith("/Page500")
   const currentPath = location.pathname; // ตัวอย่าง: "/" หรือ "/auctions"
-  const pathsToHideFooter = ['/login', '/SignUp', ]; 
+  const pathsToHideFooter = ['/login', '/SignUp','/Page404','/Page500' ]; 
   const shouldHideFooter = pathsToHideFooter.includes(currentPath);
 
   return (
     <>
     
-    {NavbarError2 ? <NavbarError /> : <Navbar />}
+    {NavbarError2 || NavbarError3 ? <NavbarError /> : <Navbar />}
     {/* Check nav */}
     <div className="layout-container">
       
