@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import SignUp from './pages/Sign-up';
 import './index.css';
 import './app.css';
+import UpcomingPage from './pages/UpcomingPage';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           {/* 2. หน้า Login: แสดงผล LoginPage Component */}
           <Route path="/login" element={<LoginPage onAuthAction={handleAuthAction} />} />
           <Route path="/SignUp" element={<SignUp onAuthAction={handleAuthAction} />} />
+          <Route path="/upcoming" element={<UpcomingPage onAuthAction={handleAuthAction} />} />
           
           
           {/* 3. หน้า 404 Fallback */}
