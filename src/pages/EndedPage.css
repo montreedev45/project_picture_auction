@@ -1,36 +1,12 @@
-.div-text {
-text-align: center;
-margin: 5rem;
-color: #333;
+.ended-div-text {
+    text-align: left;
+    width: 55%;
+    padding-top: 3rem;
 }
-.div-text h1 {
-    font-size: 4rem;
-    color: #53B2FF;
-    margin-bottom: 5px;
+.ended-div-text > h1{
+    font-size: 3rem;
 }
-.div-text p {
-    font-size: 1.3rem;
-    color: #929292;
-}
-
-.button-view {
-display: inline-block;
-padding: 10px 25px;
-margin-top: 20px;
-background-color: #53B2FF;
-color: white;
-text-decoration: none;
-border-radius: 25px;
-font-weight: bold;
-transition: background-color 0.3s, transform 0.2s;
-}
-
-.button-view:hover {
-background-color: #0056b3;
-transform: translateY(-2px);
-}
-
-.homepage-container {
+.ended-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,7 +15,7 @@ transform: translateY(-2px);
     margin-bottom: 2rem;
 }
 
-.homepage-container-card {
+.ended-container-card {
     /* Responsive Grid: แสดง Card ให้อัตโนมัติตามความกว้าง */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; 
@@ -52,8 +28,7 @@ transform: translateY(-2px);
 /* ------------------------------------------- /
 / 🖼️ Card and Image Styles (UX/UI) /
 / ------------------------------------------- */
-.card {
-background-color: white;
+.ended-card {
 border: 1px solid #d4d4d4;
 border-radius: 12px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
@@ -62,12 +37,22 @@ display: flex;
 flex-direction: column;
 transition: box-shadow 0.3s, transform 0.3s;
 }
-.card:hover {
+.ended-card-absolute {
+    position: absolute;
+    padding: 15px 15px;
+}
+.ended-card-status {
+    position: relative;
+    background-color: #00D9FF;
+    padding: 8px 18px;
+    border-radius: 15px;
+}
+.ended-card:hover {
 box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 transform: translateY(-5px);
 }
 /* ✅ Fixed Image Size 150x150 and object-fit: cover */
-.card-img {
+.ended-card-img {
 width: 250px;
 height: 230px;
 object-fit: cover;
@@ -76,21 +61,21 @@ margin: 0 auto 15px auto;
 display: block;
 }
 
-.card-des {
+.ended-card-des {
 text-align: left;
 font-size: 0.95rem;
 color: #929292;
 flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
 }
 
-.card-des p {
+.ended-card-des p {
 margin: 4px 0;
 }
 
-.card-button {
+.ended-card-button {
 display: flex;
-justify-content: space-between;
 align-items: center;
+justify-content: end;
 margin-top: 15px;
 padding-top: 10px;
 border-top: 1px dashed #eee;

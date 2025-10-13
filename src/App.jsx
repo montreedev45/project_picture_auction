@@ -6,11 +6,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import SignUp from './pages/Sign-up';
+import UpcomingPage from './pages/UpcomingPage';
+import EndedPage from './pages/EndedPage';
 import Page404 from './pages/PageError404';
-
-
-
-
 import './index.css';
 import './app.css';
 
@@ -37,6 +36,9 @@ function App() {
 
           {/* 2. หน้า Login: แสดงผล LoginPage Component */}
           <Route path="/login" element={<LoginPage onAuthAction={handleAuthAction} />} />
+          <Route path="/SignUp" element={<SignUp onAuthAction={handleAuthAction} />} />
+          <Route path="/upcoming" element={<UpcomingPage onAuthAction={handleAuthAction} />} />
+          <Route path="/ended" element={<EndedPage onAuthAction={handleAuthAction} />} />
           
           {/* 3. หน้า 404 Fallback */}
           <Route path='/Page404' element={<Page404/>}></Route>

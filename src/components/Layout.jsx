@@ -6,11 +6,13 @@ import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 
 function Layout({ children, isLoggedIn, onAuthAction  }) {
-
   const location = useLocation();
   console.log(location)
   const NavbarError2 = location.pathname.startsWith("/Page404")
-  
+  const currentPath = location.pathname; // ตัวอย่าง: "/" หรือ "/auctions"
+  const pathsToHideFooter = ['/login', '/SignUp', ]; 
+  const shouldHideFooter = pathsToHideFooter.includes(currentPath);
+
   return (
     <>
     
@@ -26,6 +28,10 @@ function Layout({ children, isLoggedIn, onAuthAction  }) {
         {children} 
       </main>
   
+
+      {!shouldHideFooter && (
+        <Footer /> // หรือ <div>... Footer Content ...</div>
+      )}
     </div>
     </>
   );
