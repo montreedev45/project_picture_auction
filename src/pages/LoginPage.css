@@ -111,9 +111,12 @@ form > .button-submit {
     right: 55px; /* เว้นระยะห่างจากขอบขวา 15px */
     top: 50%; /* เลื่อนลงมา 50% ของความสูง */
     transform: translateY(-50%); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
-
     color: #9a9898;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
+}
+.div-password .showeyeslog:hover{
+    color: #000;
+    transition: 0.3s;
 }

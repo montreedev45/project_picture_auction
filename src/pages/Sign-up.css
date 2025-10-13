@@ -47,7 +47,7 @@
     cursor: pointer;
     transition: 0.2s;
 }
-.div-password span:hover{
+.div-password .eyeregis:hover{
     color: #2a2a2a;
     transition: 0.2s;
 }
