@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // ✅ Tech Stack: นำเข้า useState
 import { Link } from 'react-router-dom';
-import './HomePage.css'
+import './MybidPage.css'
 import view1 from '../assets/view1-ai-gen.png'
 import view2 from '../assets/view2-ai-gen.png'
 import { initialProducts } from '../components/MockData';
@@ -9,7 +9,7 @@ import { initialProducts } from '../components/MockData';
 // Tech Stack: Mock Data (เพิ่ม property 'isLiked' เริ่มต้น)
 
 
-function HomePage() {
+function MybidPage() {
     // ✅ Tech Stack: State Management สำหรับรายการ (Array State)
     const [products, setProducts] = useState(initialProducts);
 
@@ -54,38 +54,40 @@ function HomePage() {
     
     return (
         <>
-            
-            <div className='div-text'>
-                <h1>Picture Auction</h1>
-                <p>The Real-time Digital Art Bidding Platform</p>
-                <Link to="/upcoming" className='button-view'>View Live Auctions</Link>
+            <div className='mybid-div-text'>
+                <h1>My bids Page</h1>
             </div>
-
-            <div className="homepage-container">
-                <div className="homepage-container-card">
+            <div className="mybid-container">
+                <div className="mybid-container-card">
                     
                     {/* ✅ Tech Stack: ใช้ .map() เพื่อ Render รายการสินค้าอัตโนมัติ */}
-                    {products.filter(product => product.status === 'upcoming...').map((product) => {
-                        
+                    {products.filter(product => product.status === 'processing' || product.status === 'rebid now').map((product) => {
                         // Business Logic: กำหนดสีตามสถานะ isLiked ของสินค้านั้นๆ
                         const heartFillColor = product.isLiked ? "#FF4081" : "none";
                         const heartStrokeColor = product.isLiked ? "#FF4081" : "#848484";
                         const imageSource = product.id <= 3 ? view1 : view2; //condition change image by id
+                        const statusClass = product.status ? product.status.toLowerCase() : 'default'; // check status 'rebid now' and 'processing...'
+
                         return (
-                            <div className="card" key={product.id}>
+                            <div className="mybid-card" key={product.id}> 
+                                <div className='mybid-card-absolute'>
+                                    <span className={`mybid-card-status-${statusClass}`}>{product.status}</span>
+                                </div>
                                 <img 
-                                    className='card-img' 
+                                    className='mybid-card-img' 
                                     src={imageSource} 
                                     alt={product.title} 
                                 />
-                                <div className="card-des">
+                                <div className="mybid-edcard-des">
                                     <p>title : {product.title}</p>
                                     <p>bid price : {product.price}</p>
                                     <p>time remanding : {product.time}</p>
                                 </div>
-                                <div className="card-button">
-                                    <Link to={`/bid/${product.id}`} className='button'>Bid Now</Link>
-                                    <button onClick={(e) => handleLikeToggle(e, product.id)} style={{ background: 'none', border: 'none', padding: 0 }}>
+                                <div className="mybid-card-button">
+                                    <button 
+                                        onClick={(e) => handleLikeToggle(e, product.id)} 
+                                        style={{ background: 'none', border: 'none', padding: 0 }}
+                                    >
                                         <HeartIcon 
                                             size="30" 
                                             fill={heartFillColor} 
@@ -104,4 +106,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default MybidPage;
