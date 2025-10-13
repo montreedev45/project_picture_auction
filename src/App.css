@@ -110,3 +110,11 @@ nav {
   line-height: 1.8rem;
   letter-spacing: 0.1rem;
 }
+
+
+.layout-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

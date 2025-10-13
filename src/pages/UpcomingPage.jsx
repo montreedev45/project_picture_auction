@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // ✅ Tech Stack: นำเข้า useState
 import { Link } from 'react-router-dom';
-import './HomePage.css'
+import './UpcomingPage.css'
 import view1 from '../assets/view1-ai-gen.png'
 import view2 from '../assets/view2-ai-gen.png'
 import { initialProducts } from '../components/MockData';
@@ -9,7 +9,7 @@ import { initialProducts } from '../components/MockData';
 // Tech Stack: Mock Data (เพิ่ม property 'isLiked' เริ่มต้น)
 
 
-function HomePage() {
+function UpcomingPage() {
     // ✅ Tech Stack: State Management สำหรับรายการ (Array State)
     const [products, setProducts] = useState(initialProducts);
 
@@ -54,15 +54,11 @@ function HomePage() {
     
     return (
         <>
-            
-            <div className='div-text'>
-                <h1>Picture Auction</h1>
-                <p>The Real-time Digital Art Bidding Platform</p>
-                <Link to="/upcoming" className='button-view'>View Live Auctions</Link>
+            <div className='upcoming-div-text'>
+                <h1>Upcoming Auction Page</h1>
             </div>
-
-            <div className="homepage-container">
-                <div className="homepage-container-card">
+            <div className="upcoming-container">
+                <div className="upcoming-container-card">
                     
                     {/* ✅ Tech Stack: ใช้ .map() เพื่อ Render รายการสินค้าอัตโนมัติ */}
                     {products.map((product) => {
@@ -72,7 +68,10 @@ function HomePage() {
                         const heartStrokeColor = product.isLiked ? "#FF4081" : "#848484";
                         const imageSource = product.id <= 3 ? view1 : view2; //condition change image by id
                         return (
-                            <div className="card" key={product.id}>
+                            <div className="card" key={product.id}> 
+                            <div className='card-absolute'>
+                                <span className='card-status'>{product.status}</span>
+                            </div>
                                 <img 
                                     className='card-img' 
                                     src={imageSource} 
@@ -84,7 +83,6 @@ function HomePage() {
                                     <p>time remanding : {product.time}</p>
                                 </div>
                                 <div className="card-button">
-                                    <Link to={`/bid/${product.id}`} className='button'>Bid Now</Link>
                                     <button onClick={(e) => handleLikeToggle(e, product.id)} style={{ background: 'none', border: 'none', padding: 0 }}>
                                         <HeartIcon 
                                             size="30" 
@@ -104,4 +102,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default UpcomingPage;
