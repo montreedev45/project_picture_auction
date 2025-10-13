@@ -5,4 +5,11 @@ export const initialProducts = [
     { id: 4, title: "the forest of par", price: "100$", time: "02:00", status: 'upcoming...', isLiked: false, imageUrl: '' },
     { id: 5, title: "Desert Sunset", price: "250$", time: "01:30", status: 'upcoming...', isLiked: false, imageUrl: '' },
     { id: 6, title: "Abstract Serenity", price: "80$", time: "03:45", status: 'upcoming...', isLiked: false, imageUrl: '' },
+    
+    { id: 7, title: "the forest of par", price: "100$", time: "02:00", status: 'sold for 500$', isLiked: false, imageUrl: '' },
+    { id: 8, title: "Desert Sunset", price: "250$", time: "01:30", status: 'sold for 500$', isLiked: false, imageUrl: '' },
+    { id: 9, title: "Abstract Serenity", price: "80$", time: "03:45", status: 'sold for 500$', isLiked: false, imageUrl: '' },
+    { id: 10, title: "the forest of par", price: "100$", time: "02:00", status: 'sold for 500$', isLiked: false, imageUrl: '' },
+    { id: 11, title: "Desert Sunset", price: "250$", time: "01:30", status: 'sold for 500$', isLiked: false, imageUrl: '' },
+    { id: 12, title: "Abstract Serenity", price: "80$", time: "03:45", status: 'sold for 500$', isLiked: false, imageUrl: '' },
 ];

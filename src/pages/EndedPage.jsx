@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // ✅ Tech Stack: นำเข้า useState
 import { Link } from 'react-router-dom';
-import './UpcomingPage.css'
+import './EndedPage.css'
 import view1 from '../assets/view1-ai-gen.png'
 import view2 from '../assets/view2-ai-gen.png'
 import { initialProducts } from '../components/MockData';
@@ -9,7 +9,7 @@ import { initialProducts } from '../components/MockData';
 // Tech Stack: Mock Data (เพิ่ม property 'isLiked' เริ่มต้น)
 
 
-function UpcomingPage() {
+function EndedPage() {
     // ✅ Tech Stack: State Management สำหรับรายการ (Array State)
     const [products, setProducts] = useState(initialProducts);
 
@@ -54,35 +54,35 @@ function UpcomingPage() {
     
     return (
         <>
-            <div className='upcoming-div-text'>
-                <h1>Upcoming Auction Page</h1>
+            <div className='ended-div-text'>
+                <h1>Ended Auction Page</h1>
             </div>
-            <div className="upcoming-container">
-                <div className="upcoming-container-card">
+            <div className="ended-container">
+                <div className="ended-container-card">
                     
                     {/* ✅ Tech Stack: ใช้ .map() เพื่อ Render รายการสินค้าอัตโนมัติ */}
-                    {products.filter(product => product.status === 'upcoming...').map((product) => {
+                    {products.filter(product => product.status === 'sold for 500$').map((product) => {
                             // Business Logic: กำหนดสีตามสถานะ isLiked ของสินค้านั้นๆ
                             const heartFillColor = product.isLiked ? "#FF4081" : "none";
                             const heartStrokeColor = product.isLiked ? "#FF4081" : "#848484";
                             const imageSource = product.id <= 3 ? view1 : view2; //condition change image by id
                             
                             return (
-                                <div className="card" key={product.id}> 
-                                    <div className='card-absolute'>
-                                        <span className='card-status'>{product.status}</span>
+                                <div className="ended-card" key={product.id}> 
+                                    <div className='ended-card-absolute'>
+                                        <span className='ended-card-status'>{product.status}</span>
                                     </div>
                                     <img 
-                                        className='card-img' 
+                                        className='ended-card-img' 
                                         src={imageSource} 
                                         alt={product.title} 
                                     />
-                                    <div className="card-des">
+                                    <div className="ended-edcard-des">
                                         <p>title : {product.title}</p>
                                         <p>bid price : {product.price}</p>
                                         <p>time remanding : {product.time}</p>
                                     </div>
-                                    <div className="card-button-upcoming">
+                                    <div className="ended-card-button">
                                         <button 
                                             onClick={(e) => handleLikeToggle(e, product.id)} 
                                             style={{ background: 'none', border: 'none', padding: 0 }}
@@ -105,4 +105,4 @@ function UpcomingPage() {
     );
 }
 
-export default UpcomingPage;
+export default EndedPage;
