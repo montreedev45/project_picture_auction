@@ -8,7 +8,7 @@ function Navbar({ isLoggedIn, onAuthAction }) {
   const authButtons = isLoggedIn ? (
     <div className="auth-group">
       <button onClick={() => onAuthAction('logout')} className="nav-button sign-in-text">
-        Logout
+        <Icon className="icon-logo" icon="mdi:account"/> 
       </button>
     </div>
   ) : (
