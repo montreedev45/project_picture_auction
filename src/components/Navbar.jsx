@@ -1,10 +1,15 @@
 // src/components/Navbar.jsx
 import React from 'react';
 import {Icon} from '@iconify/react'
-import { Link } from 'react-router-dom'; 
+import { Link, useLocation } from 'react-router-dom';
+
 
 function Navbar({ isLoggedIn, onAuthAction }) { 
-  
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const pathsToHideInputSearch = ['/search']; 
+  const shouldHideInputSearch = pathsToHideInputSearch.includes(currentPath); // hidden icon search if path= /search
+
   const authButtons = isLoggedIn ? (
     <div className="auth-group">
       <button onClick={() => onAuthAction('logout')} className="nav-button sign-in-text">
@@ -27,15 +32,15 @@ function Navbar({ isLoggedIn, onAuthAction }) {
       <div className="navbar-left">
         <Link to="/" className='navbar-brand'><Icon className="icon-logo" icon="mdi:gavel"/> Picture Auction</Link>
       </div>
-      
-      <div className="navbar-center" >
-        <div className="search-input-wrapper">
-          <input type="text" className="navbar-search" />
-          <Icon icon="mdi:magnify" className="search-icon-overlay" />
-         
+      {!shouldHideInputSearch &&
+        <div className="navbar-center" >
+          <div className="search-input-wrapper">
+            <input type="text" className="navbar-search" />
+            <Icon icon="mdi:magnify" className="search-icon-overlay" />
+          
+          </div>
         </div>
-      </div>
-      
+      }
       <div className="navbar-right">
         {authButtons}
       </div>
