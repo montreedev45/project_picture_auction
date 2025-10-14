@@ -13,6 +13,7 @@ import MybidPage from './pages/MybidPage';
 import Page404 from './pages/PageError404';
 import Page500 from './pages/PageError500'
 import SaveItemPage from './pages/SaveItemPage';
+import MywinningPage from './pages/mywinningPage';
 import './index.css';
 import './app.css';
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/ended" element={<EndedPage onAuthAction={handleAuthAction} />} />
           <Route path="/mybid" element={<MybidPage onAuthAction={handleAuthAction} />} />
           <Route path="/saveitem" element={<SaveItemPage onAuthAction={handleAuthAction} />} />
+          <Route path="/mywinning" element={<MywinningPage onAuthAction={handleAuthAction} />} />
           
           {/* 3. หน้า 404 Fallback */}
           <Route path='/Page404' element={<Page404/>}></Route>
