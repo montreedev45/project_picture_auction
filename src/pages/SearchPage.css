@@ -1,0 +1,124 @@
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa; 
+    margin-bottom: 2rem;
+}
+
+.search-container-card {
+    /* Responsive Grid: แสดง Card ให้อัตโนมัติตามความกว้าง */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 30px;
+    max-width: 900px;
+    width: 100%;
+}
+
+
+/* ------------------------------------------- /
+/ 🖼️ Card and Image Styles (UX/UI) /
+/ ------------------------------------------- */
+.search-card {
+border: 1px solid #d4d4d4;
+border-radius: 12px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+padding: 15px;
+display: flex;
+flex-direction: column;
+transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.search-card:hover {
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+transform: translateY(-5px);
+}
+/* ✅ Fixed Image Size 150x150 and object-fit: cover */
+.search-card-img {
+width: 250px;
+height: 230px;
+object-fit: cover;
+border-radius: 8px;
+margin: 0 auto 15px auto;
+display: block;
+}
+
+.search-card-des {
+text-align: left;
+font-size: 0.95rem;
+color: #929292;
+flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
+}
+
+.search-card-des p {
+margin: 4px 0;
+}
+
+.search-card-button {
+display: flex;
+align-items: center;
+justify-content: end;
+margin-top: 15px;
+padding-top: 10px;
+border-top: 1px dashed #eee;
+}
+
+
+/* Bid Now Button */
+.button {
+padding: 8px 15px;
+background-color: #53B2FF;
+color: white;
+text-decoration: none;
+border-radius: 20px;
+font-weight: bold;
+font-size: 0.9rem;
+transition: background-color 0.3s;
+}
+
+.button:hover {
+background-color: #0056b3;
+}
+
+.search-input-wrapper  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 600px;
+  margin-top: 5rem;
+}
+.navbar-search {
+  height: 2rem;
+  border-radius: 30px;
+  border: 1px solid #000000;
+  padding: 8px 0px 8px 15px;
+  outline: none;
+  width: 96%;
+  font-size: 20px;
+  caret-color: transparent;
+}
+.navbar-search:focus {
+  caret-color: auto;
+  outline: none;
+}
+.search-icon-overlay {
+  position: absolute; 
+  right: 10px;    
+  top: 50%;   
+  transform: translateY(-50%); 
+  font-size: 40px;
+  color: #666;
+  cursor: pointer;
+}
+.search-icon-filter {
+  position: absolute; 
+  right: -45px;    
+  top: 50%;   
+  transform: translateY(-50%); 
+  font-size: 40px;
+  color: #666;
+  cursor: pointer;
+}
