@@ -55,10 +55,10 @@ function SearchPage() {
     
     return (
         <>
-            <div className="search-input-wrapper">
-                <input type="text" className="navbar-search" />
-                <Icon icon="mdi:magnify" className="search-icon-overlay" />
-                <Icon icon="mi:filter" className="search-icon-filter" />
+            <div className="search-input-wrapper-page">
+                <input type="text" className="navbar-search-page" />
+                <Icon icon="mdi:magnify" className="search-icon-overlay-page" />
+                <Icon icon="mi:filter" className="search-icon-filter-page" />
                     
             </div>
             <div className="search-container">

@@ -82,7 +82,7 @@ transition: background-color 0.3s;
 background-color: #0056b3;
 }
 
-.search-input-wrapper  {
+.search-input-wrapper-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,7 +90,7 @@ background-color: #0056b3;
   width: 600px;
   margin-top: 5rem;
 }
-.navbar-search {
+.navbar-search-page {
   height: 2rem;
   border-radius: 30px;
   border: 1px solid #000000;
@@ -100,11 +100,11 @@ background-color: #0056b3;
   font-size: 20px;
   caret-color: transparent;
 }
-.navbar-search:focus {
+.navbar-search-page:focus {
   caret-color: auto;
   outline: none;
 }
-.search-icon-overlay {
+.search-icon-overlay-page {
   position: absolute; 
   right: 10px;    
   top: 50%;   
@@ -113,7 +113,7 @@ background-color: #0056b3;
   color: #666;
   cursor: pointer;
 }
-.search-icon-filter {
+.search-icon-filter-page {
   position: absolute; 
   right: -45px;    
   top: 50%;   
