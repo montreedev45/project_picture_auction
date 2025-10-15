@@ -26,7 +26,7 @@ function App() {
   // ฟังก์ชัน Mock (จำลอง) การจัดการสิทธิ์
   const handleAuthAction = (action) => {
     console.log(`Auth action: ${action} triggered (Mock)`);
-    setIsLoggedIn(action === "login"); // ตั้งค่าสถานะตาม action
+    setIsLoggedIn(action === 'login'); // ตั้งค่าสถานะตาม action
   };
 
   return (

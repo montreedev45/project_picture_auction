@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 
 function Layout({ children, isLoggedIn, onAuthAction  }) {
+  console.log(isLoggedIn, onAuthAction)
   const location = useLocation();
-  console.log(location)
   const NavbarError2 = location.pathname.startsWith("/Page404")
   const NavbarError3 = location.pathname.startsWith("/Page500")
   const currentPath = location.pathname; // ตัวอย่าง: "/" หรือ "/auctions"
@@ -17,7 +17,7 @@ function Layout({ children, isLoggedIn, onAuthAction  }) {
   return (
     <>
     
-    {NavbarError2 || NavbarError3 ? <NavbarError /> : <Navbar />}
+    {NavbarError2 || NavbarError3 ? <NavbarError /> : <Navbar isLoggedIn={isLoggedIn} onAuthAction={onAuthAction}/>}
     {/* Check nav */}
     <div className="layout-container">
       
