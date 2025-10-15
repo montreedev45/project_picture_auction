@@ -94,16 +94,17 @@ form > .div-forget-account > .forget, .account {
 
 
 form > .button-submit {
-  font-size: 1.5rem;
-  color: #ffffff; 
-  padding: 10px 25px;
-  background-color: #53B2FF;
-  letter-spacing: 0.8px;
-  font-weight: 400;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
+    font-size: 1.5rem;
+    color: #ffffff; 
+    padding: 10px 25px;
+    background-color: #53B2FF;
+    letter-spacing: 0.8px;
+    font-weight: 400;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
 }
+
 
 .div-password .showeyeslog{
     font-size: 25px;
