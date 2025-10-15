@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import './Page404.css';
+
 function Page404({ onAuthAction }) {
 
 return (
