@@ -1,6 +1,6 @@
 // src/pages/LoginPage.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css'
 import { Icon } from '@iconify/react';
 
@@ -10,6 +10,9 @@ function LoginPage({ onAuthAction }) {
     username: '',
     password: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate()
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,10 +23,17 @@ function LoginPage({ onAuthAction }) {
     e.preventDefault(); 
     
     // Logic ถูกตัดออก: เราแค่จำลองการ Login สำเร็จเพื่ออัปเดต Navbar
-    console.log('Login Form Submitted (Mock):', formData);
     onAuthAction('login'); // ทำให้ Navbar เปลี่ยนเป็น Logout
+    navigate('/mybid')
   };
 
+    const showpass = () => {
+      console.log(showPassword)
+        // เปลี่ยนค่า State จาก true เป็น false หรือ false เป็น true
+        setShowPassword(prev => !prev);
+    };
+
+    const inputType = showPassword ? 'text' : 'password';
   return (
     <div className="login-container">
       <h1>Welcome Back</h1>
@@ -37,8 +47,8 @@ function LoginPage({ onAuthAction }) {
 
         <div className="div-password" >
           <Icon className='icon-password' icon='mdi:lock-outline' />
-          <input className="input-password" type="password" placeholder='Password' id="password" name="password" value={formData.password} onChange={handleChange} required />
-         <span><Icon className="showeyeslog" icon="material-symbols-light:eye-tracking-outline"></Icon></span>
+          <input className="input-password" type={inputType} placeholder='Password' id="password" name="password" value={formData.password} onChange={handleChange} required />
+         <span><Icon className="showeyeslog" onClick={showpass} id="show-pass" icon="material-symbols-light:eye-tracking-outline"></Icon></span>
         </div>
 
         <div className="div-forget-account" ><Link className='forget'>Forget Password</Link><Link className='account'>Don't have an account</Link></div>
