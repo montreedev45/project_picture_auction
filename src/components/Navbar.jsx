@@ -1,4 +1,5 @@
 // src/components/Navbar.jsx
+import React from "react";
 import { React, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link, useLocation } from "react-router-dom";

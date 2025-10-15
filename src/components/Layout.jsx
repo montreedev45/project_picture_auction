@@ -11,7 +11,7 @@ function Layout({ children, isLoggedIn, onAuthAction  }) {
   const NavbarError2 = location.pathname.startsWith("/Page404")
   const NavbarError3 = location.pathname.startsWith("/Page500")
   const currentPath = location.pathname; // ตัวอย่าง: "/" หรือ "/auctions"
-  const pathsToHideFooter = ['/login', '/SignUp','/Page404','/Page500' ]; 
+  const pathsToHideFooter = ['/login', '/SignUp','/Page404','/Page500', ]; 
   const shouldHideFooter = pathsToHideFooter.includes(currentPath);
 
   return (
