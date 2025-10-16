@@ -1,5 +1,6 @@
 // src/components/Navbar.jsx
-import { React, useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -42,7 +43,7 @@ function Navbar({ isLoggedIn, onAuthAction }) {
           </Link>
 
           <Link className="Link"
-            to="/dashboard "
+            to="/DashBoard "
             onClick={() => setIsMenuOpen(false)}
           >
             <Icon icon="ix:piechart-filled" className="Link-icon" />
