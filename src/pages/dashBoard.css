@@ -17,11 +17,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  margin-top: 320px;
   position: relative;
   & h2 {
     margin-top: -65%;
-    font-size: 35px;
+    font-size: 40px;
     left: 0;
     position: absolute;
   }
