@@ -35,7 +35,7 @@ function Navbar({ isLoggedIn, onAuthAction }) {
         <div className="dropdown">
           {/* Item 1: Profile */}
           <Link className="Link"
-            to="/profile"
+            to="/profile-setting"
             onClick={() => setIsMenuOpen(false)}
           >
             <Icon icon="mdi:user" className="Link-icon" />

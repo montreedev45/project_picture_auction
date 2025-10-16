@@ -30,9 +30,7 @@ function SignUp({ onAuthAction }) {
     navigate("/login")
   };
 
-  const showpass = () => {
-      console.log(showPassword)
-        // เปลี่ยนค่า State จาก true เป็น false หรือ false เป็น true
+    const showpass = () => {
         setShowPassword(prev => !prev);
     };
     const inputType = showPassword ? 'text' : 'password';
