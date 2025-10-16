@@ -62,7 +62,7 @@
 .profile-div-password .eyeregis {
     font-size: 25px;
     position: absolute;
-    right: 50px; /* เว้นระยะห่างจากขอบขวา 15px */
+    right: 35px; /* เว้นระยะห่างจากขอบขวา 15px */
     top: 50%; /* เลื่อนลงมา 50% ของความสูง */
     transform: translateY(-50%); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
 
@@ -108,7 +108,7 @@ form > .profile-div-username > .icon-username {
     padding-right: 10px;
 }
 form > .profile-div-username > .input-username {
-    width: 70%;
+    width: 90%;
     border-radius: 10px;
     border: 3px solid #d4d4d4;
     padding: 15px 20px;
@@ -138,7 +138,7 @@ form > .profile-div-password > .icon-password {
     padding-right: 10px;
 }
 form > .profile-div-password > .input-password {
-    width: 70%;
+    width: 90%;
     border-radius: 10px;
     border: 3px solid #d4d4d4;
     padding: 15px 20px;
@@ -183,3 +183,4 @@ form > .profile-div-password > .input-password:focus {
 .custom-file-upload .custom-button:hover {
     background-color: #299fff;
 }
+

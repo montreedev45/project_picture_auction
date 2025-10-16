@@ -38,7 +38,7 @@
 .div-password .eyeregis {
     font-size: 25px;
     position: absolute;
-    right: 85px; /* เว้นระยะห่างจากขอบขวา 15px */
+    right: 80px; /* เว้นระยะห่างจากขอบขวา 15px */
     top: 50%; /* เลื่อนลงมา 50% ของความสูง */
     transform: translateY(-50%); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
 
@@ -51,3 +51,4 @@
     color: #2a2a2a;
     transition: 0.2s;
 }
+

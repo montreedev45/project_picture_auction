@@ -42,12 +42,12 @@ nav {
   width: 400px;
 }
 .navbar-center > .search-input-wrapper > .navbar-search {
-  height: 2rem;
+  height: 3rem;
   border-radius: 30px;
   padding: 8px 0px 8px 15px;
   border: none;
   outline: none;
-  width: 96%;
+  width: 100%;
   font-size: 20px;
   caret-color: transparent;
 }
@@ -106,7 +106,6 @@ nav {
   min-width: 300px;
   font-size: 20px;
   color: #ffffff;
-  padding: 20px;
   line-height: 1.8rem;
   letter-spacing: 0.1rem;
 }
