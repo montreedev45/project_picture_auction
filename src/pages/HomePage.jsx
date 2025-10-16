@@ -70,7 +70,7 @@ function HomePage() {
                         // Business Logic: กำหนดสีตามสถานะ isLiked ของสินค้านั้นๆ
                         const heartFillColor = product.isLiked ? "#FF4081" : "none";
                         const heartStrokeColor = product.isLiked ? "#FF4081" : "#848484";
-                        const imageSource = product.id <= 3 ? view1 : view2; //condition change image by id
+                        const imageSource = product.imageUrl === 'view1' ? view1 : view2; 
                         return (
                             <div className="card" key={product.id}>
                                 <img 
@@ -84,7 +84,7 @@ function HomePage() {
                                     <p>time remanding : {product.time}</p>
                                 </div>
                                 <div className="card-button">
-                                    <Link to={`/bid/${product.id}`} className='button'>Bid Now</Link>
+                                    <Link to={`/auction-detail/${product.id}`} className='button'>Bid Now</Link>
                                     <button onClick={(e) => handleLikeToggle(e, product.id)} style={{ background: 'none', border: 'none', padding: 0 }}>
                                         <HeartIcon 
                                             size="30" 

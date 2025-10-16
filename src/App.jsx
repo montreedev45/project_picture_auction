@@ -17,6 +17,7 @@ import DashBoard from "./pages/UserDashboard";
 import ProfileSettingPage from './pages/ProfileSettingPage';
 import "./index.css";
 import "./app.css";
+import AuctionDetailPage from "./pages/AuctionDetailPage";
 
 function App() {
   // State ถูกตั้งค่าไว้ แต่เราจะยังไม่ใช้ Logic ในตอนนี้
@@ -46,6 +47,7 @@ function App() {
           <Route path="/search" element={<SearchPage onAuthAction={handleAuthAction} />} />
           <Route path="/DashBoard" element={<DashBoard />} />
           <Route path="/profile-setting" element={<ProfileSettingPage onAuthAction={handleAuthAction} />} />
+          <Route path="/auction-detail/:id" element={<AuctionDetailPage onAuthAction={handleAuthAction} />} />
           
           {/* 3. หน้า 404 Fallback */}
           <Route path="/Page404" element={<Page404 />}></Route>

@@ -65,7 +65,7 @@ function EndedPage() {
                             // Business Logic: กำหนดสีตามสถานะ isLiked ของสินค้านั้นๆ
                             const heartFillColor = product.isLiked ? "#FF4081" : "none";
                             const heartStrokeColor = product.isLiked ? "#FF4081" : "#848484";
-                            const imageSource = product.id <= 3 ? view1 : view2; //condition change image by id
+                            const imageSource = product.imageUrl === 'view1' ? view1 : view2; 
                             
                             return (
                                 <div className="ended-card" key={product.id}> 

@@ -94,11 +94,11 @@ background-color: #0056b3;
   height: 2rem;
   border-radius: 30px;
   border: 1px solid #000000;
-  padding: 8px 0px 8px 15px;
   outline: none;
   width: 96%;
   font-size: 20px;
   caret-color: transparent;
+  padding: 1.5rem;
 }
 .navbar-search-page:focus {
   caret-color: auto;
@@ -106,7 +106,7 @@ background-color: #0056b3;
 }
 .search-icon-overlay-page {
   position: absolute; 
-  right: 10px;    
+  right: 20px;    
   top: 50%;   
   transform: translateY(-50%); 
   font-size: 40px;

@@ -1,5 +1,4 @@
 .login-container  {
-    padding: 50px;
     max-width: 500px;
     border-radius: 8px;
     margin: 0px auto;
@@ -33,7 +32,7 @@ form > .div-username > .icon-username {
     padding-right: 10px;
 }
 form > .div-username > .input-username {
-    width: 70%;
+    width: 80%;
     border-radius: 10px;
     border: 3px solid #d4d4d4;
     padding: 15px 20px;
@@ -63,7 +62,7 @@ form > .div-password > .icon-password {
     padding-right: 10px;
 }
 form > .div-password > .input-password {
-    width: 70%;
+    width: 80%;
     border-radius: 10px;
     border: 3px solid #d4d4d4;
     padding: 15px 20px;
@@ -109,7 +108,7 @@ form > .button-submit {
 .div-password .showeyeslog{
     font-size: 25px;
     position: absolute;
-    right: 55px; /* เว้นระยะห่างจากขอบขวา 15px */
+    right: 60px; /* เว้นระยะห่างจากขอบขวา 15px */
     top: 50%; /* เลื่อนลงมา 50% ของความสูง */
     transform: translateY(-50%); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
     color: #9a9898;
