@@ -15,6 +15,7 @@ import Page500 from './pages/PageError500'
 import SaveItemPage from './pages/SaveItemPage';
 import MywinningPage from './pages/mywinningPage';
 import SearchPage from './pages/SearchPage';
+import ProfileSettingPage from './pages/ProfileSettingPage';
 import './index.css';
 import './app.css';
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/saveitem" element={<SaveItemPage onAuthAction={handleAuthAction} />} />
           <Route path="/mywinning" element={<MywinningPage onAuthAction={handleAuthAction} />} />
           <Route path="/search" element={<SearchPage onAuthAction={handleAuthAction} />} />
+          <Route path="/profile-setting" element={<ProfileSettingPage onAuthAction={handleAuthAction} />} />
           
           {/* 3. หน้า 404 Fallback */}
           <Route path='/Page404' element={<Page404/>}></Route>
