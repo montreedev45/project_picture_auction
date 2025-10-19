@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icon": "^1.0.0",
