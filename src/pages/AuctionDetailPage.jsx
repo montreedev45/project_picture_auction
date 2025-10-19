@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'; // ✅ Tech Stack: นำเ
 import { Icon } from '@iconify/react';
 import { useParams } from 'react-router-dom';
 import './AuctionDetailPage.css'
-import { getProductById } from '../components/MockData';
+//import { getProductById } from '../components/MockData';
 import view1 from '../assets/view1-ai-gen.png'
 import view2 from '../assets/view2-ai-gen.png'
 
@@ -18,14 +18,33 @@ function AuctionDetailPage() {
     // BUSINESS LOGIC: ดึงข้อมูลจาก Mock File
     useEffect(() => {
         if (id) {
-            const foundProduct = getProductById(id); 
+            setLoading(true);
             
-            // 💡 UX/UI Tip: จำลองการหน่วงเวลา (Latency) เพื่อให้เห็น loading state
-            setTimeout(() => {
-                setProduct(foundProduct);
-                setLoading(false); // 🚩 ตั้งค่า loading เป็น false เมื่อได้ข้อมูลแล้ว
-            }, 300); // 300ms delay
-        }
+            // 💡 TECH STACK: กำหนด URL API ของ Express Backend
+            const API_URL = `http://localhost:5000/api/auction/product/${id}`;
+
+            // ใช้ fetch เพื่อเรียกข้อมูล
+            fetch(API_URL)
+                .then(response => {
+                    // ตรวจสอบ HTTP Status (เช่น 404, 500)
+                    if (!response.ok) {
+                        // ถ้าสถานะไม่ OK (เช่น 404 Not Found), ให้ throw error
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // แปลง Response เป็น JSON
+                })
+                .then(data => {
+                    // ✅ Success: ได้รับข้อมูลสินค้า
+                    setProduct(data); 
+                    setLoading(false);
+                })
+                .catch(error => {
+                    // 🛑 Error Handling: จัดการ Error (เช่น Network Error, 404)
+                    console.error("Error fetching product:", error);
+                    setProduct(null); // ตั้งค่า product เป็น null เพื่อแสดงหน้า Error
+                    setLoading(false);
+                });
+            }
     }, [id]);
      
 
