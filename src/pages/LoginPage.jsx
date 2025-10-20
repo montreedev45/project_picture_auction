@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import { Icon } from "@iconify/react";
+import axios from "axios";
 import { initialProducts } from "../components/MockData";
 
 function LoginPage({ onAuthAction }) {
@@ -11,17 +12,33 @@ function LoginPage({ onAuthAction }) {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
-  const handleSubmit = (e) => {
+  const [response, setResponse] = useState(null);
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    try {
+      const API_URL = `http://localhost:5000/api/auction/login`;
+
+      const res = await axios.post(API_URL, formData);
+      setResponse(res.data);
+      console.log("Login was Success:", res.data);
+    } catch (err) {
+      // 4. จัดการ Error Response
+      const errorMsg = err.response?.data?.message || err.message;
+      setResponse(errorMsg);
+
+      console.error("Login Error:", errorMsg);
+    }
+
+    // Logic ถูกตัดออก: เราแค่จำลองการ Login สำเร็จเพื่ออัปเดต Navbar
+    // console.log("Login Form Submitted (Mock):", formData);
+    // navigate("/login");
     // Logic ถูกตัดออก: เราแค่จำลองการ Login สำเร็จเพื่ออัปเดต Navbar
     onAuthAction("login"); // ทำให้ Navbar เปลี่ยนเป็น Logout
     navigate("/mybid");
