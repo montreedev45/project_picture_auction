@@ -12,7 +12,7 @@ function SignUp({ onAuthAction }) {
     password: "",
     firstname: "montree",
     lastname: "chanuanklang",
-    email: "test88@gmail.com",
+    email: "test75@gmail.com",
     phone: "0123456789",
     address: "mukdahan",
   });
@@ -25,28 +25,21 @@ function SignUp({ onAuthAction }) {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-  const MocData = {};
+
   const [response, setResponse] = useState(null);
-  const [loading, setLoading] = useState(true);
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // ⚠️ สำคัญ: ป้องกันการ Reload Page
 
-    // 1. ฟังก์ชัน Asynchronous ภายใน
-    setLoading(true);
-
     try {
       const API_URL = `http://localhost:5000/api/auction/register`;
-      // 2. HTTP POST Request (ใช้ apiClient และ Endpoint ที่เหลือ)
+
       const res = await axios.post(API_URL, formData);
-
-      // 3. จัดการ Success Response
-      setLoading(false); // ✅ ต้องตั้งเป็น false เมื่อสำเร็จหรือล้มเหลว
       setResponse(res.data);
-
       console.log("Registration Success:", res.data);
+
     } catch (err) {
       // 4. จัดการ Error Response
-      setLoading(false); // ✅ ต้องตั้งเป็น false
       const errorMsg = err.response?.data?.message || err.message;
       setResponse(errorMsg);
 

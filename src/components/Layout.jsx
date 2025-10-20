@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 
 function Layout({ children, isLoggedIn, onAuthAction  }) {
-  console.log(isLoggedIn, onAuthAction)
+  //console.log(isLoggedIn, onAuthAction)
   const location = useLocation();
   const NavbarError2 = location.pathname.startsWith("/Page404")
   const NavbarError3 = location.pathname.startsWith("/Page500")
