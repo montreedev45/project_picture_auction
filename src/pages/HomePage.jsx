@@ -116,9 +116,7 @@ function HomePage() {
   if (filteredProducts.length === 0) {
      return <div className="no-data">ไม่มีสินค้าประมูล "Upcoming" ในขณะนี้</div>;
   }
-
-    // 💡 UX/UI: แสดง Loading State (ถ้าคุณมี State loading)
-    // if (loading) { return <div>Loading...</div>; }
+  
     return (
       <>
         <div className="div-text">

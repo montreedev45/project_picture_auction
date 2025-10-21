@@ -26,6 +26,7 @@ function LoginPage({ onAuthAction }) {
       const API_URL = `http://localhost:5000/api/auction/login`;
 
       const res = await axios.post(API_URL, formData);
+      localStorage.setItem('userId', res.data.user.id); //save id in localstorage
       setResponse(res.data);
       console.log("Login was Success:", res.data);
     } catch (err) {
@@ -36,10 +37,6 @@ function LoginPage({ onAuthAction }) {
       console.error("Login Error:", errorMsg);
     }
 
-    // Logic ถูกตัดออก: เราแค่จำลองการ Login สำเร็จเพื่ออัปเดต Navbar
-    // console.log("Login Form Submitted (Mock):", formData);
-    // navigate("/login");
-    // Logic ถูกตัดออก: เราแค่จำลองการ Login สำเร็จเพื่ออัปเดต Navbar
     onAuthAction("login"); // ทำให้ Navbar เปลี่ยนเป็น Logout
     navigate("/mybid");
   };

@@ -12,7 +12,7 @@ function SignUp({ onAuthAction }) {
     password: "",
     firstname: "montree",
     lastname: "chanuanklang",
-    email: "test75@gmail.com",
+    email: "test74@gmail.com",
     phone: "0123456789",
     address: "mukdahan",
   });
@@ -47,7 +47,7 @@ function SignUp({ onAuthAction }) {
     }
 
     // Logic ถูกตัดออก: เราแค่จำลองการ Login สำเร็จเพื่ออัปเดต Navbar
-    console.log("Login Form Submitted (Mock):", formData);
+    console.log("sign up Form Submitted (Mock):", formData);
     navigate("/login");
   };
 

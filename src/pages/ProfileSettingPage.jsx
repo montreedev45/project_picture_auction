@@ -1,77 +1,146 @@
-import React, { useState, useEffect } from "react"; // ✅ Tech Stack: นำเข้า useState
-import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom"; // 💡 Tech Stack: ใช้ useParams สำหรับดึง ID
+import { Icon } from "@iconify/react"; // ✅ Tech Stack: การใช้ Iconify
 import "./ProfileSettingPage.css";
 import axios from "axios";
 
-import view1 from "../assets/view1-ai-gen.png";
-import view2 from "../assets/view2-ai-gen.png";
-
-// Tech Stack: Mock Data (เพิ่ม property 'isLiked' เริ่มต้น)
+const MOCK_USER_ID = "1";
 
 function ProfileSettingPage() {
-  // ✅ Tech Stack: State Management สำหรับรายการ (Array State)
-  const [usersall, setUsersAll] = useState([]);
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const showpass = () => {
-    setShowPassword((prev) => !prev);
-  };
-  const inputType = showPassword ? "password" : "text";
-
-  const showconfirmpass = () => {
-    setShowConfirmPassword((prev) => !prev);
-  };
-  const inputConfirmType = showConfirmPassword ? "password" : "text";
-
-  const [users, setUsers] = useState({
+  const [userProfile, setUserProfile] = useState({ 
     id: "",
     username: "",
-    password: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    adddress: ""
   });
+
+  const [formData, setFormData] = useState({ // State สำหรับ Form ที่จะถูกแก้ไข
+    username: "",
+    currentPassword: "", // สำหรับยืนยันการเปลี่ยนข้อมูล
+    newPassword: "",
+    confirmPassword: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    adddress: ""
+  });
+
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [apiMessage, setApiMessage] = useState(null); // สำหรับข้อความ Success/Error
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const showpass = () => setShowPassword((prev) => !prev);
+  const inputType = showPassword ? "text" : "password";
+
+  const showconfirmpass = () => setShowConfirmPassword((prev) => !prev);
+  const inputConfirmType = showConfirmPassword ? "text" : "password";
+
   useEffect(() => {
-    const fecth_users = async () => {
+    //const userId = MOCK_USER_ID; // 💡 ใช้ ID จริงที่ได้จากการ Login
+    const userId = localStorage.getItem('userId');
+    console.log(`user id : ${userId}`)
+    const fecth_user_profile = async () => {
       setError(null);
       setLoading(true);
 
       try {
-        console.log("Hell");
-        const API_URL = `http://localhost:5000/api/auction/users/:id`;
+        const API_URL = `http://localhost:5000/api/auction/users/${userId}`;
         const res = await axios.get(API_URL);
-        console.log(res);
-        // 🚀 Tech Stack Fix: เข้าถึง Key 'prod
-        // ucts' ใน response object โดยตรง
-        // และเพิ่ม isLiked property สำหรับ Business Logic
+        
+        const user = res.data.user || {}; 
 
-        const apiUsers = res.data.user || [];
-
-        setUsersAll(apiUsers);
+        setUserProfile(user); 
+        setFormData({ 
+            username: user.username || "", 
+            // ไม่ต้องใส่ password ใน form state, ใส่แค่ช่องที่จะเปลี่ยน
+            currentPassword: "", 
+            newPassword: "",
+            confirmPassword: "",
+        });
+        
+        console.log("User Profile Fetched:", user);
+        
       } catch (err) {
         const errorMsg =
-          err.response?.data?.message || "Failed to connect to server.";
+          err.response?.data?.message || "Failed to fetch user profile.";
 
-        setError(errorMsg); // ⬅️ แสดง Error ที่ถูกต้อง
-        setUsersAll([]); // ⚠️ setProducts ให้เป็น Array เปล่าเสมอ
-
+        setError(errorMsg);
+        setUserProfile({});
         console.error("Fetch Error:", errorMsg);
       } finally {
         setLoading(false);
       }
     };
 
-    fecth_users();
+    fecth_user_profile();
   }, []);
-  console.log(usersall.username);
+
+
+
+
+  // 3. Update Profile Logic (Business Logic/CRUD)
+  // ----------------------------------------------------------------
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      setApiMessage(null);
+      setError(null);
+      
+      const userId = userProfile.id || MOCK_USER_ID;
+
+      try {
+          const API_URL = `http://localhost:5000/api/auction/users/${userId}`;
+          // 💡 Tech Stack: ใช้ Git/Postman ในการตรวจสอบ Body ของ Request
+          // ส่งเฉพาะข้อมูลที่ต้องการอัปเดต
+          const updateData = {
+              username: formData.username,
+              // Business Logic: ส่งรหัสผ่านใหม่ไปเมื่อมีการกรอกเท่านั้น
+              ...(formData.newPassword && { 
+                  newPassword: formData.newPassword,
+                  currentPassword: formData.currentPassword 
+              })
+          };
+          
+          const res = await axios.put(API_URL, updateData); // หรือ PATCH
+          
+          setApiMessage(res.data.message || "Profile updated successfully!");
+          setUserProfile(prev => ({...prev, username: formData.username}));
+          
+      } catch (err) {
+           const errorMsg =
+            err.response?.data?.message || "Failed to update profile.";
+            
+           setError(errorMsg);
+           setApiMessage(null);
+           console.error("Update Error:", errorMsg);
+           
+      } finally {
+          setLoading(false);
+      }
+  };
+
+
+
+
   return (
     <>
       <div className="profile-setting-div-text">
         <h1>Profile Setting</h1>
       </div>
       <div className="profile-setting-container">
-        <form className="profile-setting-container-form">
+        <form className="profile-setting-container-form" onSubmit={handleSubmit}>
           <div className="div-img">
             <div className="div-mdi-user">
               <Icon icon="mdi:user" className="mdi-user" />
@@ -97,7 +166,8 @@ function ProfileSettingPage() {
               placeholder="Email or Username"
               id="username"
               name="username"
-              value={usersall.username}
+              value={formData.username}
+              onChange={handleChange}
               required
             />
           </div>
@@ -110,6 +180,8 @@ function ProfileSettingPage() {
               placeholder="Password"
               id="password"
               name="password"
+              //value={formData.username}
+              onChange={handleChange}
               required
             />
             <span>
