@@ -10,11 +10,11 @@ function SignUp({ onAuthAction }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    firstname: "montree",
-    lastname: "chanuanklang",
-    email: "test74@gmail.com",
-    phone: "0123456789",
-    address: "mukdahan",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    address: "",
   });
 
   const navigate = useNavigate();
@@ -37,7 +37,6 @@ function SignUp({ onAuthAction }) {
       const res = await axios.post(API_URL, formData);
       setResponse(res.data);
       console.log("Registration Success:", res.data);
-
     } catch (err) {
       // 4. จัดการ Error Response
       const errorMsg = err.response?.data?.message || err.message;
@@ -82,7 +81,7 @@ function SignUp({ onAuthAction }) {
         </div>
 
         <div className="div-password">
-          <Icon className="icon-password" icon="mdi:lock-outline" />
+          <Icon className="icon-password" icon="gravity-ui:envelope" />
           <input
             className="input-password"
             type={inputType}
@@ -119,6 +118,76 @@ function SignUp({ onAuthAction }) {
               icon="material-symbols-light:eye-tracking-outline"
             ></Icon>
           </span>
+        </div>
+
+        <div className="div-firstname">
+          <Icon className="icon-firstname" icon="gravity-ui:person-fill" />
+          <input
+            className="input-firstname"
+            type="text"
+            placeholder="firstname"
+            id="firstname"
+            name="firstname"
+            value={formData.firstname}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="div-lastname">
+          <Icon className="icon-lastname" icon="gravity-ui:person-fill" />
+          <input
+            className="input-lastname"
+            type="text"
+            placeholder="Last name"
+            id="lastname"
+            name="lastname"
+            value={formData.lastname}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="div-email">
+          <Icon className="icon-email" icon="gravity-ui:envelope" />
+          <input
+            className="input-email"
+            type="email"
+            placeholder="Email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="div-phone">
+          <Icon className="icon-phone" icon="gravity-ui:handset" />
+          <input
+            className="input-phone"
+            type="text"
+            placeholder="Phone"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="div-address">
+          <Icon className="icon-address" icon="gravity-ui:house" />
+          <input
+            className="input-address"
+            type="text"
+            placeholder="Address"
+            id="address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <button type="submit" className="button-submit">

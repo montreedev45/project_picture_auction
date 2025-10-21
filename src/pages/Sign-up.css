@@ -1,54 +1,215 @@
-.container-regis h2{
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 60px;
-   text-align: center;
-   margin-left: 30px;
-   
+.container-regis h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  text-align: center;
+  margin-left: 30px;
 }
-.container-regis{
-    padding: 20px;
-    max-width: 700px;
-    margin: 0 auto;
+.container-regis {
+  padding: 20px;
+  max-width: 700px;
+  margin: 0 auto;
 }
-.button-submit{
-    margin-top: 25px;
+.button-submit {
+  margin-top: 25px;
 }
 
 .div-password {
-    position: relative;
-    width: 70%;
-
+  position: relative;
+  width: 70%;
 }
-.div-password input{
-    width: 100%;
-    border-radius: 10px;
-    border: 3px solid #d4d4d4;
-    padding: 15px 20px;
-    color: #848484;
-    font-size: 20px;
-    caret-color: transparent;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-
+.div-password input {
+  width: 100%;
+  border-radius: 10px;
+  border: 3px solid #d4d4d4;
+  padding: 15px 20px;
+  color: #848484;
+  font-size: 20px;
+  caret-color: transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 .div-password .eyeregis {
-    font-size: 25px;
-    position: absolute;
-    right: 80px; /* เว้นระยะห่างจากขอบขวา 15px */
-    top: 50%; /* เลื่อนลงมา 50% ของความสูง */
-    transform: translateY(-50%); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+  font-size: 25px;
+  position: absolute;
+  right: 80px; /* เว้นระยะห่างจากขอบขวา 15px */
+  top: 50%; /* เลื่อนลงมา 50% ของความสูง */
+  transform: translateY(
+    -50%
+  ); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
 
-    color: #9a9898;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
+  color: #9a9898;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.div-password .eyeregis:hover{
-    color: #2a2a2a;
-    transition: 0.2s;
+.div-password .eyeregis:hover {
+  color: #2a2a2a;
+  transition: 0.2s;
 }
 
+/* First Name */
+.div-firstname {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  width: 83.5%;
+}
+
+.div-firstname input {
+  width: 91%;
+  border-radius: 10px;
+  border: 3px solid #d4d4d4;
+  padding: 15px 20px;
+  color: #848484;
+  font-size: 20px;
+  caret-color: auto;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.div-firstname .icon-firstname {
+  font-size: 25px;
+  margin-right: 15px;
+  /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+  color: #9a9898;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* Last Name */
+
+.div-lastname {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  width: 83.5%;
+}
+
+.div-lastname input {
+  width: 91%;
+  border-radius: 10px;
+  border: 3px solid #d4d4d4;
+  padding: 15px 20px;
+  color: #848484;
+  font-size: 20px;
+  caret-color: auto;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.div-lastname .icon-lastname {
+  font-size: 25px;
+  margin-right: 15px;
+  /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+  color: #9a9898;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+/* Email */
+.div-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  width: 83.5%;
+}
+
+.div-email input {
+  width: 91%;
+  border-radius: 10px;
+  border: 3px solid #d4d4d4;
+  padding: 15px 20px;
+  color: #848484;
+  font-size: 20px;
+  caret-color: auto;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.div-email .icon-email {
+  font-size: 25px;
+  margin-right: 15px;
+  /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+  color: #9a9898;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+/* Phone */
+.div-phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  width: 83.5%;
+}
+
+.div-phone input {
+  width: 91%;
+  border-radius: 10px;
+  border: 3px solid #d4d4d4;
+  padding: 15px 20px;
+  color: #848484;
+  font-size: 20px;
+  caret-color: auto;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.div-phone .icon-phone {
+  font-size: 25px;
+  margin-right: 15px;
+  /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+  color: #9a9898;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+/* Address */
+.div-address {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  width: 83.5%;
+}
+
+.div-address input {
+  width: 91%;
+  border-radius: 10px;
+  border: 3px solid #d4d4d4;
+  padding: 15px 20px;
+  color: #848484;
+  font-size: 20px;
+  caret-color: auto;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.div-address .icon-address {
+  font-size: 25px;
+  margin-right: 15px;
+  /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+  color: #9a9898;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
