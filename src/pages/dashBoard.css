@@ -1,3 +1,9 @@
+:root{
+ --light-purple: #b4beff;
+ --light-pink:#ffb4d5;
+ --lignt-with: #ffd4c4:
+}
+
 .body-dash {
   height: 150vh;
   width: 100%;
@@ -60,6 +66,7 @@
         margin: 10px;
         width: 25px;
         height: 25px;
+        cursor: pointer;
         background-color: #b4beff;
       }
       & .dash-box2 {
@@ -67,14 +74,20 @@
         margin: 10px;
         width: 25px;
         height: 25px;
+        cursor: pointer;
         background-color: #ffb4d5;
       }
       & .dash-box3 {
         position: relative;
+        cursor: pointer;
         margin: 10px;
         width: 25px;
         height: 25px;
         background-color: #ffd4c4;
+        &input {
+          border: none;
+          background: #b4beff;
+        }
       }
     }
   }

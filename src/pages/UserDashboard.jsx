@@ -131,7 +131,7 @@ function DashBoard({ onAuthAction }) {
                   cy="50%"
                   labelLine={false}
                   label={renderCustomizedLabel}
-                  outerRadius={140}
+                  outerRadius={130}
                   fill="#8884d8"
                   dataKey="value"
                 >
@@ -147,16 +147,16 @@ function DashBoard({ onAuthAction }) {
           </div>
           <div className="slicer">
             <label htmlFor="slicer">
-              <div className="dash-box1" type="" />
-              <span>Catagory 1</span>
+              <input className="dash-box1" type="checkbox" />
+              <span>My Bids</span>
             </label>
             <label htmlFor="slicer">
-              <div className="dash-box2" type="checkbox" />
-              <span>Catagory 2</span>
+              <input className="dash-box2" type="checkbox" />
+              <span>My winning</span>
             </label>
             <label htmlFor="slicer">
-              <div className="dash-box3" type="checkbox" />
-              <span>Catagory 3</span>
+              <input className="dash-box3" type="checkbox" />
+              <span>Ended</span>
             </label>
           </div>
         </div>
