@@ -64,6 +64,11 @@ function ProfileSettingPage() {
         setUserProfile(user); 
         setFormData({ 
             username: user.username || "", 
+            firstname: user.firstname || "", 
+            lastname: user.lastname || "", 
+            phone: user.phone || "", 
+            email: user.email || "", 
+            adddress: user.address || "", 
             // ไม่ต้องใส่ password ใน form state, ใส่แค่ช่องที่จะเปลี่ยน
             currentPassword: "", 
             newPassword: "",
@@ -98,14 +103,19 @@ function ProfileSettingPage() {
       setApiMessage(null);
       setError(null);
       
-      const userId = userProfile.id || MOCK_USER_ID;
+      const userId = localStorage.getItem('userId');
 
       try {
           const API_URL = `http://localhost:5000/api/auction/users/${userId}`;
           // 💡 Tech Stack: ใช้ Git/Postman ในการตรวจสอบ Body ของ Request
           // ส่งเฉพาะข้อมูลที่ต้องการอัปเดต
           const updateData = {
-              username: formData.username,
+            username: formData.username,
+            firstname: user.firstname , 
+            lastname: user.lastname , 
+            phone: user.phone , 
+            email: user.email , 
+            adddress: user.address ,
               // Business Logic: ส่งรหัสผ่านใหม่ไปเมื่อมีการกรอกเท่านั้น
               ...(formData.newPassword && { 
                   newPassword: formData.newPassword,
@@ -163,7 +173,7 @@ function ProfileSettingPage() {
             <input
               className="input-username"
               type="text"
-              placeholder="Email or Username"
+              placeholder="Username"
               id="username"
               name="username"
               value={formData.username}
@@ -172,33 +182,81 @@ function ProfileSettingPage() {
             />
           </div>
 
-          <div className="profile-div-password">
-            <Icon className="icon-password" icon="mdi:lock-outline" />
+          <div className="profile-div-firstname">
+            <Icon className="icon-firstname" icon="mdi:email-outline" />
             <input
-              className="input-password"
-              type={inputType}
-              placeholder="Password"
-              id="password"
-              name="password"
-              //value={formData.username}
+              className="input-firstname"
+              type="text"
+              placeholder="First name"
+              id="firstname"
+              name="firstname"
+              value={formData.firstname}
               onChange={handleChange}
               required
             />
-            <span>
-              <Icon
-                className="eyeregis"
-                onClick={showpass}
-                icon="material-symbols-light:eye-tracking-outline"
-              ></Icon>
-            </span>
           </div>
 
-          <div className="profile-div-password">
+          <div className="profile-div-lastname">
+            <Icon className="icon-lastname" icon="mdi:email-outline" />
+            <input
+              className="input-lastname"
+              type="text"
+              placeholder="Last name"
+              id="lastname"
+              name="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="profile-div-email">
+            <Icon className="icon-email" icon="mdi:email-outline" />
+            <input
+              className="input-email"
+              type="email"
+              placeholder="Email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="profile-div-phone">
+            <Icon className="icon-phone" icon="mdi:email-outline" />
+            <input
+              className="input-phone"
+              type="text"
+              placeholder="Phone"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="profile-div-address">
+            <Icon className="icon-address" icon="mdi:email-outline" />
+            <input
+              className="input-address"
+              type="text"
+              placeholder="Address"
+              id="address"
+              name="address"
+              value={formData.adddress}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          {/* <div className="profile-div-password">
             <Icon className="icon-password" icon="mdi:lock-outline" />
             <input
               className="input-password"
               type={inputConfirmType}
-              placeholder="Confirm Password"
+              placeholder="Password"
               id="password-2"
               name="password-2"
               required
@@ -210,7 +268,7 @@ function ProfileSettingPage() {
                 icon="material-symbols-light:eye-tracking-outline"
               ></Icon>
             </span>
-          </div>
+          </div> */}
 
           <button type="submit" className="button-submit">
             save

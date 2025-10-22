@@ -18,6 +18,10 @@
     margin-bottom: 300px;
 }
 
+.profile-setting-container-form {
+    width: 80%;
+}
+
 .div-img {
     display: flex;
     flex-direction: column;
@@ -94,20 +98,20 @@
 
 
 
-form > .profile-div-username {
+.profile-div-username, .profile-div-firstname, .profile-div-lastname, .profile-div-email, .profile-div-phone, .profile-div-address {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    padding: 0px 20px;
+    padding: 5px 20px;
     width: 100%;
 }
-form > .profile-div-username > .icon-username {
+.icon-username, .icon-firstname, .icon-lastname, .icon-email, .icon-phone, .icon-address {
     color: #d4d4d4;
     font-size: 40px;
     padding-right: 10px;
 }
-form > .profile-div-username > .input-username {
+.input-username, .input-firstname, .input-lastname, .input-email, .input-phone, .input-address {
     width: 90%;
     border-radius: 10px;
     border: 3px solid #d4d4d4;
@@ -116,7 +120,7 @@ form > .profile-div-username > .input-username {
     font-size: 20px;
     caret-color: transparent;
 }
-form > .profile-div-username > .input-username:focus {
+.input-username:focus , .input-firstname:focus, .input-lastname:focus, .input-email:focus, .input-phone:focus, .input-address:focus {
     border-color: #d4d4d4;
     outline: none;
     caret-color: auto;
