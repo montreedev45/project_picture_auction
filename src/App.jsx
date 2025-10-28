@@ -18,6 +18,7 @@ import ProfileSettingPage from './pages/ProfileSettingPage';
 import "./index.css";
 import "./app.css";
 import AuctionDetailPage from "./pages/AuctionDetailPage";
+import UpdatePasswordPage from "./pages/UpdatePasswordPage";
 
 function App() {
   // State ถูกตั้งค่าไว้ แต่เราจะยังไม่ใช้ Logic ในตอนนี้
@@ -25,7 +26,7 @@ function App() {
 
   // ฟังก์ชัน Mock (จำลอง) การจัดการสิทธิ์
   const handleAuthAction = (action) => {
-    console.log(`Auth action: ${action} triggered (Mock)`);
+    //console.log(`Auth action: ${action} triggered (Mock)`);
     setIsLoggedIn(action === 'login'); // ตั้งค่าสถานะตาม action
   };
 
@@ -48,6 +49,7 @@ function App() {
           <Route path="/DashBoard" element={<DashBoard />} />
           <Route path="/profile-setting" element={<ProfileSettingPage onAuthAction={handleAuthAction} />} />
           <Route path="/auction-detail/:id" element={<AuctionDetailPage onAuthAction={handleAuthAction} />} />
+          <Route path="/update-password" element={<UpdatePasswordPage onAuthAction={handleAuthAction} />} />
           
           {/* 3. หน้า 404 Fallback */}
           <Route path="/Page404" element={<Page404 />}></Route>

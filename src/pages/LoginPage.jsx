@@ -27,18 +27,27 @@ function LoginPage({ onAuthAction }) {
 
       const res = await axios.post(API_URL, formData);
       localStorage.setItem('userId', res.data.user.id); //save id in localstorage
+      localStorage.setItem('jwt', res.data.token)
       setResponse(res.data);
-      console.log("Login was Success:", res.data);
-    } catch (err) {
-      // 4. จัดการ Error Response
-      const errorMsg = err.response?.data?.message || err.message;
-      setResponse(errorMsg);
 
-      console.error("Login Error:", errorMsg);
+      onAuthAction("login"); // ทำให้ Navbar เปลี่ยนเป็น Logout
+      navigate("/mybid");
+    } catch (err) {
+        let errorMsg = "An unexpected error occurred. Please try again later.";
+        
+        if (err.response) {
+            // 💡 4xx หรือ 5xx Error ที่มี Response จาก Server
+            errorMsg = err.response.data.message || 'Server returned an error.';
+        } else if (err.request) {
+            // 💡 Network Error: Request ถูกส่งไปแต่ไม่ได้รับ Response (เช่น Server ล่ม)
+            errorMsg = "Cannot connect to the server. Please check your connection.";
+        } 
+        
+        setResponse(errorMsg);
+        console.error("Login Error:", errorMsg, err);
     }
 
-    onAuthAction("login"); // ทำให้ Navbar เปลี่ยนเป็น Logout
-    navigate("/mybid");
+
   };
 
   const showpass = () => {

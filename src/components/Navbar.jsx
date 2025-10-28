@@ -77,6 +77,13 @@ function Navbar({ isLoggedIn, onAuthAction }) {
 
           {/* Item 3: Logout Button (มีเส้นแบ่ง) */}
           <Link className="Link"
+            to="/update-password"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <Icon icon="" className="Link-icon" />
+            Update Password
+          </Link>
+          <Link className="Link"
             to="/homepage"
             onClick={handleLogout}
           >
