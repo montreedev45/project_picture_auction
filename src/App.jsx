@@ -14,11 +14,13 @@ import SaveItemPage from "./pages/SaveItemPage";
 import MywinningPage from "./pages/mywinningPage";
 import SearchPage from "./pages/SearchPage";
 import DashBoard from "./pages/UserDashboard";
-import ProfileSettingPage from './pages/ProfileSettingPage';
+import ProfileSettingPage from "./pages/ProfileSettingPage";
 import "./index.css";
 import "./app.css";
 import AuctionDetailPage from "./pages/AuctionDetailPage";
 import UpdatePasswordPage from "./pages/UpdatePasswordPage";
+import ForgetPasswordPage from "./pages/forGetPass";
+import ResetPasswordPage from "./pages/reSetPass";
 
 function App() {
   // State ถูกตั้งค่าไว้ แต่เราจะยังไม่ใช้ Logic ในตอนนี้
@@ -27,7 +29,7 @@ function App() {
   // ฟังก์ชัน Mock (จำลอง) การจัดการสิทธิ์
   const handleAuthAction = (action) => {
     //console.log(`Auth action: ${action} triggered (Mock)`);
-    setIsLoggedIn(action === 'login'); // ตั้งค่าสถานะตาม action
+    setIsLoggedIn(action === "login"); // ตั้งค่าสถานะตาม action
   };
 
   return (
@@ -38,23 +40,63 @@ function App() {
           <Route path="/" element={<HomePage />} />
 
           {/* 2. หน้า Login: แสดงผล LoginPage Component */}
-          <Route path="/login" element={<LoginPage onAuthAction={handleAuthAction} />} />
-          <Route path="/SignUp" element={<SignUp onAuthAction={handleAuthAction} />} />
-          <Route path="/upcoming" element={<UpcomingPage onAuthAction={handleAuthAction} />} />
-          <Route path="/ended" element={<EndedPage onAuthAction={handleAuthAction} />} />
-          <Route path="/mybid" element={<MybidPage onAuthAction={handleAuthAction} />} />
-          <Route path="/saveitem" element={<SaveItemPage onAuthAction={handleAuthAction} />} />
-          <Route path="/mywinning" element={<MywinningPage onAuthAction={handleAuthAction} />} />
-          <Route path="/search" element={<SearchPage onAuthAction={handleAuthAction} />} />
+          <Route
+            path="/login"
+            element={<LoginPage onAuthAction={handleAuthAction} />}
+          />
+          <Route
+            path="/SignUp"
+            element={<SignUp onAuthAction={handleAuthAction} />}
+          />
+          <Route
+            path="/upcoming"
+            element={<UpcomingPage onAuthAction={handleAuthAction} />}
+          />
+          <Route
+            path="/ended"
+            element={<EndedPage onAuthAction={handleAuthAction} />}
+          />
+          <Route
+            path="/mybid"
+            element={<MybidPage onAuthAction={handleAuthAction} />}
+          />
+          <Route
+            path="/saveitem"
+            element={<SaveItemPage onAuthAction={handleAuthAction} />}
+          />
+          <Route
+            path="/mywinning"
+            element={<MywinningPage onAuthAction={handleAuthAction} />}
+          />
+          <Route
+            path="/search"
+            element={<SearchPage onAuthAction={handleAuthAction} />}
+          />
           <Route path="/DashBoard" element={<DashBoard />} />
-          <Route path="/profile-setting" element={<ProfileSettingPage onAuthAction={handleAuthAction} />} />
-          <Route path="/auction-detail/:id" element={<AuctionDetailPage onAuthAction={handleAuthAction} />} />
-          <Route path="/update-password" element={<UpdatePasswordPage onAuthAction={handleAuthAction} />} />
-          
+          <Route
+            path="/profile-setting"
+            element={<ProfileSettingPage onAuthAction={handleAuthAction} />}
+          />
+          <Route
+            path="/auction-detail/:id"
+            element={<AuctionDetailPage onAuthAction={handleAuthAction} />}
+          />
+          <Route
+            path="/update-password"
+            element={<UpdatePasswordPage onAuthAction={handleAuthAction} />}
+          />
+
           {/* 3. หน้า 404 Fallback */}
           <Route path="/Page404" element={<Page404 />}></Route>
           <Route path="/Page500" element={<Page500 />}></Route>
           <Route path="/HomePage" element={<HomePage />}></Route>
+
+          {/* Forgot Password */}
+          <Route path="/forGetPass" element={<ForgetPasswordPage />}></Route>
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPasswordPage />}
+          ></Route>
         </Routes>
       </Layout>
     </BrowserRouter>
