@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./UpdatePasswordPage.css";
+import "./forgetpass.css";
 
 function ForgetPasswordPage() {
   const [currentEmail, setcurrentEmail] = useState("");
@@ -69,16 +69,21 @@ function ForgetPasswordPage() {
       </div>
       <div className="forget-password-container">
         <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            className="currentEmail"
-            name="currentEmail"
-            id="currentEmail"
-            placeholder="currentEmail"
-            value={currentEmail}
-            onChange={(e) => setcurrentEmail(e.target.value)}
-          />
-          <button type="submit">save</button>
+          <label htmlFor="Input Email" className="input-forgot">
+            <input
+              type="email"
+              className="currentEmail"
+              name="currentEmail"
+              id="currentEmail"
+              required
+              value={currentEmail}
+              onChange={(e) => setcurrentEmail(e.target.value)}
+            />
+            <span>Current Email</span>
+          </label>
+          <button type="submit" className="btn-send">
+            Send
+          </button>
         </form>
       </div>
     </>

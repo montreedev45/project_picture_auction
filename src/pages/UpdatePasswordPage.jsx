@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./UpdatePasswordPage.css";
 
 function UpdatePasswordPage() {
-  const [currentPassword, setcurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [currentPassword, setcurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   // 🔑 (1) แยก Service ออกไปด้านนอก
   const updatePasswordAPI = async (currentPassword, newPassword) => {
@@ -20,15 +20,18 @@ function UpdatePasswordPage() {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/auction/profile/password", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        // 🔑 (3) แก้ไข: JSON.stringify ต้องรับ Object เดียว
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/auction/profile/password",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          // 🔑 (3) แก้ไข: JSON.stringify ต้องรับ Object เดียว
+          body: JSON.stringify(payload),
+        }
+      );
 
       if (!response.ok) {
         const errorDetails = await response.json();
@@ -46,8 +49,8 @@ function UpdatePasswordPage() {
     e.preventDefault();
 
     // 💡 (5) ดึงค่าจริงจาก State/Input มาใช้
-    const currentPasswordValue = currentPassword; 
-    const newPasswordValue = newPassword; 
+    const currentPasswordValue = currentPassword;
+    const newPasswordValue = newPassword;
 
     try {
       // 🔑 (6) เรียกฟังก์ชันและส่งค่าจริงเข้าไป
