@@ -22,6 +22,7 @@ label {
   border: solid 2px lightgray;
   border-radius: 10px;
   font-size: 20px;
+ 
 }
 
 .currentEmail:focus {

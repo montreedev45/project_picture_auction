@@ -3,19 +3,17 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #53B2FF;
+  background-color: #53b2ff;
   padding: 2rem;
   width: auto;
 }
-
-
 
 .navbar-left {
   width: 30%;
   display: flex;
   justify-content: start;
 }
-.navbar-left > .navbar-brand{
+.navbar-left > .navbar-brand {
   color: #ffffff;
   font-weight: bold;
   font-size: 3rem;
@@ -28,16 +26,14 @@ nav {
   padding-right: 10px;
 }
 
-
-
 .navbar-center {
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 400px;
-  width: '100%'
+  width: "100%";
 }
-.navbar-center > .search-input-wrapper  {
+.navbar-center > .search-input-wrapper {
   position: relative;
   width: 400px;
 }
@@ -56,15 +52,17 @@ nav {
   outline: none;
 }
 .navbar-center > .search-input-wrapper > .search-icon-overlay {
-  position: absolute; 
-  right: 10px;    
-  top: 50%;   
-  transform: translateY(-50%); 
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 40px;
   color: #666;
 }
 
-
+.layout-container {
+  background-image: linear-gradient(180deg, #53b2ff, #ffff);
+}
 
 .navbar-right {
   width: 30%;
@@ -72,7 +70,7 @@ nav {
   justify-content: end;
   text-decoration: none;
 }
-.navbar-right > .auth-group > .sign-in-text{
+.navbar-right > .auth-group > .sign-in-text {
   text-decoration: none;
   font-size: 2rem;
   color: #ffffff;
@@ -81,35 +79,35 @@ nav {
   font-weight: bold;
   letter-spacing: 2px;
 }
-.navbar-right > .auth-group > .sign-up-btn{
+.navbar-right > .auth-group > .sign-up-btn {
   text-decoration: none;
   font-size: 2rem;
-  color: #000000 !important; 
+  color: #000000 !important;
   padding: 10px 20px;
   border-radius: 20px;
   font-weight: bold;
   letter-spacing: 2px;
 }
 
-
-
 .footer-container {
-  background-color: #53B2FF;
+  background: none;
   display: flex;
+  margin-top: 80px;
   justify-content: center;
   text-align: left;
   gap: 3rem;
 }
 
-.footer-container-about, .footer-container-contact, .footer-container-social {
+.footer-container-about,
+.footer-container-contact,
+.footer-container-social {
   max-width: 300px;
   min-width: 300px;
   font-size: 20px;
-  color: #ffffff;
+  color: #4f525c;
   line-height: 1.8rem;
   letter-spacing: 0.1rem;
 }
-
 
 .layout-main {
   display: flex;
@@ -118,20 +116,16 @@ nav {
   align-items: center;
 }
 
-
-
-
 .icon-profile {
   width: 60px;
   height: 60px;
-  background-color: #FFC2F7;
+  background-color: #ffc2f7;
   border-radius: 50%;
   border: 2px solid #ffffff;
   font-size: 2rem;
   color: #ffffff;
   cursor: pointer;
 }
-
 
 .dropdown {
   border-radius: 5px;
