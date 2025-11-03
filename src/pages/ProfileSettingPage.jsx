@@ -4,36 +4,30 @@ import { Icon } from "@iconify/react"; // ✅ Tech Stack: การใช้ Ico
 import "./ProfileSettingPage.css";
 import axios from "axios";
 
-const MOCK_USER_ID = "1";
-
 function ProfileSettingPage() {
-
-  const [userProfile, setUserProfile] = useState({ 
-    id: "",
-    username: "",
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    adddress: ""
+  const [userProfile, setUserProfile] = useState({
+    acc_username: "",
+    acc_firstname: "",
+    acc_lastname: "",
+    acc_email: "",
+    acc_phone: "",
+    acc_address: "",
   });
 
-  const [formData, setFormData] = useState({ // State สำหรับ Form ที่จะถูกแก้ไข
-    username: "",
-    currentPassword: "", // สำหรับยืนยันการเปลี่ยนข้อมูล
-    newPassword: "",
-    confirmPassword: "",
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    adddress: ""
+  const [formData, setFormData] = useState({
+    // State สำหรับ Form ที่จะถูกแก้ไข
+    acc_username: "",
+    acc_firstname: "",
+    acc_lastname: "",
+    acc_email: "",
+    acc_phone: "",
+    acc_address: "",
   });
+
+  const token = localStorage.getItem("jwt");
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [apiMessage, setApiMessage] = useState(null); // สำหรับข้อความ Success/Error
 
   const handleChange = (e) => {
@@ -41,16 +35,24 @@ function ProfileSettingPage() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const showpass = () => setShowPassword((prev) => !prev);
-  const inputType = showPassword ? "text" : "password";
-
-  const showconfirmpass = () => setShowConfirmPassword((prev) => !prev);
-  const inputConfirmType = showConfirmPassword ? "text" : "password";
+  const getChangedFields = (originalData, formData) => {
+    const changes = {};
+    for (const key in formData) {
+        // 1. ตรวจสอบว่า Field นั้นอยู่ใน originalData และไม่ใช่ Field รหัสผ่าน
+        if (originalData.hasOwnProperty(key)) {
+            
+            // 2. เปรียบเทียบค่า
+            if (originalData[key] !== formData[key]) {
+                changes[key] = formData[key];
+            }
+        }
+    }
+    return changes; // Object นี้จะมีเฉพาะ Field ที่เปลี่ยน
+};
 
   useEffect(() => {
     //const userId = MOCK_USER_ID; // 💡 ใช้ ID จริงที่ได้จากการ Login
-    const userId = localStorage.getItem('userId');
-    console.log(`user id : ${userId}`)
+    const userId = localStorage.getItem("acc_id");
     const fecth_user_profile = async () => {
       setError(null);
       setLoading(true);
@@ -58,25 +60,18 @@ function ProfileSettingPage() {
       try {
         const API_URL = `http://localhost:5000/api/auction/users/${userId}`;
         const res = await axios.get(API_URL);
-        
-        const user = res.data.user || {}; 
 
-        setUserProfile(user); 
-        setFormData({ 
-            username: user.username || "", 
-            firstname: user.firstname || "", 
-            lastname: user.lastname || "", 
-            phone: user.phone || "", 
-            email: user.email || "", 
-            adddress: user.address || "", 
-            // ไม่ต้องใส่ password ใน form state, ใส่แค่ช่องที่จะเปลี่ยน
-            currentPassword: "", 
-            newPassword: "",
-            confirmPassword: "",
+        const user = res.data.user || {};
+
+        setUserProfile(user);
+        setFormData({
+          acc_username: user.acc_username || "",
+          acc_firstname: user.acc_firstname || "",
+          acc_lastname: user.acc_lastname || "",
+          acc_phone: user.acc_phone || "",
+          acc_email: user.acc_email || "",
+          acc_address: user.acc_address || "",
         });
-        
-        console.log("User Profile Fetched:", user);
-        
       } catch (err) {
         const errorMsg =
           err.response?.data?.message || "Failed to fetch user profile.";
@@ -92,57 +87,61 @@ function ProfileSettingPage() {
     fecth_user_profile();
   }, []);
 
-
-
-
   // 3. Update Profile Logic (Business Logic/CRUD)
   // ----------------------------------------------------------------
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
+    e.preventDefault();
+    setLoading(true);
+    setApiMessage(null);
+    setError(null);
+
+    const changesToSubmit = getChangedFields(userProfile, formData);
+
+    if (Object.keys(changesToSubmit).length === 0) {
+        setApiMessage("ไม่มีการเปลี่ยนแปลงข้อมูลที่ต้องบันทึก");
+        return;
+    }
+
+    try {
+      console.log(token);
+      const API_URL = `http://localhost:5000/api/auction/users/profile`;
+      // 💡 Tech Stack: ใช้ Git/Postman ในการตรวจสอบ Body ของ Request
+      // ส่งเฉพาะข้อมูลที่ต้องการอัปเดต
+      const updateData = {
+        acc_username: formData.acc_username,
+        acc_firstname: formData.acc_firstname,
+        acc_lastname: formData.acc_lastname,
+        acc_phone: formData.acc_phone,
+        acc_email: formData.acc_email,
+        acc_address: formData.acc_address,
+      };
+
+      // 1. Data (Payload) เป็น Argument ตัวที่สอง
+      // 2. Configuration (Headers) เป็น Argument ตัวที่สาม
+      const res = await axios.put(API_URL, changesToSubmit, {
+        headers: {
+          // 💡 Content-Type เป็นค่า Default อยู่แล้ว แต่ระบุไว้เพื่อความชัดเจน
+          "Content-Type": "application/json",
+          // 🔑 Authorization Header ที่ถูกต้อง
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setApiMessage(res.data.message || "Profile updated successfully!");
+      setUserProfile((prev) => ({
+        ...prev,
+        acc_username: formData.acc_username,
+      }));
+    } catch (err) {
+      const errorMsg =
+        err.response?.data?.message || "Failed to update profile.";
+
+      setError(errorMsg);
       setApiMessage(null);
-      setError(null);
-      
-      const userId = localStorage.getItem('userId');
-
-      try {
-          const API_URL = `http://localhost:5000/api/auction/users/${userId}`;
-          // 💡 Tech Stack: ใช้ Git/Postman ในการตรวจสอบ Body ของ Request
-          // ส่งเฉพาะข้อมูลที่ต้องการอัปเดต
-          const updateData = {
-            username: formData.username,
-            firstname: user.firstname , 
-            lastname: user.lastname , 
-            phone: user.phone , 
-            email: user.email , 
-            adddress: user.address ,
-              // Business Logic: ส่งรหัสผ่านใหม่ไปเมื่อมีการกรอกเท่านั้น
-              ...(formData.newPassword && { 
-                  newPassword: formData.newPassword,
-                  currentPassword: formData.currentPassword 
-              })
-          };
-          
-          const res = await axios.put(API_URL, updateData); // หรือ PATCH
-          
-          setApiMessage(res.data.message || "Profile updated successfully!");
-          setUserProfile(prev => ({...prev, username: formData.username}));
-          
-      } catch (err) {
-           const errorMsg =
-            err.response?.data?.message || "Failed to update profile.";
-            
-           setError(errorMsg);
-           setApiMessage(null);
-           console.error("Update Error:", errorMsg);
-           
-      } finally {
-          setLoading(false);
-      }
+      console.error("Update Error:", errorMsg);
+    } finally {
+      setLoading(false);
+    }
   };
-
-
-
 
   return (
     <>
@@ -150,7 +149,10 @@ function ProfileSettingPage() {
         <h1>Profile Setting</h1>
       </div>
       <div className="profile-setting-container">
-        <form className="profile-setting-container-form" onSubmit={handleSubmit}>
+        <form
+          className="profile-setting-container-form"
+          onSubmit={handleSubmit}
+        >
           <div className="div-img">
             <div className="div-mdi-user">
               <Icon icon="mdi:user" className="mdi-user" />
@@ -174,9 +176,9 @@ function ProfileSettingPage() {
               className="input-username"
               type="text"
               placeholder="Username"
-              id="username"
-              name="username"
-              value={formData.username}
+              id="acc_username"
+              name="acc_username"
+              value={formData.acc_username}
               onChange={handleChange}
               required
             />
@@ -188,9 +190,9 @@ function ProfileSettingPage() {
               className="input-firstname"
               type="text"
               placeholder="First name"
-              id="firstname"
-              name="firstname"
-              value={formData.firstname}
+              id="acc_firstname"
+              name="acc_firstname"
+              value={formData.acc_firstname}
               onChange={handleChange}
               required
             />
@@ -202,9 +204,9 @@ function ProfileSettingPage() {
               className="input-lastname"
               type="text"
               placeholder="Last name"
-              id="lastname"
-              name="lastname"
-              value={formData.lastname}
+              id="acc_lastname"
+              name="acc_lastname"
+              value={formData.acc_lastname}
               onChange={handleChange}
               required
             />
@@ -216,9 +218,9 @@ function ProfileSettingPage() {
               className="input-email"
               type="email"
               placeholder="Email"
-              id="email"
-              name="email"
-              value={formData.email}
+              id="acc_email"
+              name="acc_email"
+              value={formData.acc_email}
               onChange={handleChange}
               required
             />
@@ -230,9 +232,9 @@ function ProfileSettingPage() {
               className="input-phone"
               type="text"
               placeholder="Phone"
-              id="phone"
-              name="phone"
-              value={formData.phone}
+              id="acc_phone"
+              name="acc_phone"
+              value={formData.acc_phone}
               onChange={handleChange}
               required
             />
@@ -244,32 +246,13 @@ function ProfileSettingPage() {
               className="input-address"
               type="text"
               placeholder="Address"
-              id="address"
-              name="address"
-              value={formData.adddress}
+              id="acc_address"
+              name="acc_address"
+              value={formData.acc_address}
               onChange={handleChange}
               required
             />
           </div>
-          {/* <div className="profile-div-password">
-            <Icon className="icon-password" icon="mdi:lock-outline" />
-            <input
-              className="input-password"
-              type={inputConfirmType}
-              placeholder="Password"
-              id="password-2"
-              name="password-2"
-              required
-            />
-            <span>
-              <Icon
-                className="eyeregis"
-                onClick={showconfirmpass}
-                icon="material-symbols-light:eye-tracking-outline"
-              ></Icon>
-            </span>
-          </div> */}
-
           <button type="submit" className="button-submit">
             save
           </button>

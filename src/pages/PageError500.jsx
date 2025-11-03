@@ -1,7 +1,3 @@
-// src/pages/LoginPage.jsx
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Icon } from '@iconify/react';
 import './Page500.css';
 function Page500({ onAuthAction }) {
 

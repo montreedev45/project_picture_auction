@@ -6,10 +6,6 @@ import view2 from '../assets/view2-ai-gen.png'
 import { initialProducts } from '../components/MockData';
 import { Icon } from '@iconify/react';
 
-
-// Tech Stack: Mock Data (เพิ่ม property 'isLiked' เริ่มต้น)
-
-
 function SearchPage() {
     // ✅ Tech Stack: State Management สำหรับรายการ (Array State)
     const [products, setProducts] = useState(initialProducts);

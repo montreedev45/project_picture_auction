@@ -1,10 +1,8 @@
-// src/pages/LoginPage.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import { Icon } from "@iconify/react";
 import axios from "axios";
-import { initialProducts } from "../components/MockData";
 
 function LoginPage({ onAuthAction }) {
   const [formData, setFormData] = useState({
@@ -26,7 +24,7 @@ function LoginPage({ onAuthAction }) {
       const API_URL = `http://localhost:5000/api/auction/login`;
 
       const res = await axios.post(API_URL, formData);
-      localStorage.setItem('userId', res.data.user.id); //save id in localstorage
+      localStorage.setItem('acc_id', res.data.user.acc_id); //save id in localstorage
       localStorage.setItem('jwt', res.data.token)
       setResponse(res.data);
 

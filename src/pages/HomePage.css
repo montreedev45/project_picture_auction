@@ -92,7 +92,6 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 margin-top: 15px;
-padding-top: 10px;
 border-top: 1px dashed #eee;
 }
 
@@ -111,4 +110,18 @@ transition: background-color 0.3s;
 
 .button:hover {
 background-color: #0056b3;
+}
+
+.card-status-processing {
+    position: relative;
+    background-color: #ffcc00;
+    padding: 8px 18px;
+    border-radius: 15px;
+}
+
+
+.icon-heart{
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
 }

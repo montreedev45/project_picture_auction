@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'; // ✅ Tech Stack: นำเข้า useState
+import { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import { useParams } from 'react-router-dom';
 import './AuctionDetailPage.css'
-//import { getProductById } from '../components/MockData';
 import view1 from '../assets/view1-ai-gen.png'
 import view2 from '../assets/view2-ai-gen.png'
 

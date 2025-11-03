@@ -1,5 +1,3 @@
-// src/components/Navbar.jsx
-import React from "react";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link, useLocation } from "react-router-dom";
@@ -17,9 +15,7 @@ function Navbar({ isLoggedIn, onAuthAction }) {
   };
 
   const handleLogout = () => {
-    // 🚀 ACTION UP: เรียกฟังก์ชันของ Parent Component เพื่อเปลี่ยน State isLoggedIn เป็น false
     onAuthAction("logout");
-    // UX/UI: ปิดเมนูทันทีหลังจากคลิก
     setIsMenuOpen(false);
   };
 
@@ -29,9 +25,7 @@ function Navbar({ isLoggedIn, onAuthAction }) {
         <Icon icon="mdi:user" className="mdi:user" />
       </button>
 
-      {/* 4. CONDITIONAL RENDERING: แสดง Dropdown ถ้า isMenuOpen เป็น true */}
       {isMenuOpen && (
-        // Dropdown Container: ตำแหน่งลอยตัว, จัดชิดขวา, มีเงา
         <div className="dropdown">
           {/* Item 1: Profile */}
           <Link className="Link"

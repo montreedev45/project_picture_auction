@@ -41,7 +41,7 @@ transition: box-shadow 0.3s, transform 0.3s;
     position: absolute;
     padding: 15px 15px;
 }
-.ended-card-status {
+.card-status-sold {
     position: relative;
     background-color: #00D9FF;
     padding: 8px 18px;

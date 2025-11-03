@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 
 function Layout({ children, isLoggedIn, onAuthAction  }) {
-  //console.log(isLoggedIn, onAuthAction)
   const location = useLocation();
   const NavbarError2 = location.pathname.startsWith("/Page404")
   const NavbarError3 = location.pathname.startsWith("/Page500")
@@ -18,20 +17,14 @@ function Layout({ children, isLoggedIn, onAuthAction  }) {
     <>
     
     {NavbarError2 || NavbarError3 ? <NavbarError /> : <Navbar isLoggedIn={isLoggedIn} onAuthAction={onAuthAction}/>}
-    {/* Check nav */}
-    <div className="layout-container">
-      
-      {/* Navbar จะแสดงปุ่ม Login/Logout ตามสถานะ */}
-      
+    <div className="layout-container">      
 
-      {/* ส่วนหลักที่เปลี่ยนไปตาม URL (นี่คือตำแหน่งของ LoginPage เมื่อ URL เป็น /login) */}
       <main className="layout-main">
         {children} 
       </main>
-  
 
       {!shouldHideFooter && (
-        <Footer /> // หรือ <div>... Footer Content ...</div>
+        <Footer />
       )}
     </div>
     </>
