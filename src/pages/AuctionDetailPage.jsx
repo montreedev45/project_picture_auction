@@ -1,141 +1,203 @@
-import { useState, useEffect } from 'react';
-import { Icon } from '@iconify/react';
-import { useParams } from 'react-router-dom';
-import './AuctionDetailPage.css'
-import view1 from '../assets/view1-ai-gen.png'
-import view2 from '../assets/view2-ai-gen.png'
+import { useState, useEffect } from "react";
+import { Icon } from "@iconify/react";
+import { useParams } from "react-router-dom";
+import "./AuctionDetailPage.css";
+import view1 from "../assets/view1-ai-gen.png";
+import view2 from "../assets/view2-ai-gen.png";
+import axios from "axios";
+import useCountdownTimer from "../components/useCountdownTimer";
 
-function AuctionDetailPage() {
+// 💡 Tech Stack: การใช้ Hook, Axios และ Routing
 
-    const { id } = useParams(); 
-    
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    
-
-    // BUSINESS LOGIC: ดึงข้อมูลจาก Mock File
-    useEffect(() => {
-        if (id) {
-            setLoading(true);
-            
-            // 💡 TECH STACK: กำหนด URL API ของ Express Backend
-            const API_URL = `http://localhost:5000/api/auction/product/${id}`;
-
-            // ใช้ fetch เพื่อเรียกข้อมูล
-            fetch(API_URL)
-                .then(response => {
-                    // ตรวจสอบ HTTP Status (เช่น 404, 500)
-                    if (!response.ok) {
-                        // ถ้าสถานะไม่ OK (เช่น 404 Not Found), ให้ throw error
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json(); // แปลง Response เป็น JSON
-                })
-                .then(data => {
-                    // ✅ Success: ได้รับข้อมูลสินค้า
-                    setProduct(data); 
-                    setLoading(false);
-                })
-                .catch(error => {
-                    // 🛑 Error Handling: จัดการ Error (เช่น Network Error, 404)
-                    console.error("Error fetching product:", error);
-                    setProduct(null); // ตั้งค่า product เป็น null เพื่อแสดงหน้า Error
-                    setLoading(false);
-                });
-            }
-    }, [id]);
-     
-
-    // ✅ 1. ตรวจสอบ Loading State ก่อน
-    if (loading) {
-        return <div className="p-8 text-center text-blue-600">Loading product details...</div>;
-    }
-    
-    // ✅ 2. ตรวจสอบ Product State ก่อน (หลังจาก Loading เสร็จ)
-    if (!product) {
-        return (
-             <div className="p-8 text-center text-red-600">Product not found.</div>
-        );
-    }
-    
-    const imageSource = product.imageUrl === 'view1' ? view1 : view2;
-
-
-    return (
-        <>
-            <div className="auction-container">
-                <div className="auction-left">
-                    <img src={imageSource} alt="" />
-                    <div className="auction-left-text">
-                        <p><b>title : </b>{product.title}</p>
-                        <p><b>description : </b>{product.des}</p>
-                    </div>
-                </div>
-                <div className="auction-right">
-                    <div className="auction-right-time">
-                        <h1>Auction Form</h1>
-                        <h3>Time : 00 : 02 : 00</h3>
-                        <h3>Current : 100$</h3>
-                        <button className='auction-button'>Bid Now</button>
-                        <p>Your Max Bid : 1000$</p>
-                        <p>Minimum Increment : 100$ </p>
-                    </div>
-                    <div className="auction-right-log">
-                        <h5>Bid History Log : </h5>
-                        <div className='auction-right-log-div'>
-                            <div className="auction-right-log-list">
-                                <div className="auction-right-log-list-left">
-                                    <Icon icon="mdi:user" className="icon" />
-                                    <p>usertest bid : 100$</p>
-                                </div>
-                                <div className="auction-right-log-list-right">
-                                    <p>5 seconds ago</p>
-                                </div>
-                            </div>
-                            <div className="auction-right-log-list">
-                                <div className="auction-right-log-list-left">
-                                    <Icon icon="mdi:user" className="icon" />
-                                    <p>usertest bid : 100$</p>
-                                </div>
-                                <div className="auction-right-log-list-right">
-                                    <p>5 seconds ago</p>
-                                </div>
-                            </div>
-                            <div className="auction-right-log-list">
-                                <div className="auction-right-log-list-left">
-                                    <Icon icon="mdi:user" className="icon" />
-                                    <p>usertest bid : 100$</p>
-                                </div>
-                                <div className="auction-right-log-list-right">
-                                    <p>5 seconds ago</p>
-                                </div>
-                            </div>
-                            <div className="auction-right-log-list">
-                                <div className="auction-right-log-list-left">
-                                    <Icon icon="mdi:user" className="icon" />
-                                    <p>usertest bid : 100$</p>
-                                </div>
-                                <div className="auction-right-log-list-right">
-                                    <p>5 seconds ago</p>
-                                </div>
-                            </div>
-                            <div className="auction-right-log-list">
-                                <div className="auction-right-log-list-left">
-                                    <Icon icon="mdi:user" className="icon" />
-                                    <p>usertest bid : 100$</p>
-                                </div>
-                                <div className="auction-right-log-list-right">
-                                    <p>5 seconds ago</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
-
+function formatSecondsToTime(totalSeconds) {
+  if (totalSeconds <= 0 || totalSeconds === null || isNaN(totalSeconds))
+    return "00 : 00 : 00";
+  const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+  const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
+    2,
+    "0"
+  );
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
+  return `${hours} : ${minutes} : ${seconds}`;
 }
 
-export default AuctionDetailPage
+function AuctionDetailPage() {
+  const { id } = useParams(); // 🔑 1. ดึง ID จาก URL
+  const token = localStorage.getItem("jwt");
+
+  // 🔑 2. State สำหรับสินค้าตัวเดียว (ใช้ Object แทน Array)
+  const [product, setProduct] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [bidPrice, setBidPrice] = useState(0); // ✅ ถูก: Number
+  const [isCounting, setIsCounting] = useState(() => {
+    // 💡 Tech Stack: ตรวจสอบ Local Storage เมื่อโหลดครั้งแรก
+    // ถ้ามี Key `timer_started_${id}` และมีค่าเป็น 'true' ให้เริ่มนับเลย
+    return localStorage.getItem(`timer_started_${id}`) === "true";
+  });
+
+  useEffect(() => {
+    // 💡 คำแนะนำ: ตั้งชื่อฟังก์ชันให้สอดคล้องกับ Action (fetchProductDetail)
+    const fetchProductDetail = async () => {
+      setError(null);
+      setLoading(true);
+
+      // ⚠️ การตรวจสอบ: ถ้าไม่มี ID หรือ ID เป็นค่าว่าง ไม่ต้อง Fetch
+      if (!id) {
+        setError("Product ID is missing.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const API_URL = `http://localhost:5000/api/auction/product/${id}`;
+        const res = await axios.get(API_URL);
+        const fetchedProduct = res.data.product;
+        const remainingTime = fetchedProduct?.pro_time ?? 0;
+        console.log(fetchedProduct);
+
+        setProduct(fetchedProduct);
+      } catch (err) {
+        const errorMsg =
+          err.response?.data?.message || `Failed to fetch product ${id}.`;
+
+        setError(errorMsg);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProductDetail();
+    // 🔑 Dependency Array: ใส่ [id] เพื่อให้ Fetch ใหม่เมื่อ ID เปลี่ยน (เช่น Navigate จาก ID 1 ไป ID 2)
+  }, [id]);
+
+  const auctionProducts = async () => {
+    try {
+      const payload = { bidPrice: parseInt(bidPrice) };
+      const Auction_Url = `http://localhost:5000/api/auction/products/${id}/bids`;
+
+      const res = await axios.post(Auction_Url, payload, {
+        headers: {
+          // 💡 Content-Type เป็นค่า Default อยู่แล้ว แต่ระบุไว้เพื่อความชัดเจน
+          "Content-Type": "application/json",
+          // 🔑 Authorization Header ที่ถูกต้อง
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(res.data.product);
+
+      setProduct(res.data.product);
+      if (!isCounting) {
+        setIsCounting(true);
+        // 2. 🔑 บันทึกสถานะการเริ่มนับลงใน Local Storage
+        localStorage.setItem(`timer_started_${id}`, "true");
+      }
+
+      // 🚨 ไม่ว่า Bid จะครั้งแรกหรือครั้งที่สอง อัปเดตข้อมูลสินค้าเสมอ
+      setBidPrice(0); // ล้าง Input
+    } catch (err) {
+      const errorMsg =
+        err.response?.data?.message || `Failed to auctions product ${id}.`;
+
+      setError(errorMsg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // --- Rendering Logic ---
+
+  const productTime = product?.pro_time ?? 0;
+
+  // 🚨 Hook: ส่งค่าเวลาจริงเข้า Hook เสมอ
+  // (สมมติว่า Hook จะนับถอยหลังเวลาที่เหลืออยู่)
+  const countdownFromHook = useCountdownTimer(productTime);
+
+  // 💡 Logic การแสดงผล:
+  // ถ้ายังไม่นับ (isCounting=false): แสดงผลค่าจาก DB โดยตรง (Frozen Time)
+  // ถ้าเริ่มนับแล้ว (isCounting=true): แสดงผลค่าที่กำลังนับ (จาก Hook)
+  const countdownDisplay = isCounting
+    ? countdownFromHook
+    : formatSecondsToTime(productTime); // แสดงผล 2 นาที (00:02:00)
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setBidPrice(value);
+  };
+
+  if (loading) {
+    return <div className="loading-container">กำลังโหลด...</div>;
+  }
+
+  if (error) {
+    return <div className="error-container">Error: {error}</div>;
+  }
+
+  // 🔑 5. หาก Fetch สำเร็จ แต่ product เป็น null (เช่น 404 Not Found)
+  if (!product) {
+    return <div className="not-found">ไม่พบสินค้าที่ต้องการประมูล</div>;
+  }
+
+  // 🔑 6. Render Component Detail เพียงตัวเดียว
+  const imageSource = product.pro_imgurl === "view1" ? view1 : view2; // ใช้ URL จริงจาก API
+
+  return (
+    <div className="auction-container">
+      <div className="auction-left">
+        <img src={imageSource} alt={product.pro_name} />
+        <div className="auction-left-text">
+          <p>
+            <b>Title : </b>
+            {product.pro_name}
+          </p>
+          <p>
+            <b>Description : </b>
+            {product.pro_des}
+          </p>
+        </div>
+      </div>
+
+      <div className="auction-right">
+        {/* ... ส่วน Bid Form และ Log History (คงเดิม) ... */}
+        <div className="auction-right-time">
+          <h1>{product.pro_name}</h1>
+          <div className="group-top">
+            <p>Time Remaining : {countdownDisplay || "00 : 00 : 00"}</p>{" "}
+            {/* 💡 ดึงค่าจริง */}
+            <p>Current Bid : ${product.pro_price || "100"}</p>{" "}
+            {/* 💡 ดึงค่าจริง */}
+          </div>
+          <div className="group-mid">
+            <p>Place Your Bid</p>
+            <input
+              type="text"
+              name="bidPrice"
+              value={String(bidPrice)}
+              onChange={handleChange}
+              className="bidPrice"
+            />
+            <button
+              className="auction-button"
+              onClick={auctionProducts}
+              disabled={countdownDisplay === "00:00:00"}
+            >
+              Place Bid
+            </button>
+          </div>
+          <div className="group-bottom">
+            <p>Your Max Bid : $1000</p>
+            <p>Minimum Increment : $100 </p>
+          </div>
+        </div>
+
+        <div className="auction-right-log">
+          {/* 💡 ควรวนซ้ำ Bid History ของ product จริง ๆ */}
+          <h5>Bid History Log : </h5>
+          {/* ... Bid Log JSX ... */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AuctionDetailPage;

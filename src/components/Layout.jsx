@@ -1,32 +1,34 @@
-// src/components/Layout.jsx
 import React from 'react';
 import NavbarError from './NavbarError'; 
 import Navbar from './Navbar'
 import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 
-function Layout({ children, isLoggedIn, onAuthAction  }) {
+function Layout({ children }) { 
   const location = useLocation();
-  const NavbarError2 = location.pathname.startsWith("/Page404")
-  const NavbarError3 = location.pathname.startsWith("/Page500")
-  const currentPath = location.pathname; // ตัวอย่าง: "/" หรือ "/auctions"
+  const currentPath = location.pathname; 
+
+  // 💡 Logic การตรวจสอบว่าควรแสดง NavbarError หรือไม่
+  const isErrorPage = currentPath.startsWith("/Page404") || currentPath.startsWith("/Page500");
+
+  // 💡 Logic การซ่อน Footer
   const pathsToHideFooter = ['/login', '/SignUp','/Page404','/Page500', ]; 
   const shouldHideFooter = pathsToHideFooter.includes(currentPath);
 
   return (
     <>
-    
-    {NavbarError2 || NavbarError3 ? <NavbarError /> : <Navbar isLoggedIn={isLoggedIn} onAuthAction={onAuthAction}/>}
-    <div className="layout-container">      
+      {isErrorPage ? <NavbarError /> : <Navbar/>} 
+      
+      <div className="layout-container">
 
-      <main className="layout-main">
-        {children} 
-      </main>
+        <main className="layout-main">
+          {children} 
+        </main>
 
-      {!shouldHideFooter && (
-        <Footer />
-      )}
-    </div>
+        {!shouldHideFooter && (
+          <Footer />
+        )}
+      </div>
     </>
   );
 }

@@ -61,6 +61,8 @@ function MybidPage() {
         <div className="mybid-container-card">
           {filteredProducts.map((product) => {
             const imageSource = product.pro_imgurl === "view1" ? view1 : view2;
+            const isSaved = product.likes?.includes(currentUserId) ?? false;
+
             const statusClass = product.pro_status
               ? product.pro_status.toLowerCase()
               : "default";
@@ -87,7 +89,7 @@ function MybidPage() {
                     <LikeButton
                       productId={product.pro_id}
                       initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
-                      userHasLiked={userHasLiked}
+                      userHasLiked={isSaved}
                     />
                   </div>
                 </div>

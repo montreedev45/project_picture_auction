@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./components/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -22,82 +24,40 @@ import ForgetPasswordPage from "./pages/forGetPass";
 import ResetPasswordPage from "./pages/reSetPass";
 
 function App() {
-  // State ถูกตั้งค่าไว้ แต่เราจะยังไม่ใช้ Logic ในตอนนี้
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // ฟังก์ชัน Mock (จำลอง) การจัดการสิทธิ์
-  const handleAuthAction = (action) => {
-    //console.log(`Auth action: ${action} triggered (Mock)`);
-    setIsLoggedIn(action === "login"); // ตั้งค่าสถานะตาม action
-  };
 
   return (
     <BrowserRouter>
-      <Layout isLoggedIn={isLoggedIn} onAuthAction={handleAuthAction}>
-        <Routes>
-          {/* 1. หน้าหลัก (แสดงเนื้อหาเริ่มต้น) */}
-          <Route path="/" element={<HomePage />} />
+      <AuthProvider>
+        <Layout>
+          <Routes>
+            {/* --- 1. Public Routes (เข้าได้ทุกคน) --- */}
+            <Route path="/" element={<HomePage />} />
+            <Route path="/homepage" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/upcoming" element={<UpcomingPage />} />
+            <Route path="/ended" element={<EndedPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/auction-detail/:id" element={<AuctionDetailPage />} />
+            <Route path="/forGetPass" element={<ForgetPasswordPage />} />
+            <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+            <Route path="/Page404" element={<Page404 />} />
+            <Route path="/Page500" element={<Page500 />} />
+            <Route path="*" element={<Page404 />} /> 
 
-          {/* 2. หน้า Login: แสดงผล LoginPage Component */}
-          <Route
-            path="/login"
-            element={<LoginPage onAuthAction={handleAuthAction} />}
-          />
-          <Route
-            path="/SignUp"
-            element={<SignUp onAuthAction={handleAuthAction} />}
-          />
-          <Route
-            path="/upcoming"
-            element={<UpcomingPage onAuthAction={handleAuthAction} />}
-          />
-          <Route
-            path="/ended"
-            element={<EndedPage onAuthAction={handleAuthAction} />}
-          />
-          <Route
-            path="/mybid"
-            element={<MybidPage onAuthAction={handleAuthAction} />}
-          />
-          <Route
-            path="/saveitem"
-            element={<SaveItemPage onAuthAction={handleAuthAction} />}
-          />
-          <Route
-            path="/mywinning"
-            element={<MywinningPage onAuthAction={handleAuthAction} />}
-          />
-          <Route
-            path="/search"
-            element={<SearchPage onAuthAction={handleAuthAction} />}
-          />
-          <Route path="/DashBoard" element={<DashBoard />} />
-          <Route
-            path="/profile-setting"
-            element={<ProfileSettingPage onAuthAction={handleAuthAction} />}
-          />
-          <Route
-            path="/auction-detail/:id"
-            element={<AuctionDetailPage onAuthAction={handleAuthAction} />}
-          />
-          <Route
-            path="/update-password"
-            element={<UpdatePasswordPage onAuthAction={handleAuthAction} />}
-          />
-
-          {/* 3. หน้า 404 Fallback */}
-          <Route path="/Page404" element={<Page404 />}></Route>
-          <Route path="/Page500" element={<Page500 />}></Route>
-          <Route path="/HomePage" element={<HomePage />}></Route>
-
-          {/* Forgot Password */}
-          <Route path="/forGetPass" element={<ForgetPasswordPage />}></Route>
-          <Route
-            path="/reset-password/:token"
-            element={<ResetPasswordPage />}
-          ></Route>
-        </Routes>
-      </Layout>
+            {/* --- 2. 🛡️ Protected Routes (ต้อง Login ก่อน) --- */}
+            {/* ใช้ <Route element={<ProtectedRoute />} > เพื่อทำหน้าที่เป็น Gatekeeper */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/DashBoard" element={<DashBoard />} />
+              <Route path="/profile-setting" element={<ProfileSettingPage />} />
+              <Route path="/mybid" element={<MybidPage />} />
+              <Route path="/saveitem" element={<SaveItemPage />} />
+              <Route path="/mywinning" element={<MywinningPage />} />
+              <Route path="/update-password" element={<UpdatePasswordPage />} />
+            </Route>
+          </Routes>
+        </Layout>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
