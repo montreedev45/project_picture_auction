@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "./AuthContext"; 
 
-function Navbar({ isLoggedIn, onAuthAction }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); //state for dropdown
+function Navbar() { 
+  const { isLoggedIn, logout } = useAuth(); // ⬅️ ดึงสถานะและฟังก์ชันจาก Context
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
   const location = useLocation();
   const currentPath = location.pathname;
   const pathsToHideInputSearch = ["/search"];
-  const shouldHideInputSearch = pathsToHideInputSearch.includes(currentPath); // hidden icon search if path= /search
+  const shouldHideInputSearch = pathsToHideInputSearch.includes(currentPath);
 
   const handleAccountClick = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
   const handleLogout = () => {
-    onAuthAction("logout");
+    logout(); 
     setIsMenuOpen(false);
   };
 
@@ -27,7 +29,6 @@ function Navbar({ isLoggedIn, onAuthAction }) {
 
       {isMenuOpen && (
         <div className="dropdown">
-          {/* Item 1: Profile */}
           <Link className="Link"
             to="/profile-setting"
             onClick={() => setIsMenuOpen(false)}
@@ -52,7 +53,6 @@ function Navbar({ isLoggedIn, onAuthAction }) {
             My Bids
           </Link>
 
-          {/* Item 2: Settings */}
           <Link className="Link"
             to="/mywinning"
             onClick={() => setIsMenuOpen(false)}
@@ -69,7 +69,6 @@ function Navbar({ isLoggedIn, onAuthAction }) {
             Save Item
           </Link>
 
-          {/* Item 3: Logout Button (มีเส้นแบ่ง) */}
           <Link className="Link"
             to="/update-password"
             onClick={() => setIsMenuOpen(false)}

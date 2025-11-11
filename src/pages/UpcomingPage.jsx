@@ -15,7 +15,6 @@ function UpcomingPage() {
   // ----------------------------------------------------------------
 
   const currentUserId = localStorage.getItem("acc_id");
-  const userHasLiked = products.likes?.includes(currentUserId);
 
   useEffect(() => {
     const fecth_products = async () => {
@@ -60,6 +59,8 @@ function UpcomingPage() {
         <div className="upcoming-container-card">
           {filteredProducts.map((product) => {
             const imageSource = product.pro_imgurl === "view1" ? view1 : view2;
+            const isSaved = product.likes?.includes(currentUserId) ?? false;
+
             return (
               <div className="card" key={product.pro_id}>
                 <div className="card-absolute">
@@ -82,7 +83,7 @@ function UpcomingPage() {
                     <LikeButton
                       productId={product.pro_id}
                       initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
-                      userHasLiked={userHasLiked}
+                      userHasLiked={isSaved}
                     />
                   </div>
                 </div>
