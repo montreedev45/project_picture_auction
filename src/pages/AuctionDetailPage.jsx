@@ -21,19 +21,29 @@ function formatSecondsToTime(totalSeconds) {
   return `${hours} : ${minutes} : ${seconds}`;
 }
 
+
 function AuctionDetailPage() {
   const { id } = useParams(); // 🔑 1. ดึง ID จาก URL
   const token = localStorage.getItem("jwt");
+  const TIMER_START_KEY = `timer_start_timestamp_${id}`;
+
 
   // 🔑 2. State สำหรับสินค้าตัวเดียว (ใช้ Object แทน Array)
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [bidPrice, setBidPrice] = useState(0); // ✅ ถูก: Number
-  const [isCounting, setIsCounting] = useState(() => {
-    // 💡 Tech Stack: ตรวจสอบ Local Storage เมื่อโหลดครั้งแรก
-    // ถ้ามี Key `timer_started_${id}` และมีค่าเป็น 'true' ให้เริ่มนับเลย
-    return localStorage.getItem(`timer_started_${id}`) === "true";
+  // const [isCounting, setIsCounting] = useState(() => {
+  //   // 💡 Tech Stack: ตรวจสอบ Local Storage เมื่อโหลดครั้งแรก
+  //   // ถ้ามี Key `timer_started_${id}` และมีค่าเป็น 'true' ให้เริ่มนับเลย
+  //   return localStorage.getItem(`timer_started_${id}`) === "true";
+  // });
+
+  const [timerStartTimestamp, setTimerStartTimestamp] = useState(() => {
+    // 💡 ตรวจสอบ Local Storage เมื่อโหลดครั้งแรก
+    const savedTime = localStorage.getItem(TIMER_START_KEY);
+    // ถ้ามีค่าอยู่ใน localStorage ให้ใช้ค่านั้น (ถ้าไม่มีจะเป็น null)
+    return savedTime ? parseInt(savedTime) : null;
   });
 
   useEffect(() => {
@@ -53,8 +63,6 @@ function AuctionDetailPage() {
         const API_URL = `http://localhost:5000/api/auction/product/${id}`;
         const res = await axios.get(API_URL);
         const fetchedProduct = res.data.product;
-        const remainingTime = fetchedProduct?.pro_time ?? 0;
-        console.log(fetchedProduct);
 
         setProduct(fetchedProduct);
       } catch (err) {
@@ -89,9 +97,9 @@ function AuctionDetailPage() {
 
       setProduct(res.data.product);
       if (!isCounting) {
-        setIsCounting(true);
-        // 2. 🔑 บันทึกสถานะการเริ่มนับลงใน Local Storage
-        localStorage.setItem(`timer_started_${id}`, "true");
+        const startTime = Date.now();
+        setTimerStartTimestamp(startTime); // อัปเดต State
+        localStorage.setItem(TIMER_START_KEY, startTime.toString()); // บันทึกลง Local Storage
       }
 
       // 🚨 ไม่ว่า Bid จะครั้งแรกหรือครั้งที่สอง อัปเดตข้อมูลสินค้าเสมอ
@@ -107,19 +115,29 @@ function AuctionDetailPage() {
   };
 
   // --- Rendering Logic ---
-
+  const isCounting = timerStartTimestamp !== null;
   const productTime = product?.pro_time ?? 0;
+  let initialSeconds;
+  if (isCounting) {
+    // 🚨 Logic ข้อ 3: เมื่อ Refresh ต้องนับต่อจากเวลาที่เหลืออยู่จริง
+    // เวลาที่เหลือจริง = เวลาเริ่มต้น (pro_time) - (เวลานับถึงปัจจุบัน - เวลาเริ่มนับ)
+    const secondsElapsedSinceStart = Math.floor(
+      (Date.now() - timerStartTimestamp) / 1000
+    );
 
-  // 🚨 Hook: ส่งค่าเวลาจริงเข้า Hook เสมอ
-  // (สมมติว่า Hook จะนับถอยหลังเวลาที่เหลืออยู่)
-  const countdownFromHook = useCountdownTimer(productTime);
+    // 🚨 คำนวณเวลาที่เหลือจริง
+    initialSeconds = Math.max(0, productTime - secondsElapsedSinceStart);
+  } else {
+    // Logic ข้อ 1: ยังไม่นับ ให้ใช้เวลาจาก Server โดยตรง
+    initialSeconds = productTime;
+  }
 
-  // 💡 Logic การแสดงผล:
-  // ถ้ายังไม่นับ (isCounting=false): แสดงผลค่าจาก DB โดยตรง (Frozen Time)
-  // ถ้าเริ่มนับแล้ว (isCounting=true): แสดงผลค่าที่กำลังนับ (จาก Hook)
+  const countdownFromHook = useCountdownTimer(initialSeconds);
+
+  // 💡 Logic การแสดงผล: ถ้ากำลังนับ ให้แสดง Hook ถ้าไม่นับ ให้แสดงค่า Freeze
   const countdownDisplay = isCounting
     ? countdownFromHook
-    : formatSecondsToTime(productTime); // แสดงผล 2 นาที (00:02:00)
+    : formatSecondsToTime(productTime);
   const handleChange = (e) => {
     const { value } = e.target;
     setBidPrice(value);
