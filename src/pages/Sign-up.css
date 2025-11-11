@@ -5,12 +5,32 @@
   font-size: 60px;
   text-align: center;
   margin-left: 30px;
+  color: #000000;
+  background-color: #fff;
+
+  height: 100%;
+}
+.div-username-signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 0px 20px;
+  width: 89%;
+  position: relative;
 }
 .container-regis {
   padding: 20px;
-  max-width: 700px;
+  width: 730px;
+  height: 100%;
+  background-color: #ffff;
   margin: 0 auto;
+  border-radius: 30px;
+  margin-bottom: 50px;
+  backdrop-filter: blur(6px);
+  box-shadow: 5px 5px 5px #53b2ff;
 }
+
 .button-submit {
   margin-top: 25px;
 }
@@ -58,6 +78,7 @@
   justify-content: center;
   padding: 5px;
   width: 83.5%;
+  position: relative;
 }
 
 .div-firstname input {
@@ -75,8 +96,18 @@
 }
 
 .div-firstname .icon-firstname {
-  font-size: 25px;
-  margin-right: 15px;
+  font-size: 35px;
+  margin-right: px;
+  /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+
+  color: #9a9898;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.div-address .icon-address {
+  font-size: 30px;
+  margin-right: 5px;
   /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
   color: #9a9898;
   font-weight: bold;
@@ -92,6 +123,7 @@
   justify-content: center;
   padding: 5px;
   width: 83.5%;
+  position: relative;
 }
 
 .div-lastname input {
@@ -124,6 +156,7 @@
   justify-content: center;
   padding: 5px;
   width: 83.5%;
+  position: relative;
 }
 
 .div-email input {
@@ -156,6 +189,7 @@
   justify-content: center;
   padding: 5px;
   width: 83.5%;
+  position: relative;
 }
 
 .div-phone input {
@@ -188,9 +222,11 @@
   justify-content: center;
   padding: 5px;
   width: 83.5%;
+  position: relative;
 }
 
 .div-address input {
+  margin-top: 5px;
   width: 91%;
   border-radius: 10px;
   border: 3px solid #d4d4d4;
@@ -212,4 +248,140 @@
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
+}
+/* Span */
+
+.user-place {
+  color: gray;
+  position: absolute;
+  left: 90px;
+  font-size: 20px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.passSign-place {
+  color: gray;
+  position: absolute;
+  left: 122px;
+  font-size: 20px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.confpass-place {
+  color: gray;
+  position: absolute;
+  left: 122px;
+  font-size: 20px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.firstname-place {
+  color: gray;
+  position: absolute;
+  left: 70px;
+  font-size: 20px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.Lastname-place {
+  color: gray;
+  position: absolute;
+  left: 70px;
+  font-size: 20px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.email-place {
+  color: gray;
+  position: absolute;
+  left: 70px;
+  font-size: 20px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.phone-place {
+  color: gray;
+  position: absolute;
+  left: 70px;
+  font-size: 20px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.address-place {
+  color: gray;
+  position: absolute;
+  left: 70px;
+  font-size: 20px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.input-username:focus ~ .user-place,
+.input-username:valid ~ .user-place {
+  transform: translateY(-39px);
+  left: 80px;
+  transition: 0.3s;
+}
+.input-password:focus ~ .passSign-place,
+.input-password:valid ~ .passSign-place {
+  transform: translateY(-39px);
+  left: 110px;
+  transition: 0.3s;
+  font-size: 15px;
+  color: #2a2a2a;
+}
+.input-password:focus ~ .confpass-place,
+.input-password:valid ~ .confpass-place {
+  transform: translateY(-39px);
+  left: 80px;
+  transition: 0.3s;
+  left: 110px;
+  transition: 0.3s;
+  font-size: 15px;
+  color: #2a2a2a;
+}
+.input-firstname:focus ~ .firstname-place,
+.input-firstname:valid ~ .firstname-place {
+  transform: translateY(-37px);
+  transition: 0.3s;
+  left: 60px;
+  transition: 0.3s;
+  font-size: 15px;
+  color: #2a2a2a;
+}
+.input-lastname:focus ~ .Lastname-place,
+.input-lastname:valid ~ .Lastname-place {
+  transform: translateY(-37px);
+  transition: 0.3s;
+  left: 60px;
+  transition: 0.3s;
+  font-size: 15px;
+  color: #2a2a2a;
+}
+.input-email:focus ~ .email-place,
+.input-email:valid ~ .email-place {
+  transform: translateY(-37px);
+  transition: 0.3s;
+  left: 60px;
+  transition: 0.3s;
+  font-size: 15px;
+  color: #2a2a2a;
+}
+.input-phone:focus ~ .phone-place,
+.input-phone:valid ~ .phone-place {
+  transform: translateY(-37px);
+  transition: 0.3s;
+  left: 60px;
+  transition: 0.3s;
+  font-size: 15px;
+  color: #2a2a2a;
+}
+.input-address:focus ~ .address-place,
+.input-address:valid ~ .address-place {
+  transform: translateY(-37px);
+  transition: 0.3s;
+  left: 60px;
+  transition: 0.3s;
+  font-size: 15px;
+  color: #2a2a2a;
 }

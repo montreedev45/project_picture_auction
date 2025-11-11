@@ -65,26 +65,25 @@ function SignUp({ onAuthAction }) {
       <h2>Join Our Community</h2>
 
       <form onSubmit={handleSubmit}>
-        <div className="div-username">
+        <div className="div-username-signup">
           <Icon className="icon-username" icon="mdi:email-outline" />
           <input
             className="input-username"
             type="text"
-            placeholder="Email or Username"
             id="username"
             name="username"
             value={formData.username}
             onChange={handleChange}
             required
           />
+          <span className="user-place">Email or Username</span>
         </div>
 
         <div className="div-password">
-          <Icon className="icon-password" icon="gravity-ui:envelope" />
+          <Icon className="icon-password" icon="mdi:lock-outline" />
           <input
             className="input-password"
             type={inputType}
-            placeholder="Password"
             id="password"
             name="password"
             value={formData.password}
@@ -98,14 +97,14 @@ function SignUp({ onAuthAction }) {
               icon="material-symbols-light:eye-tracking-outline"
             ></Icon>
           </span>
+          <span className="passSign-place">Password</span>
         </div>
 
         <div className="div-password">
-          <Icon className="icon-password" icon="mdi:lock-outline" />
+          <Icon className="icon-firstname" icon="mdi:lock-outline" />
           <input
             className="input-password"
             type={inputConfirmType}
-            placeholder="Confirm Password"
             id="password-2"
             name="password-2"
             required
@@ -117,6 +116,7 @@ function SignUp({ onAuthAction }) {
               icon="material-symbols-light:eye-tracking-outline"
             ></Icon>
           </span>
+          <span className="confpass-place">Confirm Password</span>
         </div>
 
         <div className="div-firstname">
@@ -124,69 +124,69 @@ function SignUp({ onAuthAction }) {
           <input
             className="input-firstname"
             type="text"
-            placeholder="firstname"
             id="firstname"
             name="firstname"
             value={formData.firstname}
             onChange={handleChange}
             required
           />
+          <span className="firstname-place">First Name</span>
         </div>
 
         <div className="div-lastname">
-          <Icon className="icon-lastname" icon="gravity-ui:person-fill" />
+          <Icon className="icon-firstname" icon="gravity-ui:person-fill" />
           <input
             className="input-lastname"
             type="text"
-            placeholder="Last name"
             id="lastname"
             name="lastname"
             value={formData.lastname}
             onChange={handleChange}
             required
           />
+          <span className="Lastname-place">Last Name</span>
         </div>
 
         <div className="div-email">
-          <Icon className="icon-email" icon="gravity-ui:envelope" />
+          <Icon className="icon-firstname" icon="gravity-ui:envelope" />
           <input
             className="input-email"
-            type="email"
-            placeholder="Email"
+            type="text"
             id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
           />
+          <span className="email-place">Email</span>
         </div>
 
         <div className="div-phone">
-          <Icon className="icon-phone" icon="gravity-ui:handset" />
+          <Icon className="icon-firstname" icon="gravity-ui:handset" />
           <input
             className="input-phone"
             type="text"
-            placeholder="Phone"
             id="phone"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
             required
           />
+          <span className="phone-place">Phone</span>
         </div>
 
         <div className="div-address">
-          <Icon className="icon-address" icon="gravity-ui:house" />
+          <Icon className="icon-firstname" icon="gravity-ui:house" />
           <input
             className="input-address"
             type="text"
-            placeholder="Address"
             id="address"
             name="address"
             value={formData.address}
             onChange={handleChange}
             required
           />
+          <span className="address-place">Address</span>
         </div>
 
         <button type="submit" className="button-submit">

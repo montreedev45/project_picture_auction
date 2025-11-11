@@ -1,190 +1,201 @@
 .profile-setting-div-text {
-    text-align: left;
-    width: 55%;
-    padding-top: 3rem;
+  text-align: left;
+  width: 55%;
+  padding-top: 3rem;
 }
-.profile-setting-div-text > h1{
-    font-size: 3rem;
+.profile-setting-div-text > h1 {
+  font-size: 3rem;
+  color: #ffffff;
 }
 .profile-setting-container {
-    width: 50%;
-    border-radius: 20px;
-    border: 4px solid #cfcfcf;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 80px 20px;
-    background-color: #ffffff; 
-    margin-bottom: 300px;
+  width: 50%;
+  border-radius: 20px;
+  box-shadow: 10px 10px 50px #299fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 20px;
+  background-color: #ffffff;
+  margin-bottom: 300px;
 }
 
 .profile-setting-container-form {
-    width: 80%;
+  width: 80%;
 }
 
 .div-img {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
 }
-.mdi-user{
-    font-size: 130px;
-    color: #ffffff;
+.mdi-user {
+  font-size: 130px;
+  color: #ffffff;
 }
-.div-mdi-user{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #FFC2F7;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
+.div-mdi-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffc2f7;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
 }
-
 
 .profile-div-password {
-    position: relative;
-    width: 70%;
-
+  position: relative;
+  width: 70%;
 }
-.profile-div-password input{
-    width: 100%;
-    border-radius: 10px;
-    border: 3px solid #d4d4d4;
-    padding: 15px 20px;
-    color: #848484;
-    font-size: 20px;
-    caret-color: transparent;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-
+.profile-div-password input {
+  width: 100%;
+  border-radius: 10px;
+  border: 3px solid #d4d4d4;
+  padding: 15px 20px;
+  color: #848484;
+  font-size: 20px;
+  caret-color: transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 .profile-div-password .eyeregis {
-    font-size: 25px;
-    position: absolute;
-    right: 35px; /* เว้นระยะห่างจากขอบขวา 15px */
-    top: 50%; /* เลื่อนลงมา 50% ของความสูง */
-    transform: translateY(-50%); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+  font-size: 25px;
+  position: absolute;
+  right: 35px; /* เว้นระยะห่างจากขอบขวา 15px */
+  top: 50%; /* เลื่อนลงมา 50% ของความสูง */
+  transform: translateY(
+    -50%
+  ); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
 
-    color: #9a9898;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
+  color: #9a9898;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.profile-div-password .eyeregis:hover{
-    color: #2a2a2a;
-    transition: 0.2s;
+.profile-div-password .eyeregis:hover {
+  color: #2a2a2a;
+  transition: 0.2s;
 }
-
 
 .button-change {
-    font-size: 1rem;
-    color: #ffffff;
-    padding: 10px 25px;
-    background-color: #53B2FF;
-    letter-spacing: 0.8px;
-    font-weight: 400;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    margin: 2rem 0;
+  font-size: 1rem;
+  color: #ffffff;
+  padding: 10px 25px;
+  background-color: #53b2ff;
+  letter-spacing: 0.8px;
+  font-weight: 400;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin: 2rem 0;
 }
 
-
-
-
-
-.profile-div-username, .profile-div-firstname, .profile-div-lastname, .profile-div-email, .profile-div-phone, .profile-div-address {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    padding: 5px 20px;
-    width: 100%;
+.profile-div-username,
+.profile-div-firstname,
+.profile-div-lastname,
+.profile-div-email,
+.profile-div-phone,
+.profile-div-address {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 5px 20px;
+  width: 100%;
 }
-.icon-username, .icon-firstname, .icon-lastname, .icon-email, .icon-phone, .icon-address {
-    color: #d4d4d4;
-    font-size: 40px;
-    padding-right: 10px;
+.icon-username,
+.icon-firstname,
+.icon-lastname,
+.icon-email,
+.icon-phone,
+.icon-address {
+  color: #d4d4d4;
+  font-size: 40px;
+  padding-right: 10px;
 }
-.input-username, .input-firstname, .input-lastname, .input-email, .input-phone, .input-address {
-    width: 90%;
-    border-radius: 10px;
-    border: 3px solid #d4d4d4;
-    padding: 15px 20px;
-    color: #848484;
-    font-size: 20px;
-    caret-color: transparent;
+.input-username,
+.input-firstname,
+.input-lastname,
+.input-email,
+.input-phone,
+.input-address {
+  width: 90%;
+  border-radius: 10px;
+  border: 3px solid #d4d4d4;
+  padding: 15px 20px;
+  color: #848484;
+  font-size: 20px;
+  caret-color: transparent;
 }
-.input-username:focus , .input-firstname:focus, .input-lastname:focus, .input-email:focus, .input-phone:focus, .input-address:focus {
-    border-color: #d4d4d4;
-    outline: none;
-    caret-color: auto;
+.input-username:focus,
+.input-firstname:focus,
+.input-lastname:focus,
+.input-email:focus,
+.input-phone:focus,
+.input-address:focus {
+  border-color: #d4d4d4;
+  outline: none;
+  caret-color: auto;
 }
-
-
 
 form > .profile-div-password {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    padding: 0px 20px;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 0px 20px;
+  width: 100%;
 }
 form > .profile-div-password > .icon-password {
-    color: #d4d4d4;
-    font-size: 40px;
-    padding-right: 10px;
+  color: #d4d4d4;
+  font-size: 40px;
+  padding-right: 10px;
 }
 form > .profile-div-password > .input-password {
-    width: 90%;
-    border-radius: 10px;
-    border: 3px solid #d4d4d4;
-    padding: 15px 20px;
-    color: #848484;
-    font-size: 20px;
-    caret-color: transparent;
+  width: 90%;
+  border-radius: 10px;
+  border: 3px solid #d4d4d4;
+  padding: 15px 20px;
+  color: #848484;
+  font-size: 20px;
+  caret-color: transparent;
 }
 form > .profile-div-password > .input-password:focus {
-    border-color: #d4d4d4;
-    outline: none;
-    caret-color: auto;
+  border-color: #d4d4d4;
+  outline: none;
+  caret-color: auto;
 }
-
-
-
 
 /* CSS สำหรับการซ่อน Input File ดั้งเดิม */
 .custom-file-upload .hidden-input {
-    /* 1. ซ่อน Element แต่ยังคงรักษาฟังก์ชันการทำงานไว้ */
+  /* 1. ซ่อน Element แต่ยังคงรักษาฟังก์ชันการทำงานไว้ */
 
-    opacity: 0;
-    overflow: hidden;
-    position: absolute; /* สำคัญ: ต้องทำให้หลุด Flow */
-    z-index: -1; 
+  opacity: 0;
+  overflow: hidden;
+  position: absolute; /* สำคัญ: ต้องทำให้หลุด Flow */
+  z-index: -1;
 }
 
 /* CSS สำหรับ Custom Button (Label) */
 .custom-file-upload .custom-button {
-    /* 2. จัดสไตล์ให้เหมือนปุ่ม */
-    position: relative;
-    top: 20px;
-    display: block;
-    padding: 12px 20px;
-    background-color: #53B2FF;
-    color: white;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer; /* UX/UI: แสดงว่าเป็นปุ่มที่คลิกได้ */
-    transition: background-color 0.2s;
+  /* 2. จัดสไตล์ให้เหมือนปุ่ม */
+  position: relative;
+  top: 20px;
+  display: flex;
+  padding: 12px 20px;
+  background-color: #53b2ff;
+  color: white;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  cursor: pointer; /* UX/UI: แสดงว่าเป็นปุ่มที่คลิกได้ */
+  transition: background-color 0.2s;
 }
 
 .custom-file-upload .custom-button:hover {
-    background-color: #299fff;
+  background-color: #299fff;
 }
-

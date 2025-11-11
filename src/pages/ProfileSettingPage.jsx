@@ -38,17 +38,16 @@ function ProfileSettingPage() {
   const getChangedFields = (originalData, formData) => {
     const changes = {};
     for (const key in formData) {
-        // 1. ตรวจสอบว่า Field นั้นอยู่ใน originalData และไม่ใช่ Field รหัสผ่าน
-        if (originalData.hasOwnProperty(key)) {
-            
-            // 2. เปรียบเทียบค่า
-            if (originalData[key] !== formData[key]) {
-                changes[key] = formData[key];
-            }
+      // 1. ตรวจสอบว่า Field นั้นอยู่ใน originalData และไม่ใช่ Field รหัสผ่าน
+      if (originalData.hasOwnProperty(key)) {
+        // 2. เปรียบเทียบค่า
+        if (originalData[key] !== formData[key]) {
+          changes[key] = formData[key];
         }
+      }
     }
     return changes; // Object นี้จะมีเฉพาะ Field ที่เปลี่ยน
-};
+  };
 
   useEffect(() => {
     //const userId = MOCK_USER_ID; // 💡 ใช้ ID จริงที่ได้จากการ Login
@@ -98,8 +97,8 @@ function ProfileSettingPage() {
     const changesToSubmit = getChangedFields(userProfile, formData);
 
     if (Object.keys(changesToSubmit).length === 0) {
-        setApiMessage("ไม่มีการเปลี่ยนแปลงข้อมูลที่ต้องบันทึก");
-        return;
+      setApiMessage("ไม่มีการเปลี่ยนแปลงข้อมูลที่ต้องบันทึก");
+      return;
     }
 
     try {
@@ -171,7 +170,7 @@ function ProfileSettingPage() {
             </div>
           </div>
           <div className="profile-div-username">
-            <Icon className="icon-username" icon="mdi:email-outline" />
+            <Icon className="icon-username" icon="gravity-ui:person-fill" />
             <input
               className="input-username"
               type="text"
@@ -185,7 +184,7 @@ function ProfileSettingPage() {
           </div>
 
           <div className="profile-div-firstname">
-            <Icon className="icon-firstname" icon="mdi:email-outline" />
+            <Icon className="icon-firstname" icon="gravity-ui:person-fill" />
             <input
               className="input-firstname"
               type="text"
@@ -199,7 +198,7 @@ function ProfileSettingPage() {
           </div>
 
           <div className="profile-div-lastname">
-            <Icon className="icon-lastname" icon="mdi:email-outline" />
+            <Icon className="icon-lastname" icon="gravity-ui:person-fill" />
             <input
               className="input-lastname"
               type="text"
@@ -227,7 +226,7 @@ function ProfileSettingPage() {
           </div>
 
           <div className="profile-div-phone">
-            <Icon className="icon-phone" icon="mdi:email-outline" />
+            <Icon className="icon-phone" icon="gravity-ui:handset" />
             <input
               className="input-phone"
               type="text"
@@ -241,7 +240,7 @@ function ProfileSettingPage() {
           </div>
 
           <div className="profile-div-address">
-            <Icon className="icon-address" icon="mdi:email-outline" />
+            <Icon className="icon-address" icon="gravity-ui:house" />
             <input
               className="input-address"
               type="text"

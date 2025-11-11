@@ -3,9 +3,12 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #53b2ff;
+  background: none;
   padding: 2rem;
   width: auto;
+  backdrop-filter: blur(2px);
+  color: #fff;
+  position: sticky;
 }
 
 .navbar-left {
@@ -30,7 +33,7 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 400px;
+  max-width: 200px;
   width: "100%";
 }
 .navbar-center > .search-input-wrapper {
@@ -61,7 +64,8 @@ nav {
 }
 
 .layout-container {
-  background-image: linear-gradient(180deg, #53b2ff, #ffff);
+  width: 100%;
+  height: 100%;
 }
 
 .navbar-right {
@@ -92,7 +96,6 @@ nav {
 .footer-container {
   background: none;
   display: flex;
-  margin-top: 80px;
   justify-content: center;
   text-align: left;
   gap: 3rem;
@@ -104,7 +107,7 @@ nav {
   max-width: 300px;
   min-width: 300px;
   font-size: 20px;
-  color: #4f525c;
+  color: #ffffff;
   line-height: 1.8rem;
   letter-spacing: 0.1rem;
 }

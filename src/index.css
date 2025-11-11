@@ -19,10 +19,14 @@
 
 /* คุณยังสามารถคงค่าอื่นๆ ไว้ที่ body ได้ */
 body {
+  background-image: url(./assets/Auction.jpg);
+  background-repeat: repeat;
+  background-position: center;
+  background-size: cover;
   margin: 0;
   padding: 0;
   /* ไม่จำเป็นต้องมี box-sizing: border-box; ซ้ำที่นี่แล้ว แต่มีไว้ก็ไม่เสีย */
-  min-height: 100vh;
+  height: 100%;
 }
 
 * {
