@@ -5,10 +5,19 @@ nav {
   padding: 10px 20px;
   background: none;
   padding: 2rem;
-  width: auto;
   backdrop-filter: blur(2px);
   color: #fff;
+}
+
+.nav.fixed {
+  transition: 0.3s all;
+  color: #fff;
+  backdrop-filter: blur(25px);
   position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+  height: 100%;
 }
 
 .navbar-left {
@@ -65,7 +74,12 @@ nav {
 
 .layout-container {
   width: 100%;
+  background-image: url(./assets/Auction.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   height: 100%;
+  position: relative;
 }
 
 .navbar-right {
@@ -128,7 +142,7 @@ nav {
   max-width: 300px;
   min-width: 300px;
   font-size: 20px;
-  color: #ffffff;
+  color: #000;
   line-height: 1.8rem;
   letter-spacing: 0.1rem;
 }
