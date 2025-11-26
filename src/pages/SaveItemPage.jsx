@@ -58,7 +58,7 @@ function SaveItemPage() {
       <div className="saveitem-container">
         <div className="saveitem-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = product.pro_imgurl === "view1" ? view1 : view2;
+            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}` ;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
             const statusClass = product.pro_status
               ? product.pro_status.toLowerCase()

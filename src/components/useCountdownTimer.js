@@ -1,54 +1,33 @@
 // useCountdownTimer.js
 import { useState, useEffect } from 'react';
-
-// 🚨 ต้องรวมฟังก์ชัน formatSecondsToTime ไว้ใน Hook หรือ Import มาใช้
-// เนื่องจาก Hook นี้ต้องรับผิดชอบในการแปลงค่าสุดท้าย
-const formatSecondsToTime = (totalSeconds) => {
-    if (totalSeconds <= 0 || totalSeconds === null || isNaN(totalSeconds))
-        return "00 : 00 : 00";
-    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
-    const seconds = String(totalSeconds % 60).padStart(2, "0");
-    return `${hours} : ${minutes} : ${seconds}`;
-};
-
-
+// สมมติฐาน: useCountdownTimer รับเวลาเริ่มต้นและเริ่มนับทุก 1 วิ
 const useCountdownTimer = (initialSeconds) => {
-    // 1. State ภายในสำหรับเก็บวินาทีที่เหลือ
-    const [secondsRemaining, setSecondsRemaining] = useState(initialSeconds);
+    const [seconds, setSeconds] = useState(initialSeconds);
     
-    // 2. 🔑 useEffect: ตั้งค่าเริ่มต้นใหม่ทุกครั้งที่ initialSeconds เปลี่ยน (Refresh/Bid)
     useEffect(() => {
-        // เมื่อ initialSeconds เปลี่ยน (จากการคำนวณใน AuctionDetailPage) 
-        // ให้ set State ภายในใหม่ทันที
-        setSecondsRemaining(initialSeconds);
-    }, [initialSeconds]); 
+        // 🔑 1. ถ้า initialSeconds เป็น 0 หรือไม่ได้เริ่มนับ ให้หยุด
+        if (initialSeconds <= 0) {
+            setSeconds(initialSeconds); // ตั้งค่าให้เป็น 0
+            return;
+        }
 
-    // 3. 🚨 useEffect: Logic การนับถอยหลัง (Interval)
-    useEffect(() => {
-        // ถ้าเวลาหมดแล้ว หรือเวลานับเป็น 0 ให้หยุด
-        if (secondsRemaining <= 0) return;
+        // 2. ตั้งค่า State เริ่มต้นใหม่ทุกครั้งที่ initialSeconds เปลี่ยน
+        setSeconds(initialSeconds);
 
-        // 💡 Tech Stack: ตั้ง Interval ที่วิ่งทุก 1 วินาที
-        const intervalId = setInterval(() => {
-            // ใช้ Functional Update (prev => prev - 1) เพื่อให้ Interval วิ่งอย่างอิสระ
-            // โดยไม่ต้องพึ่งพา secondsRemaining ใน Dependency Array 
-            setSecondsRemaining(prev => {
-                if (prev <= 1) { // เมื่อนับถึง 1 วินาทีสุดท้าย ให้เคลียร์ Interval
-                    clearInterval(intervalId);
+        const interval = setInterval(() => {
+            setSeconds(prevSeconds => {
+                if (prevSeconds <= 1) {
+                    clearInterval(interval);
                     return 0;
                 }
-                return prev - 1;
+                return prevSeconds - 1;
             });
         }, 1000);
 
-        // 🔑 Cleanup: เคลียร์ Interval ทุกครั้งที่ Effect ถูกเรียกซ้ำหรือ Component ถูกถอดออก
-        return () => clearInterval(intervalId);
+        return () => clearInterval(interval);
+    }, [initialSeconds]); // 🔑 Dependency: เริ่มนับใหม่เมื่อค่าเริ่มต้นเปลี่ยนไป
 
-    }, [secondsRemaining]); // 🚨 ให้ Effect รันซ้ำทุกครั้งที่ secondsRemaining เปลี่ยน
-    
-    // 4. คืนค่าเป็น String ที่จัดรูปแบบแล้ว
-    return formatSecondsToTime(secondsRemaining);
-};
+    return seconds;
+}
 
 export default useCountdownTimer;

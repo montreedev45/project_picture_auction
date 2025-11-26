@@ -63,7 +63,7 @@ function EndedPage() {
       <div className="ended-container">
         <div className="ended-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = product.pro_imgurl === "view1" ? view1 : view2;
+            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}` ;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
             return (
               <div className="card" key={product.pro_id}>

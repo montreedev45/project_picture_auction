@@ -3,21 +3,20 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import { Icon } from "@iconify/react";
 import axios from "axios";
-// 🔑 FIX: นำเข้า useAuth เพื่อจัดการ Context
 import { useAuth } from "../components/AuthContext";
+import { useError } from "../components/ErrorContext";
 
-// 🔑 FIX: ไม่ต้องรับ Prop onAuthAction อีกต่อไป
 function LoginPage() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null); // 🔑 FIX: ใช้ State สำหรับ Error Message
 
   const navigate = useNavigate();
-  // 🔑 FIX: ดึงฟังก์ชัน login จาก Context
   const { login } = useAuth();
+  const { setError } = useError();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,44 +25,37 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMsg(null); // Clear previous error
 
     try {
-      // 💡 Tech Stack: ควรใช้ HTTPS ใน Production
       const API_URL = `http://localhost:5000/api/auction/login`;
-
       const res = await axios.post(API_URL, formData);
 
-      // 1. 🔑 FIX: เรียกใช้ฟังก์ชัน login จาก Context (ซึ่งควรจัดการ localStorage.setItem('jwt', ...) ไว้แล้ว)
-      //    (หรือถ้าคุณยังคงใช้ localStorage ในไฟล์นี้ ให้เรียก login() ด้วย Token ที่ได้รับมา)
+      const token = res.data.token;
+      const accId = res.data.user.acc_id;
+      const userProfileData = res.data.user;
 
-      // 💡 เราจะเรียกใช้ login() เพื่ออัปเดตสถานะ isLoggedin ใน Context
-      login(res.data.token);
+      // ต้องเรียกใช้ login() แบบ await
+      await login(token, accId, userProfileData);
 
-      // 2. เก็บ User ID สำหรับ Frontend Logic (Save Item Page)
-      localStorage.setItem("acc_id", res.data.user.acc_id);
-
-      // 3. นำผู้ใช้ไปยังหน้า My Bid
+      // นำผู้ใช้ไปยังหน้าใหม่ หลังจากที่ Context State ถูกอัปเดตแล้ว
       navigate("/mybid");
-    } catch (err) {
-      let message = "An unexpected error occurred. Please try again later.";
+    } catch (error) {
+      let errorMessage =
+        "login failed, Pless check username or password";
 
-      if (err.response) {
-        // Error Message จาก Server
-        message = err.response.data.message || "Server returned an error.";
-      } else if (err.request) {
-        // Network Error
-        message = "Cannot connect to the server. Please check your connection.";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
       }
-
-      // 🔑 FIX: ตั้งค่า Error Message ที่จะแสดงใน UI
-      setErrorMsg(message);
-      console.error("Login Error:", message, err);
+      setError(errorMessage)
     }
   };
 
   const showpass = () => {
-    console.log(showPassword);
+    //console.log(showPassword);
     // เปลี่ยนค่า State จาก true เป็น false หรือ false เป็น true
     setShowPassword((prev) => !prev);
   };
@@ -113,9 +105,10 @@ function LoginPage() {
         </div>
 
         <div className="div-forget-account">
-          <Link className="forget">Forget Password</Link>
-          <Link className="account">Don't have an account</Link>
+          <Link to="/forGetPass" className="forget">Forget Password</Link>
+          <Link to="/SignUp" className="account">Don't have an account</Link>
         </div>
+        {/* {errorMsg && <p style={{ color: "red", margin:0 }}>Error: {errorMsg}</p>} */}
 
         <button type="submit" className="button-submit">
           sign in

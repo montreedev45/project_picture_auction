@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "./AuthContext"; 
+import { useAuth } from "./AuthContext";
 
-function Navbar() { 
-  const { isLoggedIn, logout } = useAuth(); // ⬅️ ดึงสถานะและฟังก์ชันจาก Context
-  const [isMenuOpen, setIsMenuOpen] = useState(false); 
+function Navbar() {
+  const { isLoggedIn, logout, userProfile } = useAuth(); // ⬅️ ดึงสถานะและฟังก์ชันจาก Context
+  //console.log('userProfile : ',userProfile)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const location = useLocation();
   const currentPath = location.pathname;
@@ -17,19 +18,28 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    logout(); 
+    logout();
     setIsMenuOpen(false);
   };
 
   const authButtons = isLoggedIn ? (
     <div className="auth-group-1">
-      <button className='icon-profile' onClick={handleAccountClick} >
-        <Icon icon="mdi:user" className="mdi:user" />
+      <button className="icon-profile" onClick={handleAccountClick}>
+        {userProfile?.profilePicUrl ? (
+          <img // ถ้า userProfile เป็น null บรรทัดนี้จะไม่ถูกประมวลผล
+            src={userProfile.profilePicUrl}
+            alt="Profile"
+            className="navbar-profile-pic"
+          />
+        ) : (
+          <Icon icon="mdi:user" className="mdi:userAC" /> // แสดง Icon เมื่อไม่มีรูปภาพ
+        )}
       </button>
 
       {isMenuOpen && (
         <div className="dropdown">
-          <Link className="Link"
+          <Link
+            className="Link"
             to="/profile-setting"
             onClick={() => setIsMenuOpen(false)}
           >
@@ -37,7 +47,8 @@ function Navbar() {
             Profile Setting
           </Link>
 
-          <Link className="Link"
+          <Link
+            className="Link"
             to="/DashBoard "
             onClick={() => setIsMenuOpen(false)}
           >
@@ -45,7 +56,8 @@ function Navbar() {
             Dash Board
           </Link>
 
-          <Link className="Link"
+          <Link
+            className="Link"
             to="/mybid"
             onClick={() => setIsMenuOpen(false)}
           >
@@ -53,7 +65,8 @@ function Navbar() {
             My Bids
           </Link>
 
-          <Link className="Link"
+          <Link
+            className="Link"
             to="/mywinning"
             onClick={() => setIsMenuOpen(false)}
           >
@@ -61,7 +74,8 @@ function Navbar() {
             My Winning
           </Link>
 
-          <Link className="Link"
+          <Link
+            className="Link"
             to="/saveitem"
             onClick={() => setIsMenuOpen(false)}
           >
@@ -69,17 +83,15 @@ function Navbar() {
             Save Item
           </Link>
 
-          <Link className="Link"
+          <Link
+            className="Link"
             to="/update-password"
             onClick={() => setIsMenuOpen(false)}
           >
             <Icon icon="" className="Link-icon" />
             Update Password
           </Link>
-          <Link className="Link"
-            to="/homepage"
-            onClick={handleLogout}
-          >
+          <Link className="Link" to="/homepage" onClick={handleLogout}>
             <Icon icon="material-symbols:logout" className="Link-icon" />
             Log Out
           </Link>

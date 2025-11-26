@@ -1,37 +1,155 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(() => {
-        const token = localStorage.getItem('jwt');
-        return !!token; // คืนค่า true ถ้ามี Token, false ถ้าไม่มี
-    }); 
-    const navigate = useNavigate();
+  // 1. States หลัก
+  const [userProfile, setUserProfile] = useState(null); // 🔑 เก็บข้อมูลผู้ใช้ทั้งหมด
+  const [loading, setLoading] = useState(true); // 💡 State สำหรับรอการตรวจสอบ Token/Profile
+  const initialToken = localStorage.getItem("jwt");
+  const initialUserId = localStorage.getItem("acc_id");
 
-    /*
-    useEffect(() => {
-        // หากต้องการตรวจสอบ Token ที่หมดอายุ ให้ทำ API Call ตรวจสอบ Token ที่นี่
-    }, []);
-    */
+  const [token, setToken] = useState(initialToken);
+  const [userId, setUserId] = useState(initialUserId);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!initialToken);
+  const navigate = useNavigate();
 
-    const login = (token) => {
-        localStorage.setItem('jwt', token); 
-        setIsLoggedIn(true);
-    };
+  // ----------------------------------------------------------------
+  // 2. Helper Functions (ย้าย Logic ที่ซับซ้อนมาที่นี่)
+  // ----------------------------------------------------------------
 
-    const logout = () => {
-        localStorage.clear(); 
-        setIsLoggedIn(false);
-        navigate('/login'); 
-    };
+  // A. 🔑 ฟังก์ชัน Fetch Profile
+  const fetchUserProfile = async (currentToken, currentUserId) => {
+    if (!currentToken || !currentUserId) {
+      setUserProfile(null);
+      return;
+    }
 
-    return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+    try {
+      const API_URL = `http://localhost:5000/api/auction/users/${currentUserId}`;
+      const res = await axios.get(API_URL, {
+        headers: { Authorization: `Bearer ${currentToken}` },
+      });
+
+      const user = res.data.user;
+
+      // สร้าง URL รูปภาพที่สมบูรณ์
+      const profilePicUrl = user.acc_profile_pic
+        ? `http://localhost:5000/images/profiles/${user.acc_profile_pic}`
+        : null;
+
+      // 🔑 เก็บข้อมูล Profile และ URL รูปภาพ
+      setUserProfile({
+        ...user,
+        profilePicUrl: profilePicUrl,
+      });
+    } catch (error) {
+      console.error("Failed to fetch user profile:", error);
+      // หากดึง Profile ล้มเหลว อาจหมายถึง ID ไม่ถูกต้อง
+      logout();
+    }
+  };
+
+  // B. ฟังก์ชันตรวจสอบ/ต่ออายุ Token
+  const checkTokenExpireAndFetchProfile = async (
+    currentToken,
+    currentUserId
+  ) => {
+    if (!currentToken) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // 💡 Tech Stack: ใช้ API checkToken เพื่อตรวจสอบความถูกต้องของ Token
+      await axios.post(
+        `http://localhost:5000/api/auction/checkToken`,
+        {},
+        { headers: { Authorization: `Bearer ${currentToken}` } }
+      );
+
+      // 🔑 ถ้า Token ถูกต้อง: ดึง Profile ต่อไป
+      await fetchUserProfile(currentToken, currentUserId);
+    } catch (error) {
+      // 🚨 Token หมดอายุ/ไม่ถูกต้อง
+      console.error("Token invalid or expired. Auto-logging out.");
+      if (
+        error.response &&
+        (error.response.status === 401 || error.response.status === 403)
+      ) {
+      }
+      // เรียก logout โดยตรงเพื่อให้ล้าง storage และนำทาง
+      logout();
+    } finally {
+      setLoading(false); // 💡 เมื่อเสร็จสิ้นกระบวนการตรวจสอบ
+    }
+  };
+
+  // ----------------------------------------------------------------
+  // 3. Effect Hooks
+  // ----------------------------------------------------------------
+
+  // 🔑 เมื่อ Component Mount ให้ตรวจสอบ Token และดึง Profile
+  useEffect(() => {
+    if (token) {
+      // 🔑 เรียกใช้ฟังก์ชันตรวจสอบ Token และดึง Profile
+      //console.log(55);
+      checkTokenExpireAndFetchProfile(token, userId);
+    } else {
+      setLoading(false);
+    }
+  }, []); // ⚠️ รันแค่ครั้งเดียวเมื่อ Component Mount
+
+  // ----------------------------------------------------------------
+  // 4. Auth Actions
+  // ----------------------------------------------------------------
+
+  const login = async (jwtToken, accId, profileData) => {
+    //console.log(profileData);
+    localStorage.setItem("jwt", jwtToken);
+    localStorage.setItem("acc_id", accId);
+    setIsLoggedIn(true);
+    setToken(jwtToken);
+    setUserId(accId);
+
+    const profilePicUrl = profileData.acc_profile_pic
+      ? `http://localhost:5000/images/profiles/${profileData.acc_profile_pic}`
+      : null; // 🔑 FIX: อัปเดต userProfile State ทันทีด้วยข้อมูลที่ได้รับ พร้อม URL
+
+    setUserProfile({
+      ...profileData,
+      profilePicUrl: profilePicUrl, // ⬅️ เพิ่ม Field นี้
+    });
+
+    // 🔑 FIX: อัปเดต userProfile State ทันทีด้วยข้อมูลที่ได้รับ
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+    setToken(null);
+    setUserId(null);
+    setUserProfile(null);
+    navigate("/login");
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+        login,
+        logout,
+        token,
+        userProfile, // 🔑 Export userProfile
+        loading, // 💡 Export loading status
+        fetchUserProfile, // 💡 Export เพื่อให้ ProfileSettingPage ใช้ Update
+      }}
+    >
+      {children}       {" "}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);

@@ -5,7 +5,7 @@ import axios from "axios";
 import "./Sign-up.css";
 import { Icon } from "@iconify/react";
 
-function SignUp({ onAuthAction }) {
+function SignUp() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -19,34 +19,28 @@ function SignUp({ onAuthAction }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const [response, setResponse] = useState(null);
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // ⚠️ สำคัญ: ป้องกันการ Reload Page
+    setErrorMsg(null);
 
     try {
       const API_URL = `http://localhost:5000/api/auction/register`;
 
       const res = await axios.post(API_URL, formData);
-      setResponse(res.data);
       console.log("Registration Success:", res.data);
+      navigate("/login");
     } catch (err) {
-      // 4. จัดการ Error Response
-      const errorMsg = err.response?.data?.message || err.message;
-      setResponse(errorMsg);
-
-      console.error("Registration Error:", errorMsg);
+      let errorMessage = "";
+      errorMessage = err.response.data.message;
+      setErrorMsg(errorMessage);
     }
-
-    // Logic ถูกตัดออก: เราแค่จำลองการ Login สำเร็จเพื่ออัปเดต Navbar
-    console.log("sign up Form Submitted (Mock):", formData);
-    navigate("/login");
   };
 
   const showpass = () => {
@@ -188,6 +182,8 @@ function SignUp({ onAuthAction }) {
           />
           <span className="address-place">Address</span>
         </div>
+
+        {errorMsg && <p style={{ color: "red", margin:0 }}>Error: {errorMsg}</p>}
 
         <button type="submit" className="button-submit">
           sign up

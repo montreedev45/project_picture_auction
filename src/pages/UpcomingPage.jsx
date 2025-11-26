@@ -58,7 +58,7 @@ function UpcomingPage() {
       <div className="upcoming-container">
         <div className="upcoming-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = product.pro_imgurl === "view1" ? view1 : view2;
+            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}` ;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
             return (

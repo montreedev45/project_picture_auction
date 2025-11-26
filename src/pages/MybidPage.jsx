@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./MybidPage.css";
-import view1 from "../assets/view1-ai-gen.png";
-import view2 from "../assets/view2-ai-gen.png";
 import axios from "axios";
 import LikeButton from "./LikeButton";
 
@@ -60,7 +58,7 @@ function MybidPage() {
       <div className="mybid-container">
         <div className="mybid-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = product.pro_imgurl === "view1" ? view1 : view2;
+            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}` ;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
             const statusClass = product.pro_status

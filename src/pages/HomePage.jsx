@@ -4,11 +4,9 @@ import axios from "axios";
 import LikeButton from "./LikeButton";
 import "./HomePage.css";
 
-import view1 from "../assets/view1-ai-gen.png";
-import view2 from "../assets/view2-ai-gen.png";
-
 function HomePage() {
   const [products, setProducts] = useState([]); // State สำหรับจัดการสินค้า
+  const [users, setUsers] = useState([]); // State สำหรับจัดการสินค้า
   const [error, setError] = useState(null); // State สำหรับจัดการข้อผิดพลาด
   const [loading, setLoading] = useState(true); // State สำหรับจัดการสถานะการโหลด
 
@@ -20,16 +18,52 @@ function HomePage() {
       setError(null);
       setLoading(true);
       try {
-        const API_URL = `http://localhost:5000/api/auction/products`;
-        const res = await axios.get(API_URL);
-        const apiProducts = res.data.products || [];
+        const [productResult, userResult] = await Promise.allSettled([
+          axios.get(`http://localhost:5000/api/auction/products`),
+          axios.get(`http://localhost:5000/api/auction/users`),
+        ]);
 
-        // Tech Stack: คัดลอก Array และ Object เพื่อ Immutability
-        const initialData = apiProducts.map((product) => ({
-          ...product,
-        }));
+        if (productResult.status === "fulfilled") {
+          const fetchedProductsObject = productResult.value.data.products;
 
-        setProducts(initialData);
+          if (
+            typeof fetchedProductsObject === "object" &&
+            fetchedProductsObject !== null
+          ) {
+            const productsArray = Object.values(fetchedProductsObject).map(
+              (product) => {
+                return {
+                  ...product,
+                };
+              }
+            );
+            setProducts(productsArray);
+          } else {
+            
+            setProducts([]);
+          }
+        }
+
+        if (userResult.status === "fulfilled") {
+          const fetchedUsersObject = userResult.value.data.users;
+
+          if (
+            typeof fetchedUsersObject === "object" &&
+            fetchedUsersObject !== null
+          ) {
+            const usersArray = Object.values(fetchedUsersObject).map(
+              (user) => {
+                return {
+                  ...user,
+                };
+              }
+            );
+            setUsers(usersArray);
+          } else {
+            
+            setUsers([]);
+          }
+        }
       } catch (err) {
         const errorMsg =
           err.response?.data?.message || "Failed to connect to server.";
@@ -53,10 +87,15 @@ function HomePage() {
   // ----------------------------------------------------------------
   // 3. Filtering และ Conditional Rendering Logic
   // ----------------------------------------------------------------
+  const usersToFilter = Array.isArray(users) ? users : [];
+  // const filteredUsers = usersToFilter.filter(
+  //   (user) => user.acc_coin === 10000 
+  // );
+  // console.log('user:',filteredUsers)
+
   const productsToFilter = Array.isArray(products) ? products : [];
   const filteredProducts = productsToFilter.filter(
-    (product) =>
-      product.pro_status === "processing" || product.pro_status === ""
+    (product) => product.pro_status === "processing" || product.pro_status === ""
   );
 
   // UX/UI: แสดงสถานะ Loading ก่อน
@@ -87,7 +126,7 @@ function HomePage() {
       <div className="homepage-container">
         <div className="homepage-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = product.pro_imgurl === "view1" ? view1 : view2;
+            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
             return (
               <div className="card" key={product.pro_id}>
@@ -120,6 +159,18 @@ function HomePage() {
                       userHasLiked={isSaved}
                     />
                   </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {usersToFilter.map((user) => {
+              const imageSource = `http://localhost:5000/images/profiles/${user.acc_profile_pic}`;
+            return (
+              <div className="card" key={user.acc_id}>
+                <img src={imageSource} alt="" />test
+                <div className="card-des">
+                  <p>title : {user.acc_username}</p>
                 </div>
               </div>
             );
