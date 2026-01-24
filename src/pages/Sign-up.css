@@ -2,9 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 60px;
+  font-size: 70px;
   text-align: center;
-  margin-left: 30px;
   color: #000000;
   background-color: #fff;
 
@@ -21,7 +20,7 @@
 }
 .container-regis {
   padding: 20px;
-  width: 730px;
+  max-width: 730px;
   height: 100%;
   background-color: #ffff;
   margin: 0 auto;
@@ -29,6 +28,9 @@
   margin-bottom: 50px;
   backdrop-filter: blur(6px);
   box-shadow: 5px 5px 5px #53b2ff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .button-submit {

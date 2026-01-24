@@ -14,6 +14,7 @@ function Navbar() {
   const shouldHideInputSearch = pathsToHideInputSearch.includes(currentPath);
 
   const handleAccountClick = () => {
+    console.log(3)
     setIsMenuOpen((prev) => !prev);
   };
 
@@ -38,6 +39,15 @@ function Navbar() {
 
       {isMenuOpen && (
         <div className="dropdown">
+          <Link
+            className="Link"
+            to="/"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <Icon icon="mdi:gavel" className="Link-icon" />
+            Auction
+          </Link>
+
           <Link
             className="Link"
             to="/profile-setting"
@@ -91,6 +101,9 @@ function Navbar() {
             <Icon icon="" className="Link-icon" />
             Update Password
           </Link>
+          <Link className="Link" to="/coin-packet">
+            Coin Packet 
+          </Link>
           <Link className="Link" to="/homepage" onClick={handleLogout}>
             <Icon icon="material-symbols:logout" className="Link-icon" />
             Log Out
@@ -128,7 +141,8 @@ function Navbar() {
           </div>
         </div>
       )}
-      <div className="navbar-right">{authButtons}</div>
+      
+      <div className="navbar-right"><div  style={{marginRight:"2rem", fontSize:'2rem', display:'flex', justifyContent:'space-between', alignItems:'center', fontWeight:'bold' }}><Icon icon="mdi-coin" style={{marginRight:'1rem',fontSize:'3rem'}}></Icon>{userProfile?.acc_coin}</div>{authButtons}</div>
     </nav>
   );
 }

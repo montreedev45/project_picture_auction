@@ -70,6 +70,7 @@ nav {
   transform: translateY(-50%);
   font-size: 40px;
   color: #666;
+  cursor: pointer;
 }
 
 .layout-container {
@@ -112,9 +113,25 @@ nav {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-
 }
 
+.auth-group-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coin {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-right: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & .icon-coin {
+    font-size: 2rem;
+  }
+}
 
 .icon-profile {
   padding: 0;
@@ -127,13 +144,15 @@ nav {
   background-color: #b3b3b3;
 }
 
-
 .footer-container {
+  background-color: aqua;
+  width: 100%;
   background: none;
-  display: flex;
-  justify-content: center;
-  text-align: left;
-  gap: 3rem;
+  display: grid;
+  place-items: center;
+  place-content: center;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .footer-container-about,
@@ -145,6 +164,7 @@ nav {
   color: #000;
   line-height: 1.8rem;
   letter-spacing: 0.1rem;
+  text-align: center;
 }
 
 .layout-main {
@@ -154,9 +174,8 @@ nav {
   align-items: center;
 }
 
-
-
 .dropdown {
+  top: 130px;
   border-radius: 5px;
   background-color: #ffffff;
   border: 2px solid #bdbdbd;
@@ -186,4 +205,11 @@ nav {
 .Link-icon {
   padding-right: 10px;
   font-size: 25px;
+}
+
+
+@media (min-width: 378px) and (max-width: 1000px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
 }

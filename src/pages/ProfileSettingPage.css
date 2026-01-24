@@ -8,7 +8,9 @@
   color: #ffffff;
 }
 .profile-setting-container {
-  width: 50%;
+  width: 100%;
+  max-width: 700px;
+  min-width: 600px;
   border-radius: 20px;
   box-shadow: 10px 10px 50px #299fff;
   display: flex;
@@ -226,4 +228,17 @@ form > .profile-div-password > .input-password:focus {
     /* เพิ่มขอบหรือเงา (ถ้าต้องการ) */
     border: 2px solid #ddd;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+@media (min-width: 378px) and (max-width: 768px) {
+  .profile-setting-container{
+    width: 80%;
+    min-width:370px ;
+    max-width: 600px;
+    padding: 2.5rem 0;
+  }
+
+  .profile-div-username, .profile-div-firstname, .profile-div-lastname, .profile-div-email, .profile-div-phone, .profile-div-address{
+    padding: 0;
+  }
 }

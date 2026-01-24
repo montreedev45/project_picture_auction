@@ -3,9 +3,15 @@ import { Link, useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import "./ProfileSettingPage.css";
 import axios from "axios";
+import { useError } from "../components/ErrorContext";
+import { useAuth } from "../components/AuthContext";
 
 function ProfileSettingPage() {
+  const { setError } = useError();
   const fileInputRef = useRef(null);
+  const { fetchUserProfile } = useAuth()
+  const userId = localStorage.getItem("acc_id")
+  const token = localStorage.getItem("jwt");
 
   const [userProfile, setUserProfile] = useState({
     acc_username: "",
@@ -29,9 +35,7 @@ function ProfileSettingPage() {
   // State สำหรับแสดงภาพ Preview ทันทีที่ผู้ใช้เลือก
   const [profilePicPreview, setProfilePicPreview] = useState(null);
 
-  const token = localStorage.getItem("jwt");
 
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [apiMessage, setApiMessage] = useState(null);
 
@@ -52,8 +56,6 @@ function ProfileSettingPage() {
   };
 
   const getChangedFields = (originalData, currentData) => {
-    console.log(originalData);
-    console.log(currentData);
     // ฟังก์ชันนี้จะถูกใช้เพื่อตรวจสอบว่ามีการเปลี่ยนแปลง Text Data หรือไม่
     const changes = {};
     for (const key in currentData) {
@@ -63,7 +65,7 @@ function ProfileSettingPage() {
         }
       }
     }
-    console.log(changes);
+    // console.log(changes);
     return changes;
   };
 
@@ -104,13 +106,17 @@ function ProfileSettingPage() {
           acc_email: user.acc_email || "",
           acc_address: user.acc_address || "",
         });
-      } catch (err) {
-        const errorMsg =
-          err.response?.data?.message || "Failed to fetch user profile.";
-
-        setError(errorMsg);
+      } catch (error) {
+        let errorMessage = "Failed to fetch user profile.";
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          errorMessage = error.response.data.message;
+        }
+        setError(errorMessage);
         setUserProfile({});
-        console.error("Fetch Error:", errorMsg);
       } finally {
         setLoading(false);
       }
@@ -131,7 +137,7 @@ function ProfileSettingPage() {
 
     // 2. ตรวจสอบ Text Data ที่เปลี่ยนไป
     const changesToSubmit = getChangedFields(userProfile, formData);
-    console.log(changesToSubmit);
+    // console.log(changesToSubmit);
 
     // 3. วนลูปและแนบเฉพาะ Text Data ที่เปลี่ยนไปเข้า FormData
     for (const key in changesToSubmit) {
@@ -202,17 +208,23 @@ function ProfileSettingPage() {
         acc_profile_pic: hasNewFile ? res.data.fileName : prev.acc_profile_pic, // อัปเดตชื่อไฟล์ใหม่
       }));
 
+      fetchUserProfile(token, userId)
+
       // 8. ถ้ามีการอัปโหลดไฟล์ใหม่ ให้ล้างค่า input file เพื่อป้องกันการส่งซ้ำ
       if (hasNewFile && fileInputRef.current) {
         fileInputRef.current.value = "";
       }
-    } catch (err) {
-      const errorMsg =
-        err.response?.data?.message || "Failed to update profile.";
-
-      setError(errorMsg);
+    } catch (error) {
+      let errorMessage = "Failed to update profile.";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage);
       setApiMessage(null);
-      console.error("Update Error:", errorMsg);
     } finally {
       setLoading(false);
     }
@@ -343,8 +355,6 @@ function ProfileSettingPage() {
             />
           </div>
           {loading && <p>Saving...</p>}
-          {apiMessage && <p style={{ color: "green" }}>{apiMessage}</p>}
-          {error && <p style={{ color: "red" }}>Error: {error}</p>}
           <button type="submit" className="button-submit" disabled={loading}>
             save
           </button>

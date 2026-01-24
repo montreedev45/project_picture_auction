@@ -5,7 +5,8 @@ import "./AuctionDetailPage.css";
 import axios from "axios";
 import io from "socket.io-client";
 import useCountdownTimer from "../components/useCountdownTimer";
-import ErrorModal from "../components/ErrorModal";
+import { useError } from "../components/ErrorContext";
+import { useAuth } from "../components/AuthContext";
 
 const SOCKET_SERVER_URL = "http://localhost:5000";
 let socket = null;
@@ -15,6 +16,7 @@ let socket = null;
 // ------------------------------------------------------------------
 function formatSecondsToTime(totalSeconds) {
   const remainingSeconds = Math.round(totalSeconds);
+
   if (remainingSeconds <= 0 || isNaN(remainingSeconds)) return "00 : 00 : 00";
 
   const hours = String(Math.floor(remainingSeconds / 3600)).padStart(2, "0");
@@ -27,21 +29,26 @@ function formatSecondsToTime(totalSeconds) {
 }
 
 function AuctionDetailPage() {
+  const { setError } = useError();
   const { id } = useParams();
-  const token = localStorage.getItem("jwt");
-
+  const { fetchUserProfile, userProfile } = useAuth(); //  ดึงข้อมูลผู้ใช้และฟังก์ชัน update จาก Context
   const [product, setProduct] = useState(null);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const [bidPrice, setBidPrice] = useState("");
+  const token = localStorage.getItem("jwt");
+  const userId = localStorage.getItem("acc_id");
 
-  // Real-Time States: ใช้สำหรับ Socket Update
+  // State: ใช้สำหรับ update data จาก socket ที่ส่งมา
   const [currentBidPrice, setCurrentBidPrice] = useState(0);
   const [bidHistory, setBidHistory] = useState([]);
 
+
+  useEffect(() => {
+    console.log("fetch profile")
+    fetchUserProfile(token, userId)
+  }, [bidHistory])
   // ------------------------------------------------------------------
-  // 🎯 useEffect 1: จัดการ Socket Connection และ Real-Time Update
+  // useEffect 1: จัดการ Socket Connection และ Real-Time Update
   // ------------------------------------------------------------------
   useEffect(() => {
     // 1. เชื่อมต่อ Socket
@@ -49,8 +56,8 @@ function AuctionDetailPage() {
 
     // 2. การจัดการ Connection/Room Join
     socket.on("connect", () => {
-      console.log("🔗 Connected to Socket Server (ID: " + socket.id + ")");
-      console.log(`Debug Client: Joining room with ID: ${id}`);
+      // console.log("🔗 Connected to Socket Server (ID: " + socket.id + ")");
+      // console.log(`Debug Client: Joining room with ID: ${id}`);
       socket.emit("join_auction", id);
     });
 
@@ -59,7 +66,7 @@ function AuctionDetailPage() {
       console.error("❌ Socket Connection Failed:", err.message);
     });
 
-    // 4. Listener สำหรับการอัปเดตข้อมูลทั้งหมด (รวมถึงเวลาใหม่)
+    // 4. Listener สำหรับการอัปเดตข้อมูลทั้งหมด จาก broadcast ที่ส่งมา
     socket.on("auction_update", (data) => {
       console.log("Received real-time update:", data);
 
@@ -73,15 +80,14 @@ function AuctionDetailPage() {
 
     // 5. Cleanup
     return () => {
-      // การใช้ socket.off() ร่วมกับการ disconnect() เป็นสิ่งที่ถูกต้อง
       socket.off("auction_update");
       socket.disconnect();
-      console.log(`Disconnected from room ${id}.`);
+      //console.log(`Disconnected from room ${id}.`);
     };
-  }, [id, setProduct, setBidHistory]); // Dependencies
+  }, [id, setProduct, setBidHistory]);
 
   // ------------------------------------------------------------------
-  // 🎯 useEffect 2: Fetch Initial Data
+  // useEffect 2: Fetch Initial Data
   // ------------------------------------------------------------------
   useEffect(() => {
     const fetchAllData = async () => {
@@ -89,7 +95,7 @@ function AuctionDetailPage() {
       setLoading(true);
 
       try {
-        // ใช้ Promise.allSettled เพื่อความทนทานต่อข้อผิดพลาด (Fault Tolerance)
+        // ใช้ Promise.allSettled เพื่อยิง api พร้อมกัน
         const [productResult, historyResult] = await Promise.allSettled([
           axios.get(`http://localhost:5000/api/auction/product/${id}`),
           axios.get(
@@ -100,6 +106,8 @@ function AuctionDetailPage() {
           ),
         ]);
 
+        // เมื่อใช้ Promise.allSettled ต้องเช็ค status ด้วย
+        // res from api product
         if (productResult.status === "fulfilled") {
           const fetchedProduct = productResult.value.data.product;
           setProduct(fetchedProduct);
@@ -112,6 +120,7 @@ function AuctionDetailPage() {
           );
         }
 
+        //res from api history
         if (historyResult.status === "fulfilled") {
           const fetchedHistory = historyResult.value.data.history || [];
           setBidHistory(fetchedHistory);
@@ -119,48 +128,59 @@ function AuctionDetailPage() {
           console.warn("History fetch failed:", historyResult.reason);
           setBidHistory([]);
         }
-      } catch (err) {
+      } catch (error) {
+        let errorMessage = "fetch data failed, Pless check server";
+
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          errorMessage = error.response.data.message;
+        }
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
     };
 
     if (id) fetchAllData();
-  }, [id, token]); // เพิ่ม token ใน Dependency Array
+  }, [id, token]);
 
   // ------------------------------------------------------------------
-  // 🎯 Logic: การประมูล (Bid Action)
+  // Logic: การประมูล (Bid Action)
   // ------------------------------------------------------------------
-
   const auctionProducts = async () => {
     const requiredMinBid =
-      (currentBidPrice || product.pro_price) +
-      (product.pro_min_increment || 100);
+      (currentBidPrice || product.pro_price) + product.pro_min_increment;
 
     try {
       const payload = { bidPrice: parseFloat(bidPrice) };
 
       if (payload.bidPrice < requiredMinBid) {
-        setError(`Bid must be at least $${requiredMinBid}.`);
+        setError(`Bid must be at least $${requiredMinBid}`);
         return;
       }
 
       const Auction_Url = `http://localhost:5000/api/auction/products/${id}/bids`;
-
       await axios.post(Auction_Url, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // 🟢 Success State:
-      // 1. ล้าง Input
       setBidPrice("");
-      // 2. ล้าง Error
       setError(null);
-    } catch (err) {
-      const errorMsg = err.response?.data?.message || `Failed to place bid.`;
-      console.log("test_error", errorMsg);
-      setError(errorMsg);
-      console.log(error);
+      fetchUserProfile(token, userId);
+    } catch (error) {
+      let errorMessage = `Failed to place bid.`;
+
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage);
     }
   };
 
@@ -169,16 +189,19 @@ function AuctionDetailPage() {
     setBidPrice(value);
   };
 
-
+  const handleKeyDown = (event) => {
+  if (event.key === 'Enter') {
+    auctionProducts();
+  }
+};
 
   // ------------------------------------------------------------------
-  // 🎯 Rendering Logic (Timer and Data Access)
+  // Rendering Logic (Timer and Data Access)
   // ------------------------------------------------------------------
-  const auctionEndTimeString = product?.endTimeAuction;
-
-  // 1. ⚙️ การแปลงและตั้งค่าเริ่มต้น
+  const auctionEndTimeString = product?.endTimeAuction; // ถ้ายังไม่มีการ bid .endTimeAuction จะไม่มีในระบบ
+  // 1. การแปลงและตั้งค่าเริ่มต้น
   let endTimeTimestamp = 0;
-  let initialSeconds = product?.pro_time ?? 0; // ตั้งค่าเริ่มต้นเป็นเวลาเต็มของสินค้า (กรณีไม่มี Bid แรก)
+  let initialSeconds = product?.pro_time ?? 0; // ตั้งค่าเริ่มต้นเป็นเวลาเต็มของสินค้า (กรณีไม่มี Bid แรก) เช่น 120 วิ
   let isAuctionActive = false;
 
   // 2. ถ้ามีเวลาสิ้นสุด (หมายถึงมีการ Bid ครั้งแรกแล้ว)
@@ -204,70 +227,70 @@ function AuctionDetailPage() {
   const countdownDisplay = formatSecondsToTime(secondsToDisplay);
 
   const historyData = Array.isArray(bidHistory) ? bidHistory : [];
+  const imageSource = product?.pro_imgurl
+    ? `http://localhost:5000/images/products/${product.pro_imgurl}`
+    : "";
 
   if (loading) {
-    return <div className="loading-container">กำลังโหลด...</div>;
+    return <div className="auction-container-loading">กำลังโหลด...</div>;
   }
 
-  // หาก Fetch สำเร็จ แต่ product เป็น null (เช่น 404 Not Found)
   if (!product) {
-    return <div className="not-found">ไม่พบสินค้าที่ต้องการประมูล</div>;
+    return (
+      <div className="auction-container-not-found">
+        ไม่พบสินค้าที่ต้องการประมูล
+      </div>
+    );
   }
-
-  const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}`;
 
   return (
     <div className="auction-container">
-      <div className="auction-left">
+      <div className="auction-container-imgDetail">
         <img src={imageSource} alt={product.pro_name} />
-        <div className="auction-left-text">
-          <p>
-            <b>Title : </b>
-            {product.pro_name}
-          </p>
-          <p>
-            <b>Description : </b>
-            {product.pro_des}
-          </p>
+        <div className="auction-container-imgDetail-text">
+          <b>{product.pro_name}</b>
+          <p>{product.pro_des}</p>
         </div>
       </div>
 
-      <div className="auction-right">
-        <div className="auction-right-time">
-          <h1>{product.pro_name}</h1>
-          <div className="group-top">
-            <p>Time Remaining : {countdownDisplay}</p>
-            <p>Current Bid : ${product.pro_price || "100"}</p>{" "}
+      <div className="auction-container-bidDetail">
+        <div className="auction-container-bidDetail-placeBid">
+          <div className="auction-container-bidDetail-placeBid-top">
+            <b>{product.pro_name}</b>
           </div>
-          <div className="group-mid">
-            <p>Place Your Bid</p>
+          <div className="auction-container-bidDetail-placeBid-mid">
+            <p>Time Remaining : {countdownDisplay}</p>
+            <p>
+              Current Bid : &nbsp;<Icon icon="mdi-coin"></Icon> &nbsp;
+              {product.pro_price.toLocaleString('en-US') || "100"}
+            </p>{" "}
+            <p>
+              Min Increment : &nbsp;<Icon icon="mdi-coin"></Icon> &nbsp;
+              {product.pro_min_increment.toLocaleString('en-US')}{" "}
+            </p>
             <input
               type="text"
               name="bidPrice"
               value={String(bidPrice)}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               className="bidPrice"
+              placeholder="Your Bid Price"
             />
             <button className="auction-button" onClick={auctionProducts}>
               Place Bid
             </button>
           </div>
-          <div className="group-bottom">
-            <p>Your Max Bid : $1000</p>
-            <p>Minimum Increment : $100 </p>
+          <div className="auction-container-bidDetail-placeBid-bottom">
+            <b>Bid History Log : </b>
+            <ul className="auction-ui-history">
+              {historyData.map((bid, index) => (
+                <li key={index}>
+                  <p>user {bid.acc_id} -- $ {bid.bidAmount.toLocaleString('en-US')}</p><p>{new Date(bid.createdAt).toLocaleTimeString()}</p>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-
-        <div className="auction-right-log">
-          <h5>Bid History Log : </h5>
-          <ul>
-            {historyData.map((bid, index) => (
-              <li key={index}>
-                User: {bid.acc_id} - Price: $ {bid.bidAmount} - Time:{" "}
-                {new Date(bid.createdAt).toLocaleTimeString()}
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </div>

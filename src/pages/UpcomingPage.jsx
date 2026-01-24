@@ -4,10 +4,11 @@ import view1 from "../assets/view1-ai-gen.png";
 import view2 from "../assets/view2-ai-gen.png";
 import axios from "axios";
 import LikeButton from "./LikeButton";
+import { useError } from "../components/ErrorContext";
 
 function UpcomingPage() {
+  const {setError} = useError()
   const [products, setProducts] = useState([]); // State สำหรับจัดการสินค้า
-  const [error, setError] = useState(null); // State สำหรับจัดการข้อผิดพลาด
   const [loading, setLoading] = useState(true); // State สำหรับจัดการสถานะการโหลด
 
   // ----------------------------------------------------------------
@@ -31,11 +32,16 @@ function UpcomingPage() {
         }));
 
         setProducts(initialData);
-      } catch (err) {
-        const errorMsg =
-          err.response?.data?.message || "Failed to connect to server.";
-
-        setError(errorMsg); // แก้ไข: ตั้งค่า Error State
+      } catch (error) {
+        let errorMessage = "fetch products failed, Pless check server"
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          errorMessage = error.response.data.message;
+        }
+        setError(errorMessage);
         setProducts([]); // setProducts ให้เป็น Array เปล่าเสมอ
       } finally {
         setLoading(false); // ต้องปิด Loading เสมอ ไม่ว่าจะสำเร็จหรือผิดพลาด

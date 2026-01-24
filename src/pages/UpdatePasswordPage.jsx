@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import "./UpdatePasswordPage.css";
+import { useError } from "../components/ErrorContext";
 
 function UpdatePasswordPage() {
+  const {setError} = useError()
   const [currentPassword, setcurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -59,11 +61,17 @@ function UpdatePasswordPage() {
         newPasswordValue
       );
 
-      console.log("Password updated successfully:", data);
       alert("Password updated!");
     } catch (error) {
-      console.error("Password Update Error:", error.message);
-      alert(`Error: ${error.message}`);
+      let errorMessage = "Password Update Failed"
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          errorMessage = error.response.data.message;
+        }
+        setError(errorMessage);
     }
   };
   return (

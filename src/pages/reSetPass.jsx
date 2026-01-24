@@ -42,7 +42,15 @@ function ResetPasswordPage() {
 
       return await response.json();
     } catch (error) {
-      throw error;
+      let errorMessage = "Reset Password fail please try again";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage);
     }
   };
 
@@ -57,11 +65,17 @@ function ResetPasswordPage() {
       // 🔑 (6) เรียกฟังก์ชันและส่งค่าจริงเข้าไป
       const data = await ResetPasswordAPI(token, reSetPassValue);
 
-      console.log("Reset Password successfully:", data);
       alert("Reset Password successfully");
     } catch (error) {
-      console.error("Reset Password Error:", error.message);
-      alert(`Error: ${error.message}`);
+      let errorMessage = "Reset Password error.";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage);
     }
   };
   return (

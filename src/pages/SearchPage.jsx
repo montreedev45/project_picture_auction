@@ -1,105 +1,224 @@
-import React, { useState } from 'react'; // ✅ Tech Stack: นำเข้า useState
-import { Link } from 'react-router-dom';
-import './SearchPage.css'
-import view1 from '../assets/view1-ai-gen.png'
-import view2 from '../assets/view2-ai-gen.png'
-import { initialProducts } from '../components/MockData';
-import { Icon } from '@iconify/react';
+import React, { useState, useEffect, useCallback } from "react";
+import { Link, useLocation } from "react-router-dom";
+import "./SearchPage.css";
+import { Icon } from "@iconify/react";
+import { useError } from "../components/ErrorContext";
+import LikeButton from "./LikeButton";
+import axios from "axios";
 
 function SearchPage() {
-    // ✅ Tech Stack: State Management สำหรับรายการ (Array State)
-    const [products, setProducts] = useState(initialProducts);
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search)
+  const initialSearch = urlParams.get('pro_name_input')
 
-    // Icon heart svg
-    const HeartIcon = ({ className = "icon", size = "24", fill = "none", stroke = "currentColor", onClick }) => (
-        <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width={size} 
-            height={size} 
-            viewBox="0 0 24 24" 
-            fill={fill} 
-            stroke={stroke} 
-            strokeWidth="1" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            className={className}
-            onClick={onClick}
-            style={{ cursor: 'pointer' }} 
-        >
-            {/* Business Logic: Path ของ Icon รูปหัวใจ */}
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-    );
+  const { setError } = useError();
+  const [products, setProducts] = useState([]);
+  const [filterCriteria, setfilterCriteria] = useState({
+    pro_name_input: initialSearch || '',
+    statuses: [], // Array สำหรับ Checkbox/Multi-select (Status)
+  });
+  const [loading, setLoading] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    // ----------------------------------------------------------------
-    // 2. Business Logic: Handler สำหรับการกด Like/Unlike
-    // ----------------------------------------------------------------
-    const handleLikeToggle = (e, id) => {
-        e.preventDefault(); 
-        
-        // Tech Stack: การอัปเดต Array State แบบ Immutable 
-        setProducts(currentProducts => 
-            currentProducts.map(product => 
-                product.id === id 
-                    ? { ...product, isLiked: !product.isLiked } // อัปเดตสถานะ Like ของ Card ที่ถูกกด
-                    : product 
-            )
-        );
-    };
+  const currentUserId = localStorage.getItem("acc_id");
+  const ALL_CATEGORIES = ["upcoming", "ended", "processing"];
+  let queryCriteria = {};
 
-    // Tech Stack: ใช้ Placeholder Image (เพื่อให้ภาพแสดงผลอย่างถูกต้อง)
-    
-    return (
-        <>
-            <div className="search-input-wrapper-page">
-                <input type="text" className="navbar-search-page" />
-                <Icon icon="mdi:magnify" className="search-icon-overlay-page" />
-                <Icon icon="mi:filter" className="search-icon-filter-page" />
-                    
+  const fecth_products = useCallback(async () => {
+    console.log("fecth_products start...");
+    setLoading(true);
+
+    if (filterCriteria.statuses && filterCriteria.statuses.length > 0) {
+      queryCriteria.status = filterCriteria.statuses;
+    }
+
+    if (
+      filterCriteria.pro_name_input &&
+      filterCriteria.pro_name_input.length > 0
+    ) {
+      queryCriteria.pro_name_input = filterCriteria.pro_name_input;
+    }
+
+    try {
+      console.log("queryCriteria : ", queryCriteria);
+      const API_URL = `http://localhost:5000/api/auction/products`;
+      const res = await axios.get(API_URL, { params: queryCriteria });
+
+      const apiProducts = res.data.products || [];
+
+      // Tech Stack: คัดลอก Array และ Object เพื่อ Immutability
+      const initialData = apiProducts.map((product) => ({
+        ...product,
+      }));
+
+      setProducts(initialData);
+    } catch (error) {
+      let errorMessage = "fetch products failed, Pless check server";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage);
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  },[filterCriteria]);
+
+  useEffect(() => {
+    fecth_products();
+  }, [location.search]);
+
+  const handleAccountClick = () => {
+    console.log("criteria start...");
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const handleCheckboxChange = (event) => {
+    // ดึงข้อมูลที่จำเป็นจาก Event
+    const targetKey = event.target.name; // 'statuses'
+    const itemToToggle = event.target.value; // 'upcoming', 'active' ฯลฯ
+    const isChecked = event.target.checked;
+
+    setfilterCriteria((prevCriteria) => {
+      // ดึง Array ปัจจุบันของ Field นั้นออกมา
+      const currentArray = prevCriteria[targetKey] || [];
+
+      let newArray;
+      if (isChecked) {
+        // เพิ่มเข้าไป
+        newArray = [...currentArray, itemToToggle];
+      } else {
+        // กรองออก
+        newArray = currentArray.filter((item) => item !== itemToToggle);
+      }
+
+      // คืนค่า Object State ใหม่ (ใช้ Dynamic Key)
+      return {
+        ...prevCriteria,
+        // ใช้ targetKey ('statuses') เป็น Dynamic Key ใน Object
+        [targetKey]: newArray,
+      };
+    });
+  };
+
+  const handleCheckInput = (e) => {
+    const input_value = e.target.value;
+    const input_name = e.target.name;
+
+    setfilterCriteria((prev) => {
+      return {
+        ...prev,
+        [input_name]: input_value,
+      };
+    });
+  };
+
+  console.log(filterCriteria);
+
+  const handleRefreshClick = async () => {
+    console.log("Refreshing data...");
+    // 🚨 การเรียก fetchProducts() ตรงๆ
+    await fecth_products();
+
+    // หรือถ้าอยากให้ useEffect Trigger อีกครั้ง:
+    // setShouldRefetch(prev => !prev);
+  };
+
+  const productsArray = Array.isArray(products) ? products : [];
+  return (
+    <>
+      <div className="search-input-wrapper-page">
+        <input
+          type="text"
+          name="pro_name_input"
+          className="navbar-search-page"
+          value={filterCriteria.pro_name_input}
+          onChange={handleCheckInput}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleRefreshClick();
+            }
+          }}
+        />
+        <Icon
+          icon="mdi:magnify"
+          className="search-icon-overlay-page"
+          onClick={handleRefreshClick}
+        />
+        <Icon
+          icon="mi:filter"
+          className="search-icon-filter-page"
+          onClick={handleAccountClick}
+        />
+      </div>
+      {isDropdownOpen && (
+        <div className="criteria-container">
+          <b className="cate-status">status</b>
+          {ALL_CATEGORIES.map((status) => (
+            <div className="search-dropdown" key={status}>
+              <input
+                type="checkbox"
+                id={status}
+                name="statuses"
+                value={status}
+                checked={filterCriteria.statuses.includes(status)}
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor={status}>{status}</label>
             </div>
-            <div className="search-container">
-                <div className="search-container-card">
-                    
-                    {/* ✅ Tech Stack: ใช้ .map() เพื่อ Render รายการสินค้าอัตโนมัติ */}
-                    {products.filter(product => product.isLiked == true).map((product) => {
-                        // Business Logic: กำหนดสีตามสถานะ isLiked ของสินค้านั้นๆ
-                        const heartFillColor = product.isLiked ? "#FF4081" : "none";
-                        const heartStrokeColor = product.isLiked ? "#FF4081" : "#848484";
-                        const imageSource = product.imageUrl === 'view1' ? view1 : view2; 
+          ))}
+        </div>
+      )}
 
-                        return (
-                            <div className="search-card" key={product.id}> 
-                                <img 
-                                    className='search-card-img' 
-                                    src={imageSource} 
-                                    alt={product.title} 
-                                />
-                                <div className="search-edcard-des">
-                                    <p>title : {product.title}</p>
-                                    <p>bid price : {product.price}</p>
-                                    <p>time remanding : {product.time}</p>
-                                </div>
-                                <div className="search-card-button">
-                                    <button 
-                                        onClick={(e) => handleLikeToggle(e, product.id)} 
-                                        style={{ background: 'none', border: 'none', padding: 0 }}
-                                    >
-                                        <HeartIcon 
-                                            size="30" 
-                                            fill={heartFillColor} 
-                                            stroke={heartStrokeColor} 
-                                            className="transition hover:scale-110" 
-                                        />
-                                    </button>
-                                </div>
-                            </div>
-                        );
-                    })}
+      <div className="search-container">
+        <div className="search-container-card">
+          {productsArray.map((product) => {
+            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}`;
+            const isSaved = product.likes?.includes(currentUserId) ?? false;
 
+            return (
+              <div className="search-card" key={product.pro_id}>
+                <div className="card-absolute">
+                  <span className={`card-status-${product.pro_status}`}>
+                    {product.pro_status}
+                  </span>
                 </div>
-            </div>
-        </>
-    );
+                <img
+                  className="card-img"
+                  src={imageSource}
+                  alt={product.pro_name}
+                />
+                <div className="card-des">
+                  <p>title : {product.pro_name}</p>
+                  <p>bid price : {product.pro_price}</p>
+                  <p>time remanding : {product.pro_time}</p>
+                </div>
+                <div className="card-button">
+                  <Link
+                    to={`/auction-detail/${product.pro_id}`}
+                    className="button"
+                  >
+                    Bid Now
+                  </Link>
+                  <div>
+                    <LikeButton
+                      productId={product.pro_id}
+                      initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
+                      userHasLiked={isSaved}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default SearchPage;

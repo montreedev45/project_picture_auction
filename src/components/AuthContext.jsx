@@ -10,9 +10,12 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); // 💡 State สำหรับรอการตรวจสอบ Token/Profile
   const initialToken = localStorage.getItem("jwt");
   const initialUserId = localStorage.getItem("acc_id");
+  const initialUsername = localStorage.getItem("acc_username")
 
   const [token, setToken] = useState(initialToken);
   const [userId, setUserId] = useState(initialUserId);
+  const [username, setUsername] = useState(initialUsername);
+
   const [isLoggedIn, setIsLoggedIn] = useState(!!initialToken);
   const navigate = useNavigate();
 
@@ -106,13 +109,15 @@ export const AuthProvider = ({ children }) => {
   // 4. Auth Actions
   // ----------------------------------------------------------------
 
-  const login = async (jwtToken, accId, profileData) => {
+  const login = async (jwtToken, accId, username,profileData) => {
     //console.log(profileData);
     localStorage.setItem("jwt", jwtToken);
     localStorage.setItem("acc_id", accId);
+    localStorage.setItem("acc_username", username)
     setIsLoggedIn(true);
     setToken(jwtToken);
     setUserId(accId);
+    setUsername(username);
 
     const profilePicUrl = profileData.acc_profile_pic
       ? `http://localhost:5000/images/profiles/${profileData.acc_profile_pic}`
