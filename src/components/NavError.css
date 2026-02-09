@@ -1,15 +1,16 @@
-.Navbar-404{
-     display: flex;
+.Navbar-404 {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #53B2FF;
+  background-color: #53b2ff;
   padding: 2rem;
   width: auto;
+  width: 100%;
 }
 
 .Navbar-404 .icon-logo-404 {
-    color: white;
+  color: white;
   font-size: 3.5rem;
   padding-right: 10px;
   cursor: pointer;

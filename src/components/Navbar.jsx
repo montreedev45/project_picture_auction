@@ -7,6 +7,7 @@ function Navbar() {
   const { isLoggedIn, logout, userProfile } = useAuth(); // ⬅️ ดึงสถานะและฟังก์ชันจาก Context
   //console.log('userProfile : ',userProfile)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuList, setMenulist] = useState(false);
 
   const location = useLocation();
   const currentPath = location.pathname;
@@ -15,6 +16,7 @@ function Navbar() {
 
   const handleAccountClick = () => {
     setIsMenuOpen((prev) => !prev);
+    setMenulist((prev) => !prev);
   };
 
   const handleLogout = () => {
@@ -35,7 +37,6 @@ function Navbar() {
           <Icon icon="mdi:user" className="mdi:userAC" /> // แสดง Icon เมื่อไม่มีรูปภาพ
         )}
       </button>
-
       {isMenuOpen && (
         <div className="dropdown">
           <Link
@@ -46,7 +47,6 @@ function Navbar() {
             <Icon icon="mdi:user" className="Link-icon" />
             Profile Setting
           </Link>
-
           <Link
             className="Link"
             to="/DashBoard "
@@ -55,7 +55,6 @@ function Navbar() {
             <Icon icon="ix:piechart-filled" className="Link-icon" />
             Dash Board
           </Link>
-
           <Link
             className="Link"
             to="/mybid"
@@ -64,7 +63,6 @@ function Navbar() {
             <Icon icon="mdi:gavel" className="Link-icon" />
             My Bids
           </Link>
-
           <Link
             className="Link"
             to="/mywinning"
@@ -73,7 +71,6 @@ function Navbar() {
             <Icon icon="healthicons:award-trophy" className="Link-icon" />
             My Winning
           </Link>
-
           <Link
             className="Link"
             to="/saveitem"
@@ -82,7 +79,6 @@ function Navbar() {
             <Icon icon="iconoir:star-solid" className="Link-icon" />
             Save Item
           </Link>
-
           <Link
             className="Link"
             to="/update-password"
@@ -92,7 +88,11 @@ function Navbar() {
             Update Password
           </Link>
           <Link className="Link" to="/homepage" onClick={handleLogout}>
-            <Icon icon="material-symbols:logout" className="Link-icon" />
+            <Icon
+              icon="material-symbols:logout"
+              className="Link-icon"
+              id="hed"
+            />
             Log Out
           </Link>
         </div>
@@ -100,22 +100,60 @@ function Navbar() {
     </div>
   ) : (
     <div className="auth-group">
-      <Link to="/login" className="nav-button sign-in-text">
-        sign in
-      </Link>
-      <Link
-        to="/SignUp"
-        className="nav-button sign-up-btn"
-        style={{ backgroundColor: "white", color: "blue" }}
-      >
-        sign up
-      </Link>
+      <div className="link-login">
+        <Link to="/login" className="nav-button sign-in-text">
+          <h4 className="sign-page">sign in</h4>
+        </Link>
+        <Link to="/SignUp" className="nav-button sign-up-btn">
+          <h4 className="sign-page">Sign Up</h4>
+        </Link>
+      </div>
+
+      {menuList && (
+        <div className="dropdown">
+          <Link className="Link" to="/login" onClick={() => setMenulist(false)}>
+            <Icon icon="ri:lock-2-line" className="Link-icon" />
+            Sign In
+          </Link>
+          <Link
+            className="Link"
+            to="/SignUp"
+            onClick={() => setMenulist(false)}
+          >
+            <Icon icon="iconoir:star-solid" className="Link-icon" />
+            Sign up
+          </Link>
+        </div>
+      )}
     </div>
   );
 
   return (
     <nav>
-      <div className="navbar-left">
+      <ul>
+        <div className="navbar-left">
+          <Link to="/" className="navbar-brand">
+            <Icon className="icon-logo" icon="mdi:gavel" /> Picture Auction
+          </Link>
+        </div>
+        {!shouldHideInputSearch && (
+          <div className="navbar-center">
+            <div className="search-input-wrapper">
+              <input type="text" className="navbar-search" />
+              <Icon icon="mdi:magnify" className="search-icon-overlay" />
+            </div>
+          </div>
+        )}
+        <div className="navbar-right">{authButtons}</div>
+        <div className="logo-menu-list">
+          <Icon
+            className="icons-menu-list"
+            onClick={handleAccountClick}
+            icon="mage:dash-menu"
+          />
+        </div>
+      </ul>
+      {/* <div className="navbar-left">
         <Link to="/" className="navbar-brand">
           <Icon className="icon-logo" icon="mdi:gavel" /> Picture Auction
         </Link>
@@ -129,6 +167,13 @@ function Navbar() {
         </div>
       )}
       <div className="navbar-right">{authButtons}</div>
+      <div className="logo-menu-list">
+        <Icon
+          className="icons-menu-list"
+          onClick={handleAccountClick}
+          icon="mage:dash-menu"
+        />
+      </div> */}
     </nav>
   );
 }
