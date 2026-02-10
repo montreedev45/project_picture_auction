@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Profiler } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import LikeButton from "./LikeButton";
@@ -16,6 +16,10 @@ import img3 from "../assets/person3.jpg";
 import img4 from "../assets/person4.jpg";
 import img5 from "../assets/davin-fake.jpg";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import "../index.css";
 import { useError } from "../components/ErrorContext";
 const API_URL = import.meta.env.VITE_BACKEND_URL
 
@@ -125,17 +129,60 @@ function HomePage() {
   if (filteredProducts.length === 0) {
     return <div className="no-data">ไม่มีสินค้าประมูล "Upcoming" ในขณะนี้</div>;
   }
+
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    initialSlide: 2,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
+
   {
   }
   const usersToFilter = Array.isArray(users) ? users : [];
 
+  const loopPic = [
+    { image1: "../assets/Mountain.jpg" },
+    { image2: "../assets/Lake.jpg" },
+    { image3: "../assets/Beach.jpg" },
+    { image4: "../assets/Nature.jpg" },
+  ];
   return (
     <>
       <div className="bg-red rounded-xl shadow-2xl p-6 w-80 mx-auto mt-10">
@@ -148,8 +195,7 @@ function HomePage() {
           View Live Auctions
         </Link>
       </div>
-
-      <div className="homepage-container w-3">
+      <div className="homepage-container">
         <div className="homepage-container-card">
           {filteredProducts.map((product) => {
             const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
@@ -191,61 +237,63 @@ function HomePage() {
           })}
         </div>
       </div>
+      {/* Vibe container */}
       <section className="Page-layout">
-        <div className="cover-content">
-          <h1>Select your vibe</h1>
-          <div className="articel-content">
-            <img src={myImage1} alt="" />
-
-            <div className="conten-one">
-              <span className="content">The Great Path</span>
-              <h2>Mountain</h2>
-              <a href="" className="link-to-view">
-                Read more
-              </a>
+        <div className="cover-card-3">
+          <h2 class="main-topic">Your Vibe</h2>
+          <div className="card-box">
+            <div className="box">
+              <div className="menu-pic">
+                <img className="first-pic" src={myImage4} alt="" />
+              </div>
+              <div className="content-box">
+                <div className="detail-pic-3">
+                  <h4>Your Vibe</h4>
+                  <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Maxime, voluptates.
+                  </p>
+                  <a href="#">Nature</a>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="articel-content">
-            <img src={myImage2} alt="" />
-
-            <div className="conten-one">
-              <span className="content">The Great Path</span>
-              <h2>
-                <b>Nature</b>
-              </h2>
-              <a href="" className="link-to-view">
-                Read more
-              </a>
+            <div className="box">
+              <div className="content-box">
+                <div className="detail-pic-3">
+                  <h4>Your Vibe</h4>
+                  <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Maxime, voluptates.
+                  </p>
+                  <a href="#">Mountain</a>
+                </div>
+              </div>
+              <div className="menu-pic">
+                <img className="second-pic" src={myImage1} alt="" />
+              </div>
             </div>
-          </div>
-          <div className="articel-content">
-            <img src={myImage3} alt="" />
-
-            <div className="conten-one">
-              <span className="content">The Great Path</span>
-              <h2>Beach</h2>
-              <a href="" className="link-to-view">
-                Read more
-              </a>
-            </div>
-          </div>
-          <div className="articel-content">
-            <img src={myImage4} alt="" />
-
-            <div className="conten-one">
-              <span className="content">The Great Path</span>
-              <h2>Lake</h2>
-              <a href="" className="link-to-view">
-                Read more
-              </a>
+            <div className="box">
+              <div className="menu-pic">
+                <img className="third-pic" src={view1} alt="" />
+              </div>
+              <div className="content-box">
+                <div className="detail-pic-3">
+                  <h4>Your Vibe</h4>
+                  <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Maxime, voluptates.
+                  </p>
+                  <a href="#">Lake</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
       <div className="section-2">
         <div className="text-box">
-          <h2>Oil Picture Auction</h2>
-          <p>
+          <h2 className="animate-text">Oil Picture Auction</h2>
+          <p className="animate-text">
             Our oil paintings capture timeless beauty with rich textures and
             vibrant colors, making each piece a unique treasure for collectors."
             "Every brushstroke tells a story—these oil artworks are crafted to
@@ -258,60 +306,74 @@ function HomePage() {
           </p>
         </div>
         <div className="images-show">
-          <img src={view2} alt="" />
+          <img className="animate-image" src={view2} alt="" />
         </div>
       </div>
-      <div className="Artis-card">
-        <div className="cover-box">
+      <div className="cover-card-artis">
+        <Slider {...settings}>
           {usersToFilter.map((user) => {
+            const profilePicUrl = user.acc_profile_pic
+              ? `http://localhost:5000/images/profiles/${user.acc_profile_pic}`
+              : null;
             return (
-              <div className="cover-card" key={user.acc_id}>
-                {/* Bakcground */}
-                <div className="bg-content">
-                  <span className="icon-follow">
-                    <Icon icon="Element Plus"></Icon>
-                  </span>
-                </div>
-                {/* Profile */}
-                <div className="profile-content">
-                  <img src={img3} alt="" />
-                </div>
-                {/* detail content */}
-                <div className="detail-content">
-                  <h2 id="artis-name">{user.acc_username}</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Excepturi, debitis!
-                  </p>
+              <div className="card-artis">
+                <div className="backgroun-artis">
+                  <a href="#">
+                    <Icon icon="line-md:plus" className="bg-icon"></Icon>Follow
+                  </a>
+                  <div className="cover-profile-art">
+                    <img src={profilePicUrl} alt="" className="profile-art" />
+                  </div>
                 </div>
 
-                {/* Post Like content */}
-                <div className="post-like-content">
-                  <div className="like-content">
-                    <h4>10.9K</h4>
-                    <p>Likes</p>
+                <div className="detail">
+                  <div className="username-detail">
+                    <h3 className="username-art">{user.acc_username}</h3>
+                    <p>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Optio, illum.
+                    </p>
                   </div>
-                  <div className="post-content">
-                    <h4>100</h4>
-                    <p>Posts</p>
+                  <div className="all-followerPost">
+                    <div className="detail-LikePost">
+                      <div className="amout-FP">
+                        <h3>200K</h3>
+                      </div>
+                      <h4>Likes</h4>
+                    </div>
+                    <div className="detail-LikePost">
+                      <div className="amout-FP">
+                        <h3>100</h3>
+                      </div>
+                      <h4>Post</h4>
+                    </div>
                   </div>
                 </div>
-                {/* Social media content */}
-                <div className="socialmedea-content">
-                  <a href="#">
-                    <Icon icon={"typcn:social-instagram"} />
+                <div className="footer-artis">
+                  <a href="">
+                    <Icon
+                      icon="ion:social-github"
+                      className="icon-social"
+                    ></Icon>
                   </a>
-                  <a href="#">
-                    <Icon icon={"ion:social-github"} />
+                  <a href="">
+                    <Icon
+                      icon="foundation:social-linkedin"
+                      className="icon-social"
+                    ></Icon>
                   </a>
-                  <a href="#">
-                    <Icon icon={"ion:social-linkedin"} />
+                  <a href="">
+                    <Icon
+                      icon="mingcute:social-x-fill"
+                      className="icon-social"
+                    ></Icon>
                   </a>
                 </div>
               </div>
             );
           })}
-        </div>
+        </Slider>
+        ;
       </div>
     </>
   );

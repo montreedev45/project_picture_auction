@@ -1,12 +1,95 @@
+@media screen and (max-width: 768px) {
+  .logo-menu-list {
+    .icons-menu-list {
+      display: block !important;
+      width: 30px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #fff;
+    }
+  }
+  .icon-profile {
+    display: none;
+  }
+  .navbar-right .nav-button {
+    display: none;
+  }
+  .navbar-center {
+    display: none;
+  }
+  .navbar-center input {
+    display: none;
+  }
+  .search-input-wrapper input {
+    display: none;
+  }
+}
+.topnav {
+  display: block;
+  background-color: aqua;
+}
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto;
+  gap: 30px;
+
   padding: 10px 20px;
   background: none;
   padding: 2rem;
   backdrop-filter: blur(2px);
   color: #fff;
+  width: 100%;
+  & ul {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & .navbar-left {
+      width: 100%;
+      & .navbar-brand {
+        font-size: 2rem;
+        list-style: none;
+        color: #fff;
+        text-decoration: none;
+      }
+      & .icon-logo {
+        font-size: 2rem;
+      }
+    }
+    & .navbar-center {
+      width: 100%;
+      position: relative;
+
+      & .search-input-wrapper input {
+        border: none;
+        outline: none;
+        height: 30px;
+        width: 100%;
+        border-radius: 10px;
+        padding: 10px;
+        display: block;
+      }
+      & .search-input-wrapper .search-icon-overlay {
+        position: absolute;
+        color: #858282;
+        right: 6px;
+        top: 5px;
+        font-size: 22px;
+      }
+    }
+    & .navbar-right {
+      width: 100%;
+      display: block;
+    }
+    & .logo-menu-list {
+      width: 10%;
+      & .icons-menu-list {
+        display: none;
+      }
+    }
+  }
 }
 
 .nav.fixed {
@@ -19,12 +102,13 @@ nav {
   z-index: 999;
   height: 100%;
 }
-
+/* 
 .navbar-left {
   width: 30%;
   display: flex;
   justify-content: start;
 }
+
 .navbar-left > .navbar-brand {
   color: #ffffff;
   font-weight: bold;
@@ -43,7 +127,7 @@ nav {
   justify-content: center;
   align-items: center;
   max-width: 200px;
-  width: "100%";
+  width: 100%;
 }
 .navbar-center > .search-input-wrapper {
   position: relative;
@@ -72,7 +156,6 @@ nav {
   color: #666;
   cursor: pointer;
 }
-
 .layout-container {
   width: 100%;
   background-image: url(./assets/Auction.jpg);
@@ -82,8 +165,37 @@ nav {
   height: 100%;
   position: relative;
 }
+.link-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-.navbar-right {
+  & .sign-in-text {
+    margin: 0 20px;
+    font-size: 20px;
+    text-decoration: none;
+    & .sign-page {
+      color: #fff;
+    }
+  }
+  & .sign-up-btn {
+    margin: 0 20px;
+    text-decoration: none;
+    font-size: 20px;
+    & .sign-page {
+      color: #fff;
+      transition: 0.3s;
+    }
+  }
+  & .sign-up-btn:focus,
+  .sign-up-btn:hover,
+  .sign-in-text:focus,
+  .sign-in-text:hover {
+    color: #fff;
+    transform: scale(1.2);
+  }
+}
+/* .navbar-right {
   width: 30%;
   display: flex;
   justify-content: end;
@@ -93,6 +205,7 @@ nav {
   text-decoration: none;
   font-size: 2rem;
   color: #ffffff;
+  text-decoration: none;
   padding: 10px 20px;
   border-radius: 20px;
   font-weight: bold;
@@ -106,7 +219,7 @@ nav {
   border-radius: 20px;
   font-weight: bold;
   letter-spacing: 2px;
-}
+} */
 
 .navbar-profile-pic {
   width: 100%;
@@ -172,6 +285,8 @@ nav {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .dropdown {

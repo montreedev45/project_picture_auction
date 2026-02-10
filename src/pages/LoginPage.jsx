@@ -42,8 +42,7 @@ function LoginPage() {
       // นำผู้ใช้ไปยังหน้าใหม่ หลังจากที่ Context State ถูกอัปเดตแล้ว
       navigate("/mybid");
     } catch (error) {
-      let errorMessage =
-        "login failed, Pless check username or password";
+      let errorMessage = "login failed, Pless check username or password";
 
       if (
         error.response &&
@@ -57,7 +56,7 @@ function LoginPage() {
         username: "",
         password: ""
       })
-      setError(errorMessage)
+      setError(errorMessage);
     }
   };
 
@@ -112,8 +111,12 @@ function LoginPage() {
         </div>
 
         <div className="div-forget-account">
-          <Link to="/forGetPass" className="forget">Forget Password</Link>
-          <Link to="/SignUp" className="account">Don't have an account</Link>
+          <Link to="/forGetPass" className="forget">
+            Forget Password
+          </Link>
+          <Link to="/SignUp" className="account">
+            Don't have an account
+          </Link>
         </div>
         {/* {errorMsg && <p style={{ color: "red", margin:0 }}>Error: {errorMsg}</p>} */}
 

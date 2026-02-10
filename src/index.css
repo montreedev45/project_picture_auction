@@ -20,7 +20,7 @@
 /* คุณยังสามารถคงค่าอื่นๆ ไว้ที่ body ได้ */
 body {
   /* background-image: url(./assets/Auction.jpg); */
-
+  width: 100%;
   margin: 0;
   padding: 0;
   /* ไม่จำเป็นต้องมี box-sizing: border-box; ซ้ำที่นี่แล้ว แต่มีไว้ก็ไม่เสีย */
