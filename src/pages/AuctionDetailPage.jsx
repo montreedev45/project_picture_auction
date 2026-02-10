@@ -7,8 +7,9 @@ import io from "socket.io-client";
 import useCountdownTimer from "../components/useCountdownTimer";
 import { useError } from "../components/ErrorContext";
 import { useAuth } from "../components/AuthContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
-const SOCKET_SERVER_URL = "http://localhost:5000";
+const SOCKET_SERVER_URL = API_URL;
 let socket = null;
 
 // ------------------------------------------------------------------
@@ -44,7 +45,6 @@ function AuctionDetailPage() {
 
 
   useEffect(() => {
-    console.log("fetch profile")
     fetchUserProfile(token, userId)
   }, [bidHistory])
   // ------------------------------------------------------------------
@@ -56,7 +56,7 @@ function AuctionDetailPage() {
 
     // 2. การจัดการ Connection/Room Join
     socket.on("connect", () => {
-      // console.log("🔗 Connected to Socket Server (ID: " + socket.id + ")");
+      console.log("🔗 Connected to Socket Server (ID: " + socket.id + ")");
       // console.log(`Debug Client: Joining room with ID: ${id}`);
       socket.emit("join_auction", id);
     });
@@ -68,7 +68,6 @@ function AuctionDetailPage() {
 
     // 4. Listener สำหรับการอัปเดตข้อมูลทั้งหมด จาก broadcast ที่ส่งมา
     socket.on("auction_update", (data) => {
-      console.log("Received real-time update:", data);
 
       if (data.product) {
         setProduct(data.product);
@@ -97,9 +96,9 @@ function AuctionDetailPage() {
       try {
         // ใช้ Promise.allSettled เพื่อยิง api พร้อมกัน
         const [productResult, historyResult] = await Promise.allSettled([
-          axios.get(`http://localhost:5000/api/auction/product/${id}`),
+          axios.get(`${API_URL}/api/auction/product/${id}`),
           axios.get(
-            `http://localhost:5000/api/auction/products/${id}/history`,
+            `${API_URL}/api/auction/products/${id}/history`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -162,7 +161,7 @@ function AuctionDetailPage() {
         return;
       }
 
-      const Auction_Url = `http://localhost:5000/api/auction/products/${id}/bids`;
+      const Auction_Url = `${API_URL}/api/auction/products/${id}/bids`;
       await axios.post(Auction_Url, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -228,7 +227,7 @@ function AuctionDetailPage() {
 
   const historyData = Array.isArray(bidHistory) ? bidHistory : [];
   const imageSource = product?.pro_imgurl
-    ? `http://localhost:5000/images/products/${product.pro_imgurl}`
+    ? `${API_URL}/images/products/${product.pro_imgurl}`
     : "";
 
   if (loading) {

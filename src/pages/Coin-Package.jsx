@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../components/AuthContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function CoinPackage() {
   const [coinPacket, SetCoinPacket] = useState([500, 1000, 10000]);
@@ -13,7 +14,7 @@ function CoinPackage() {
       //const coinPacket = 500
       const payload = { coinPacket: coin };
       await axios.post(
-        `http://localhost:5000/api/auction/coin-packet`,
+        `${API_URL}/api/auction/coin-packet`,
         payload,
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -5,6 +5,7 @@ import axios from "axios";
 import LikeButton from "./LikeButton";
 import { useError } from "../components/ErrorContext";
 import { useAuth } from "../components/AuthContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function MybidPage() {
   const { setError } = useError();
@@ -20,11 +21,10 @@ function MybidPage() {
 
   useEffect(() => {
     const fecth_products = async () => {
-      console.log(1)
       setError(null);
       setLoading(true); // ตั้งค่า Loading เป็น true ก่อนเริ่ม Fetch
       try {
-        const API_URL = `http://localhost:5000/api/auction/products`;
+        const API_URL = `${API_URL}/api/auction/products`;
         const res = await axios.get(API_URL, {
           params: { page: "mybid", userId: currentUserId }
         });
@@ -70,7 +70,7 @@ function MybidPage() {
       <div className="mybid-container">
         <div className="mybid-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}`;
+            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
             const statusClass = product.pro_status

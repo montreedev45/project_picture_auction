@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./UpdatePasswordPage.css";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function ResetPasswordPage() {
   const { token } = useParams();
@@ -20,7 +21,7 @@ function ResetPasswordPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/auction/reset-password/${token}`,
+        `${API_URL}/api/auction/reset-password/${token}`,
         {
           method: "POST",
           headers: {

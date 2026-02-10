@@ -3,6 +3,7 @@ import "./EndedPage.css";
 import axios from "axios";
 import { useError } from "../components/ErrorContext";
 import LikeButton from "./LikeButton";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 
 function EndedPage() {
@@ -18,7 +19,7 @@ function EndedPage() {
       setError(null);
       setLoading(true);
       try {
-        const API_URL = `http://localhost:5000/api/auction/products`;
+        const API_URL = `${API_URL}/api/auction/products`;
         const res = await axios.get(API_URL);
         const apiProducts = res.data.products || [];
 
@@ -66,7 +67,7 @@ function EndedPage() {
       <div className="ended-container">
         <div className="ended-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}` ;
+            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}` ;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
             return (
               <div className="ended-card" key={product.pro_id}>

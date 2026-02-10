@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // 💡 อย่าลืม import axios
 import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
+
 
 const LikeButton = ({ productId, initialLikeCount, userHasLiked }) => {
   const { setError } = useError();
@@ -55,7 +57,7 @@ const LikeButton = ({ productId, initialLikeCount, userHasLiked }) => {
       setIsLiked(!isLiked);
       setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
 
-      const api = `http://localhost:5000/api/auction/products/${productId}/toggle-like`;
+      const api = `${API_URL}/api/auction/products/${productId}/toggle-like`;
 
       const response = await axios.post(api, null, {
         headers: {

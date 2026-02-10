@@ -5,6 +5,7 @@ import view2 from "../assets/view2-ai-gen.png";
 import axios from "axios";
 import LikeButton from "./LikeButton";
 import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function MywinningPage() {
   const { setError } = useError();
@@ -22,7 +23,7 @@ function MywinningPage() {
       setError(null);
       setLoading(true); // ตั้งค่า Loading เป็น true ก่อนเริ่ม Fetch
       try {
-        const API_URL = `http://localhost:5000/api/auction/products`;
+        const API_URL = `${API_URL}/api/auction/products`;
         const res = await axios.get(API_URL, {
           headers: { Authorization: `Bearer ${token}` },
           params: { acc_id: currentUserId, is_time_sensitive: true },
@@ -71,7 +72,7 @@ function MywinningPage() {
         <div className="mywinning-container">
           <div className="mywinning-container-card">
             {filteredProducts.map((product) => {
-              const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}`;
+              const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
               const isSaved = product.likes?.includes(currentUserId) ?? false;
 
               const statusClass = product.pro_status

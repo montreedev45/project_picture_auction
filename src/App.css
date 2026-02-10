@@ -207,6 +207,69 @@ nav {
   font-size: 25px;
 }
 
+.mdi-bell {
+  cursor: pointer;
+}
+
+.red-dot{
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background-color: #ff0000;
+  position: absolute;
+  top: 8px;
+  left: 30px;
+}
+
+.icon-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  & span{
+    padding: 10px;
+  }
+}
+
+.notification-container{
+  position: absolute;
+  top: 80px;
+  right: 210px;
+  background-color: #ffffff;
+  width: 300px;
+  height: 350px;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #bdbdbd;
+  overflow: auto;
+  
+  & .notification-container-relative {
+    position: relative;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    color: #000;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.red {
+  background-color: #f34f4f;
+}
+
+.green {
+  background-color: #5eee65;
+}
+
+.blue {
+  background-color: #4ca3eb;
+}
+
 
 @media (min-width: 378px) and (max-width: 1000px) {
   .footer-container {

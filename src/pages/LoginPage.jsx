@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 import axios from "axios";
 import { useAuth } from "../components/AuthContext";
 import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function LoginPage() {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const API_URL = `http://localhost:5000/api/auction/login`;
+      const API_URL = `${API_URL}/api/auction/login`;
       const res = await axios.post(API_URL, formData);
 
       const token = res.data.token;

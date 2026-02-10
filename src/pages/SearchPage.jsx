@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 import { useError } from "../components/ErrorContext";
 import LikeButton from "./LikeButton";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function SearchPage() {
   const location = useLocation();
@@ -41,8 +42,8 @@ function SearchPage() {
 
     try {
       console.log("queryCriteria : ", queryCriteria);
-      const API_URL = `http://localhost:5000/api/auction/products`;
-      const res = await axios.get(API_URL, { params: queryCriteria });
+      const URL = `${API_URL}/api/auction/products`;
+      const res = await axios.get(URL, { params: queryCriteria });
 
       const apiProducts = res.data.products || [];
 
@@ -177,7 +178,7 @@ function SearchPage() {
       <div className="search-container">
         <div className="search-container-card">
           {productsArray.map((product) => {
-            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}`;
+            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
             return (

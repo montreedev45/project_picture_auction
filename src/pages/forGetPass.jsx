@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./forgetpass.css";
 import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function ForgetPasswordPage() {
   const { setError } = useError()
@@ -21,7 +22,7 @@ function ForgetPasswordPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auction/forgot-password",
+        `${API_URL}/api/auction/forgot-password`,
         {
           method: "POST",
           headers: {

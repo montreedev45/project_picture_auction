@@ -5,6 +5,7 @@ import "./ProfileSettingPage.css";
 import axios from "axios";
 import { useError } from "../components/ErrorContext";
 import { useAuth } from "../components/AuthContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function ProfileSettingPage() {
   const { setError } = useError();
@@ -77,9 +78,9 @@ function ProfileSettingPage() {
       setLoading(true);
 
       try {
-        const API_URL = `http://localhost:5000/api/auction/users/${userId}`;
+        const URL = `${API_URL}/api/auction/users/${userId}`;
         // 💡 Tech Stack: ควรกำหนด Header Authorization สำหรับการดึงข้อมูลส่วนตัวด้วย
-        const res = await axios.get(API_URL, {
+        const res = await axios.get(URL, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -87,7 +88,7 @@ function ProfileSettingPage() {
 
         // ตั้งค่ารูปภาพ Profile เดิมสำหรับแสดงผล
         const profilePicUrl = user.acc_profile_pic
-          ? `http://localhost:5000/images/profiles/${user.acc_profile_pic}`
+          ? `${API_URL}/images/profiles/${user.acc_profile_pic}`
           : null;
 
         setUserProfile({
@@ -188,11 +189,11 @@ function ProfileSettingPage() {
 
     try {
       console.log(updateFormData);
-      const API_URL = `http://localhost:5000/api/auction/users/profile`;
+      const URL = `${API_URL}/api/auction/users/profile`;
 
       // 6. ส่ง FormData Object เป็น Payload หลัก
       // 🚨 สำคัญ: เมื่อส่ง FormData ต้องใช้ POST หรือ PUT และไม่ต้องระบุ Content-Type: application/json
-      const res = await axios.put(API_URL, updateFormData, {
+      const res = await axios.put(URL, updateFormData, {
         headers: {
           // 🔑 Authorization Header ที่ถูกต้อง
           Authorization: `Bearer ${token}`,

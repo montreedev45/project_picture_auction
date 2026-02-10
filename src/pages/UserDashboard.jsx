@@ -14,10 +14,12 @@ import {
   LabelList,
   ResponsiveContainer,
 } from "recharts";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function DashBoard({ onAuthAction }) {
   const [dataDashboardPie, setdataDashboardPie] = useState([])
   const [dataDashboardBar, setdataDashboardBar] = useState([])
+  const [dropdown, setDropdown] = useState([])
   const [visiblekey, setVisiblekey] = useState({
     myBid : true,
     myWinning: true,
@@ -28,14 +30,12 @@ function DashBoard({ onAuthAction }) {
   useEffect(() => {
     const fecth_dataDashboard = async () => {
       try {
-        const API_URL = `http://localhost:5000/api/auction/products`;
-        const res = await axios.get(API_URL, {
-          params: { page: "dashboard", userId: currentUserId }
+        const URL = `${API_URL}/api/auction/products`;
+        const res = await axios.get(URL, {
+          params: { page: "dashboard", userId: currentUserId , dropdownMonth: dropdown}
         });
         const apiDataPie = res.data.dashboardPiechart || [];
         const apiDataBar = res.data.dashboardBarchart || [];
-        console.log(apiDataPie)
-        console.log(apiDataBar)
         setdataDashboardPie(apiDataPie);
         setdataDashboardBar(apiDataBar)
 
@@ -55,7 +55,39 @@ function DashBoard({ onAuthAction }) {
     };
 
     fecth_dataDashboard();
-  }, []);
+  }, [dropdown]);
+
+
+  const aggregatedData = Object.values(dataDashboardBar.reduce((acc, item) => {
+    const key = `${item.month}-${item.week}`;
+    if (!acc[key]) {
+      acc[key] = { ...item }; // สร้างก้อนใหม่ถ้ายังไม่มี
+    } else {
+      acc[key].price += item.price; // ถ้ามีแล้วให้บวกราคาเพิ่ม
+    }
+    return acc;
+  }, {}));
+
+
+  const sortedData = [...aggregatedData].sort((a, b) => {
+    // 1. เรียงเดือน (ถ้ามีหลายเดือน)
+    // หากข้อมูลมีเดือนเดียว ข้ามไปเช็ก week ได้เลย
+    const monthOrder = { "January": 1, "February": 2, "March": 3 , "April":4 , "May":5, "June":6,
+    "July":7, "August":8, "September":9, "October":10, "November":11, "December":12/* ...จนครบ */ };
+    if (a.month !== b.month) {
+      return monthOrder[a.month] - monthOrder[b.month];
+    }
+
+    // 2. เรียงสัปดาห์ (W1, W2, W3, W4)
+    // ใช้การดึงตัวเลขหลังตัว 'W' ออกมาเปรียบเทียบ
+    const weekA = parseInt(a.week.replace('W', ''));
+    const weekB = parseInt(b.week.replace('W', ''));
+    
+    return weekA - weekB;
+  });
+
+  console.log(sortedData)
+
 
   const toggleVisibility = (key) => {
     console.log(visiblekey)
@@ -100,22 +132,7 @@ function DashBoard({ onAuthAction }) {
     );
   };
 
-  
-  //Bar Chart
-  const data2 = [
-    {
-      name: "Page A",
-      uv: 10,
-      pv: 20,
-      amt: 50,
-    },
-    {
-      name: "Page B",
-      uv: 10,
-      pv: 20,
-      amt: 60,
-    },
-  ];
+
 
   const renderCustomizedLabel2 = (props) => {
     const { x, y, width, height, value } = props;
@@ -131,7 +148,7 @@ function DashBoard({ onAuthAction }) {
           textAnchor="middle"
           dominantBaseline="middle"
         >
-          {value.split(" ")[1]}
+          {value}
         </text>
       </g>
     );
@@ -142,6 +159,22 @@ function DashBoard({ onAuthAction }) {
       <div className="container-dash">
         <div className="pieChart-dash">
           <h2>User DashBoard</h2>
+          <div className="dropdown-dashBoard">
+            <select selected={dropdown} onChange={(e)=> setDropdown(e.target.value)}>
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
           <div className="pie">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart width={700} height={700}>
@@ -182,7 +215,7 @@ function DashBoard({ onAuthAction }) {
             <BarChart
               width={500}
               height={300}
-              data={dataDashboardBar}
+              data={sortedData}
               margin={{
                 top: 5,
                 right: 30,
@@ -194,11 +227,10 @@ function DashBoard({ onAuthAction }) {
               <XAxis dataKey="week" />
               <YAxis />
               <Tooltip />
-              <Legend />
-              <Bar dataKey="month" fill="#8884d8" minPointSize={5}>
-                <LabelList dataKey="price" content={renderCustomizedLabel2} />
+              {/* <Legend /> */}
+              <Bar dataKey="price" fill="#8884d8" minPointSize={5}>
+                {/* <LabelList dataKey="price" content={renderCustomizedLabel2} /> */}
               </Bar>
-              <Bar dataKey="month" fill="#82ca9d" minPointSize={10} />
             </BarChart>
           </ResponsiveContainer>
         </div>

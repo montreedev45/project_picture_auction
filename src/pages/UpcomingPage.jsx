@@ -5,6 +5,7 @@ import view2 from "../assets/view2-ai-gen.png";
 import axios from "axios";
 import LikeButton from "./LikeButton";
 import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function UpcomingPage() {
   const {setError} = useError()
@@ -22,8 +23,8 @@ function UpcomingPage() {
       setError(null);
       setLoading(true);
       try {
-        const API_URL = `http://localhost:5000/api/auction/products`;
-        const res = await axios.get(API_URL);
+        const URL = `${API_URL}/api/auction/products`;
+        const res = await axios.get(URL);
         const apiProducts = res.data.products || [];
 
         // Tech Stack: คัดลอก Array และ Object เพื่อ Immutability
@@ -64,7 +65,7 @@ function UpcomingPage() {
       <div className="upcoming-container">
         <div className="upcoming-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}` ;
+            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}` ;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
             return (

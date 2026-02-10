@@ -5,6 +5,7 @@ import { useError } from "../components/ErrorContext";
 
 import "./Sign-up.css";
 import { Icon } from "@iconify/react";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function SignUp() {
   const { setError } = useError();
@@ -32,9 +33,9 @@ function SignUp() {
     setError(null);
 
     try {
-      const API_URL = `http://localhost:5000/api/auction/register`;
+      const URL = `${API_URL}/api/auction/register`;
 
-      const res = await axios.post(API_URL, formData);
+      const res = await axios.post(URL, formData);
       console.log("Registration Success:", res.data);
       navigate("/login");
     } catch (error) {

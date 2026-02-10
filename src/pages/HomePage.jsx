@@ -17,6 +17,8 @@ import img4 from "../assets/person4.jpg";
 import img5 from "../assets/davin-fake.jpg";
 import Slider from "react-slick";
 import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
+
 
 function HomePage() {
   const { setError } = useError();
@@ -33,8 +35,8 @@ function HomePage() {
       setLoading(true);
       try {
         const [productResult, userResult] = await Promise.allSettled([
-          axios.get(`http://localhost:5000/api/auction/products`),
-          axios.get(`http://localhost:5000/api/auction/users`),
+          axios.get(`${API_URL}/api/auction/products`),
+          axios.get(`${API_URL}/api/auction/users`),
         ]);
 
         if (productResult.status === "fulfilled") {
@@ -150,7 +152,7 @@ function HomePage() {
       <div className="homepage-container w-3">
         <div className="homepage-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}`;
+            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
             return (
               <div className="card" key={product.pro_id}>
