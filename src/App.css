@@ -154,8 +154,8 @@ nav {
   transform: translateY(-50%);
   font-size: 40px;
   color: #666;
-  cursor: pointer;
-}
+} */
+
 .layout-container {
   width: 100%;
   background-image: url(./assets/Auction.jpg);
@@ -228,24 +228,6 @@ nav {
   object-fit: cover;
 }
 
-.auth-group-1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.coin {
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding-right: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  & .icon-coin {
-    font-size: 2rem;
-  }
-}
-
 .icon-profile {
   padding: 0;
   width: 70px;
@@ -261,23 +243,12 @@ nav {
   background-color: aqua;
   width: 100%;
   background: none;
-  display: grid;
-  place-items: center;
-  place-content: center;
-  gap: 2rem;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.footer-container-about,
-.footer-container-contact,
-.footer-container-social {
-  max-width: 300px;
-  min-width: 300px;
-  font-size: 20px;
-  color: #000;
-  line-height: 1.8rem;
-  letter-spacing: 0.1rem;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+  background-color: aqua;
 }
 
 .layout-main {

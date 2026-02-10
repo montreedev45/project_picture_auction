@@ -12,10 +12,10 @@ function Navbar() {
   const { isLoggedIn, logout, userProfile, fetchUserProfile } = useAuth(); // ⬅️ ดึงสถานะและฟังก์ชันจาก Context
   //console.log('userProfile : ',userProfile)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [menuList, setMenulist] = useState(false);
   const [isNotificationOpen, setIsNotification] = useState(false);
   const [notification, setNotification] = useState([]);
   const [showReddot, setShowReddot] = useState(false);
+  const [menuList, setMenulist] = useState(false);
 
   const location = useLocation();
   const currentPath = location.pathname;
@@ -297,22 +297,55 @@ function Navbar() {
           <Icon className="icon-logo" icon="mdi:gavel" /> Picture Auction
         </Link>
       </div>
-      {!shouldHideInputSearch && (
-        <div className="navbar-center">
-          <div className="search-input-wrapper">
-            <input type="text" className="navbar-search" />
-            <Icon icon="mdi:magnify" className="search-icon-overlay" />
-          </div>
-        </div>
-      )}
-      <div className="navbar-right">{authButtons}</div>
-      <div className="logo-menu-list">
-        <Icon
-          className="icons-menu-list"
-          onClick={handleAccountClick}
-          icon="mage:dash-menu"
-        />
-      </div> */}
+      // {!shouldHideInputSearch && (
+      //   <div className="navbar-center">
+      //     <div className="search-input-wrapper">
+      //       <input type="text" className="navbar-search" />
+      //       <Icon icon="mdi:magnify" className="search-icon-overlay" />
+      //     </div>
+      //   </div>
+      // )}
+
+      // <div className="navbar-right">
+      //   <div
+      //     style={{
+      //       marginRight: "2rem",
+      //       fontSize: "2rem",
+      //       display: "flex",
+      //       justifyContent: "space-between",
+      //       alignItems: "center",
+      //       fontWeight: "bold",
+      //     }}
+      //   >
+      //     {isLoggedIn && (
+      //       <div className="icon-container">
+      //         <Icon
+      //           icon="mdi-bell"
+      //           className="mdi-bell"
+      //           onClick={handleNotification}
+      //           style={{ marginRight: "1rem", fontSize: "3rem" }}
+      //         ></Icon>
+      //         {showReddot ? <span className="red-dot"></span> : ""}
+      //         {notificationBox}
+
+      //         <Icon
+      //           icon="mdi-coin"
+      //           style={{ marginRight: "1rem", fontSize: "3rem" }}
+      //         ></Icon>
+      //         <span>{userProfile?.acc_coin}</span>
+      //       </div>
+      //     )}
+      //   </div>
+      //   {authButtons}
+      // </div>
+      // <div className="navbar-right">{authButtons}</div>
+      // <div className="logo-menu-list">
+      //   <Icon
+      //     className="icons-menu-list"
+      //     onClick={handleAccountClick}
+      //     icon="mage:dash-menu"
+      //   />
+      // </div> */}
     </nav>
   );
 }

@@ -23,8 +23,8 @@ function MywinningPage() {
       setError(null);
       setLoading(true); // ตั้งค่า Loading เป็น true ก่อนเริ่ม Fetch
       try {
-        const API_URL = `${API_URL}/api/auction/products`;
-        const res = await axios.get(API_URL, {
+        const URL = `${API_URL}/api/auction/products`;
+        const res = await axios.get(URL, {
           headers: { Authorization: `Bearer ${token}` },
           params: { acc_id: currentUserId, is_time_sensitive: true },
         });

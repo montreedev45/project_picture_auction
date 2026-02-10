@@ -28,8 +28,10 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const API_URL = `${API_URL}/api/auction/login`;
-      const res = await axios.post(API_URL, formData);
+      const URL = `${API_URL}/api/auction/login`;
+  console.log("API_URL", API_URL)
+
+      const res = await axios.post(URL, formData);
 
       const token = res.data.token;
       const accId = res.data.user.acc_id;
