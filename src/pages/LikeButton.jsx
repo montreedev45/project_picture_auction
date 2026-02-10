@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // 💡 อย่าลืม import axios
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios"; // 💡 อย่าลืม import axios
+import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
+
 
 const LikeButton = ({ productId, initialLikeCount, userHasLiked }) => {
+  const { setError } = useError();
   // 🔑 State สำหรับสถานะ Like และจำนวน Like
   const [isLiked, setIsLiked] = useState(userHasLiked);
   const [likeCount, setLikeCount] = useState(initialLikeCount);
 
   const navigate = useNavigate();
   // 🔑 Tech Stack: ใช้ชื่อตัวแปรให้ตรงกันเพื่อป้องกันข้อผิดพลาด
-  const jwt = localStorage.getItem("jwt"); 
+  const jwt = localStorage.getItem("jwt");
 
   const HeartIcon = ({
     className = "icon",
@@ -42,7 +46,7 @@ const LikeButton = ({ productId, initialLikeCount, userHasLiked }) => {
     const previousCount = likeCount;
 
     // 🔑 Fix: ใช้ตัวแปร jwt ที่ดึงมาจาก localStorage
-    if (!jwt) { 
+    if (!jwt) {
       alert("กรุณาเข้าสู่ระบบ");
       navigate("/login");
       return; // ออกจาก Function ทันที
@@ -53,8 +57,8 @@ const LikeButton = ({ productId, initialLikeCount, userHasLiked }) => {
       setIsLiked(!isLiked);
       setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
 
-      const api = `http://localhost:5000/api/auction/products/${productId}/toggle-like`;
-      
+      const api = `${API_URL}/api/auction/products/${productId}/toggle-like`;
+
       const response = await axios.post(api, null, {
         headers: {
           Authorization: `Bearer ${jwt}`, // 🔑 Fix: ใช้ jwt
@@ -66,8 +70,16 @@ const LikeButton = ({ productId, initialLikeCount, userHasLiked }) => {
             }
             try {
               return JSON.parse(data);
-            } catch (e) {
-              console.error("Manual JSON Parse Failed:", data);
+            } catch (error) {
+              let errorMessage = "Manual JSON Parse Failed";
+              if (
+                error.response &&
+                error.response.data &&
+                error.response.data.message
+              ) {
+                errorMessage = error.response.data.message;
+              }
+              setError(errorMessage);
               return data;
             }
           },
@@ -75,18 +87,21 @@ const LikeButton = ({ productId, initialLikeCount, userHasLiked }) => {
       });
 
       // 2. Optional: ยืนยันค่าจาก Server (ถ้า Server ส่ง Body กลับมา)
-      if (response.data && typeof response.data.likeCount !== 'undefined') {
-          // 💡 Tech Stack: อัปเดตด้วยค่าที่ถูกต้องจาก Server เพื่อความน่าเชื่อถือ
-          // setIsLiked(response.data.pro_islike);
-          // setLikeCount(response.data.likeCount);
+      if (response.data && typeof response.data.likeCount !== "undefined") {
+        // 💡 Tech Stack: อัปเดตด้วยค่าที่ถูกต้องจาก Server เพื่อความน่าเชื่อถือ
+        // setIsLiked(response.data.pro_islike);
+        // setLikeCount(response.data.likeCount);
       }
-
     } catch (error) {
-      console.error("Failed to toggle like:", error);
-      alert("บันทึก Like ไม่สำเร็จ กรุณาลองอีกครั้ง");
-      // 3. Revert State (ถ้า API Error)
-      // setIsLiked(previousLikedState);
-      // setLikeCount(previousCount);
+      let errorMessage = "Failed to toggle like";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage);
     }
   };
 

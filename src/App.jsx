@@ -23,6 +23,8 @@ import UpdatePasswordPage from "./pages/UpdatePasswordPage";
 import ForgetPasswordPage from "./pages/forGetPass";
 import ResetPasswordPage from "./pages/reSetPass";
 import { ErrorProvider } from "./components/ErrorContext";
+import CoinPackage from "./pages/Coin-Package";
+
 
 function App() {
   return (
@@ -66,6 +68,10 @@ function App() {
                 <Route
                   path="/auction-detail/:id"
                   element={<AuctionDetailPage />}
+                />
+                <Route
+                  path="/coin-packet"
+                  element={<CoinPackage />}
                 />
               </Route>
             </Routes>

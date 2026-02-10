@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./UpdatePasswordPage.css";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function ResetPasswordPage() {
   const { token } = useParams();
@@ -20,7 +21,7 @@ function ResetPasswordPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/auction/reset-password/${token}`,
+        `${API_URL}/api/auction/reset-password/${token}`,
         {
           method: "POST",
           headers: {
@@ -42,7 +43,15 @@ function ResetPasswordPage() {
 
       return await response.json();
     } catch (error) {
-      throw error;
+      let errorMessage = "Reset Password fail please try again";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage);
     }
   };
 
@@ -57,11 +66,17 @@ function ResetPasswordPage() {
       // 🔑 (6) เรียกฟังก์ชันและส่งค่าจริงเข้าไป
       const data = await ResetPasswordAPI(token, reSetPassValue);
 
-      console.log("Reset Password successfully:", data);
       alert("Reset Password successfully");
     } catch (error) {
-      console.error("Reset Password Error:", error.message);
-      alert(`Error: ${error.message}`);
+      let errorMessage = "Reset Password error.";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage);
     }
   };
   return (

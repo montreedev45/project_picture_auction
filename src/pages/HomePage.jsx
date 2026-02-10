@@ -20,10 +20,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import "../index.css";
+import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
+
 
 function HomePage() {
+  const { setError } = useError();
   const [products, setProducts] = useState([]); // State สำหรับจัดการสินค้า // State สำหรับจัดการสินค้า
-  const [error, setError] = useState(null); // State สำหรับจัดการข้อผิดพลาด
   const [loading, setLoading] = useState(true); // State สำหรับจัดการสถานะการโหลด
 
   const [users, setUsers] = useState([]); // user account state
@@ -33,12 +36,11 @@ function HomePage() {
 
   useEffect(() => {
     const fecth_products = async () => {
-      setError(null);
       setLoading(true);
       try {
         const [productResult, userResult] = await Promise.allSettled([
-          axios.get(`http://localhost:5000/api/auction/products`),
-          axios.get(`http://localhost:5000/api/auction/users`),
+          axios.get(`${API_URL}/api/auction/products`),
+          axios.get(`${API_URL}/api/auction/users`),
         ]);
 
         if (productResult.status === "fulfilled") {
@@ -78,11 +80,16 @@ function HomePage() {
             setUsers([]);
           }
         }
-      } catch (err) {
-        const errorMsg =
-          err.response?.data?.message || "Failed to connect to server.";
-
-        setError(errorMsg);
+      } catch (error) {
+        let errorMessage = "fetch products failed, Pless check server"
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          errorMessage = error.response.data.message;
+        }
+        setError(errorMessage);
         setProducts([]); // setProducts ให้เป็น Array เปล่าเสมอ
       } finally {
         setLoading(false); // ต้องปิด Loading เสมอ ไม่ว่าจะสำเร็จหรือผิดพลาด
@@ -116,11 +123,6 @@ function HomePage() {
   // UX/UI: แสดงสถานะ Loading ก่อน
   if (loading) {
     return <div className="loading-state">Loading Auction Products...</div>; // ใส่ Loading Component ของคุณที่นี่
-  }
-
-  // UX/UI: แสดงสถานะ Error
-  if (error) {
-    return <div className="error-state">Error: {error}</div>; // Error UI ของคุณที่นี่
   }
 
   // 💡 UX/UI: แสดง No Data Found
@@ -174,7 +176,6 @@ function HomePage() {
   {
   }
   const usersToFilter = Array.isArray(users) ? users : [];
-  console.log(usersToFilter);
 
   const loopPic = [
     { image1: "../assets/Mountain.jpg" },
@@ -184,6 +185,9 @@ function HomePage() {
   ];
   return (
     <>
+      <div className="bg-red rounded-xl shadow-2xl p-6 w-80 mx-auto mt-10">
+        test tailwind
+      </div>
       <div className="div-text">
         <h1>Picture Auction</h1>
         <p>The Real-time Digital Art Bidding Platform</p>
@@ -194,7 +198,7 @@ function HomePage() {
       <div className="homepage-container">
         <div className="homepage-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}`;
+            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
             return (
               <div className="card" key={product.pro_id}>

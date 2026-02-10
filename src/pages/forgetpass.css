@@ -1,12 +1,19 @@
 .forget-password-container {
-  height: 40vh;
+  background-color: #756f72de;
+  width: auto;
+  padding: 1rem;
+  border-radius: 2rem;
+  margin: 1rem;
+  margin-bottom: 5rem;
 }
 .forget-password-div-text {
   margin-top: 5rem;
   margin-bottom: 2rem;
+  text-align: center;
 
   && h1 {
     font-size: 3rem;
+    color: #ffffff;
   }
 }
 label {
@@ -37,14 +44,15 @@ label span {
   pointer-events: none;
   color: lightgray;
   transition: 0.3s;
+  
 }
 
 label .currentEmail:focus ~ span,
 label .currentEmail:valid ~ span {
-  transform: translateY(-30px);
-  background-color: rgb(250, 250, 250);
+  transform: translateY(-40px);
+  background-color: transparent;
   transition: 0.3s;
-  color: black;
+  color: rgb(54, 54, 54);
 }
 .btn-send {
   background: none;

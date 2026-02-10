@@ -6,6 +6,8 @@
     padding: 40px 20px;
     background-color: #f8f9fa; 
     margin-bottom: 2rem;
+    margin-top: 4rem;
+    border-radius: 2rem;
 }
 
 .search-container-card {
@@ -121,4 +123,23 @@ background-color: #0056b3;
   font-size: 40px;
   color: #666;
   cursor: pointer;
+}
+
+.criteria-container{
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 20px;
+}
+
+@media (min-width:378px) and (max-width:600px){
+  .search-container-card{
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width:601px) and (max-width:900px){
+  .search-container-card{
+    grid-template-columns: 1fr 1fr;
+  }
 }

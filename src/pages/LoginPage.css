@@ -1,5 +1,7 @@
 .login-container {
-  width: 600px;
+  width: 100%;
+  max-width: 500px;
+  min-width: 250px;
   margin-top: 100px;
   margin-bottom: 200px;
   border-radius: 8px;
@@ -176,4 +178,15 @@ form > .button-submit:hover {
   color: #000;
   font-size: 15px;
   transition: 0.3s;
+}
+
+
+@media (min-width: 901px) and (max-width: 1440px) {
+
+}
+@media (min-width: 901px) and (max-width: 1440px) {
+
+}
+@media (min-width: 901px) and (max-width: 1440px) {
+
 }

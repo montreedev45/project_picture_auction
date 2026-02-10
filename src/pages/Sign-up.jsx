@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useError } from "../components/ErrorContext";
 
 import "./Sign-up.css";
 import { Icon } from "@iconify/react";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function SignUp() {
+  const { setError } = useError();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -19,7 +22,6 @@ function SignUp() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,18 +30,24 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // ⚠️ สำคัญ: ป้องกันการ Reload Page
-    setErrorMsg(null);
+    setError(null);
 
     try {
-      const API_URL = `http://localhost:5000/api/auction/register`;
+      const URL = `${API_URL}/api/auction/register`;
 
-      const res = await axios.post(API_URL, formData);
+      const res = await axios.post(URL, formData);
       console.log("Registration Success:", res.data);
       navigate("/login");
-    } catch (err) {
-      let errorMessage = "";
-      errorMessage = err.response.data.message;
-      setErrorMsg(errorMessage);
+    } catch (error) {
+      let errorMessage = "Register failed, Pless try again";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage);
     }
   };
 
@@ -182,8 +190,6 @@ function SignUp() {
           />
           <span className="address-place">Address</span>
         </div>
-
-        {errorMsg && <p style={{ color: "red", margin:0 }}>Error: {errorMsg}</p>}
 
         <button type="submit" className="button-submit">
           sign up

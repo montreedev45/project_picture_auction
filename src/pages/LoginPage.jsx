@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 import axios from "axios";
 import { useAuth } from "../components/AuthContext";
 import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function LoginPage() {
   const [formData, setFormData] = useState({
@@ -27,15 +28,18 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const API_URL = `http://localhost:5000/api/auction/login`;
-      const res = await axios.post(API_URL, formData);
+      const URL = `${API_URL}/api/auction/login`;
+  console.log("API_URL", API_URL)
+
+      const res = await axios.post(URL, formData);
 
       const token = res.data.token;
       const accId = res.data.user.acc_id;
+      const username = res.data.user.acc_username
       const userProfileData = res.data.user;
 
       // ต้องเรียกใช้ login() แบบ await
-      await login(token, accId, userProfileData);
+      await login(token, accId, username, userProfileData);
 
       // นำผู้ใช้ไปยังหน้าใหม่ หลังจากที่ Context State ถูกอัปเดตแล้ว
       navigate("/mybid");
@@ -49,6 +53,11 @@ function LoginPage() {
       ) {
         errorMessage = error.response.data.message;
       }
+      setFormData({
+        ...formData,
+        username: "",
+        password: ""
+      })
       setError(errorMessage);
     }
   };
@@ -65,7 +74,7 @@ function LoginPage() {
     <div className="login-container">
       <h1>Welcome Back</h1>
 
-      <form onSubmit={handleSubmit} className="cover-form">
+      <form onSubmit={handleSubmit} className="cover-form" >
         <div className="div-username">
           <Icon className="icon-username" icon="mdi:email-outline" />
           <input

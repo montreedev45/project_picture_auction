@@ -6,6 +6,7 @@
 .mybid-div-text > h1{
     font-size: 3rem;
 }
+
 .mybid-container {
     display: flex;
     flex-direction: column;
@@ -13,13 +14,15 @@
     padding: 40px 20px;
     background-color: #f8f9fa; 
     margin-bottom: 2rem;
+    border-radius: 2rem;
 }
 
 .mybid-container-card {
     /* Responsive Grid: แสดง Card ให้อัตโนมัติตามความกว้าง */
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr; 
-    gap: 30px;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* background-color: #FF0004;  */
+    gap: 10px;
     max-width: 900px;
     width: 100%;
 }
@@ -47,7 +50,7 @@ transition: box-shadow 0.3s, transform 0.3s;
     padding: 8px 18px;
     border-radius: 15px;
 }
-.mybid-card-status-rebid {
+.mybid-card-status-ended {
     position: relative;
     background-color: #FF0004;
     padding: 8px 18px;
@@ -81,7 +84,7 @@ margin: 4px 0;
 .mybid-card-button {
 display: flex;
 align-items: center;
-justify-content: end;
+justify-content: space-between;
 margin-top: 15px;
 border-top: 1px dashed #eee;
 }
@@ -101,4 +104,29 @@ transition: background-color 0.3s;
 
 .button:hover {
 background-color: #0056b3;
+}
+
+@media (min-width: 375px) and (max-width: 640px) {
+
+    .mybid-container{
+        padding: 2rem;
+    }
+    .mybid-container-card {
+        grid-template-columns: 1fr;
+    }
+
+    .mybid-card{
+        margin-bottom: 2rem;
+    }
+
+    
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+    .mybid-container-card {
+        grid-template-columns: 1fr 1fr ;
+    }
+    .mybid-card{
+        margin: 0.5rem;
+    }
 }

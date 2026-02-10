@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import "./UpdatePasswordPage.css";
+import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function UpdatePasswordPage() {
+  const {setError} = useError()
   const [currentPassword, setcurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -21,7 +24,7 @@ function UpdatePasswordPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auction/profile/password",
+        `${API_URL}/api/auction/profile/password`,
         {
           method: "PUT",
           headers: {
@@ -59,11 +62,17 @@ function UpdatePasswordPage() {
         newPasswordValue
       );
 
-      console.log("Password updated successfully:", data);
       alert("Password updated!");
     } catch (error) {
-      console.error("Password Update Error:", error.message);
-      alert(`Error: ${error.message}`);
+      let errorMessage = "Password Update Failed"
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          errorMessage = error.response.data.message;
+        }
+        setError(errorMessage);
     }
   };
   return (

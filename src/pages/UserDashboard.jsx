@@ -1,6 +1,7 @@
-import React from "react";
+import {useEffect, useMemo, React, useState} from "react";
 import "./dashBoard.css";
 import { Pie, PieChart } from "recharts";
+import axios from "axios";
 import {
   BarChart,
   Bar,
@@ -13,14 +14,93 @@ import {
   LabelList,
   ResponsiveContainer,
 } from "recharts";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function DashBoard({ onAuthAction }) {
-  //Pie Chart
-  const data = [
-    { name: "Group A", value: 300 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 },
-  ];
+  const [dataDashboardPie, setdataDashboardPie] = useState([])
+  const [dataDashboardBar, setdataDashboardBar] = useState([])
+  const [dropdown, setDropdown] = useState([])
+  const [visiblekey, setVisiblekey] = useState({
+    myBid : true,
+    myWinning: true,
+    saveItem: true
+  })
+  const currentUserId = localStorage.getItem("acc_id")
+
+  useEffect(() => {
+    const fecth_dataDashboard = async () => {
+      try {
+        const URL = `${API_URL}/api/auction/products`;
+        const res = await axios.get(URL, {
+          params: { page: "dashboard", userId: currentUserId , dropdownMonth: dropdown}
+        });
+        const apiDataPie = res.data.dashboardPiechart || [];
+        const apiDataBar = res.data.dashboardBarchart || [];
+        setdataDashboardPie(apiDataPie);
+        setdataDashboardBar(apiDataBar)
+
+      } catch (error) {
+        console.log(error)
+        let errorMessage = "fetch products failed, Pless check server";
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          errorMessage = error.response.data.message;
+        }
+        setdataDashboardPie([]); // setProducts ให้เป็น Array เปล่าเสมอ
+        setdataDashboardBar([])
+      } 
+    };
+
+    fecth_dataDashboard();
+  }, [dropdown]);
+
+
+  const aggregatedData = Object.values(dataDashboardBar.reduce((acc, item) => {
+    const key = `${item.month}-${item.week}`;
+    if (!acc[key]) {
+      acc[key] = { ...item }; // สร้างก้อนใหม่ถ้ายังไม่มี
+    } else {
+      acc[key].price += item.price; // ถ้ามีแล้วให้บวกราคาเพิ่ม
+    }
+    return acc;
+  }, {}));
+
+
+  const sortedData = [...aggregatedData].sort((a, b) => {
+    // 1. เรียงเดือน (ถ้ามีหลายเดือน)
+    // หากข้อมูลมีเดือนเดียว ข้ามไปเช็ก week ได้เลย
+    const monthOrder = { "January": 1, "February": 2, "March": 3 , "April":4 , "May":5, "June":6,
+    "July":7, "August":8, "September":9, "October":10, "November":11, "December":12/* ...จนครบ */ };
+    if (a.month !== b.month) {
+      return monthOrder[a.month] - monthOrder[b.month];
+    }
+
+    // 2. เรียงสัปดาห์ (W1, W2, W3, W4)
+    // ใช้การดึงตัวเลขหลังตัว 'W' ออกมาเปรียบเทียบ
+    const weekA = parseInt(a.week.replace('W', ''));
+    const weekB = parseInt(b.week.replace('W', ''));
+    
+    return weekA - weekB;
+  });
+
+  console.log(sortedData)
+
+
+  const toggleVisibility = (key) => {
+    console.log(visiblekey)
+    setVisiblekey(prev => ({
+      ...prev,
+      [key] : !prev[key]
+    }))
+  }
+
+  const filterData = useMemo(()=>{
+    return dataDashboardPie.filter(item => visiblekey[item.key])
+  }, [dataDashboardPie,visiblekey])
+
   const RADIAN = Math.PI / 180;
   const COLORS = ["#ffb4d5", "#b4beff", "#ffd4c4", "#FF8042"];
 
@@ -51,51 +131,8 @@ function DashBoard({ onAuthAction }) {
       </text>
     );
   };
-  //Bar Chart
-  const data2 = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 8,
-      amt: 2290,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Page E",
-      uv: 18,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+
+
 
   const renderCustomizedLabel2 = (props) => {
     const { x, y, width, height, value } = props;
@@ -111,7 +148,7 @@ function DashBoard({ onAuthAction }) {
           textAnchor="middle"
           dominantBaseline="middle"
         >
-          {value.split(" ")[1]}
+          {value}
         </text>
       </g>
     );
@@ -122,11 +159,27 @@ function DashBoard({ onAuthAction }) {
       <div className="container-dash">
         <div className="pieChart-dash">
           <h2>User DashBoard</h2>
+          <div className="dropdown-dashBoard">
+            <select selected={dropdown} onChange={(e)=> setDropdown(e.target.value)}>
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
           <div className="pie">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart width={700} height={700}>
                 <Pie
-                  data={data}
+                  data={filterData}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
@@ -135,7 +188,7 @@ function DashBoard({ onAuthAction }) {
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {data.map((entry, index) => (
+                  {dataDashboardPie.map((entry, index) => (
                     <Cell
                       key={`cell-${entry.name}`}
                       fill={COLORS[index % COLORS.length]}
@@ -146,18 +199,14 @@ function DashBoard({ onAuthAction }) {
             </ResponsiveContainer>
           </div>
           <div className="slicer">
-            <label htmlFor="slicer">
-              <input className="dash-box1" type="checkbox" />
-              <span>My Bids</span>
-            </label>
-            <label htmlFor="slicer">
-              <input className="dash-box2" type="checkbox" />
-              <span>My winning</span>
-            </label>
-            <label htmlFor="slicer">
-              <input className="dash-box3" type="checkbox" />
-              <span>Ended</span>
-            </label>
+            {dataDashboardPie.map((data)=>{
+              return (
+                <label htmlFor="slicer" key={data.id}>
+                  <input className="dash-box" type="checkbox" checked={visiblekey[data.key]} onChange={() => toggleVisibility(data.key)}/>
+                  <span>{data.name}</span>
+                </label>
+              )
+            })}
           </div>
         </div>
 
@@ -166,7 +215,7 @@ function DashBoard({ onAuthAction }) {
             <BarChart
               width={500}
               height={300}
-              data={data2}
+              data={sortedData}
               margin={{
                 top: 5,
                 right: 30,
@@ -175,14 +224,13 @@ function DashBoard({ onAuthAction }) {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis dataKey="week" />
               <YAxis />
               <Tooltip />
-              <Legend />
-              <Bar dataKey="pv" fill="#8884d8" minPointSize={5}>
-                <LabelList dataKey="name" content={renderCustomizedLabel2} />
+              {/* <Legend /> */}
+              <Bar dataKey="price" fill="#8884d8" minPointSize={5}>
+                {/* <LabelList dataKey="price" content={renderCustomizedLabel2} /> */}
               </Bar>
-              <Bar dataKey="uv" fill="#82ca9d" minPointSize={10} />
             </BarChart>
           </ResponsiveContainer>
         </div>

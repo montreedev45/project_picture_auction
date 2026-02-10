@@ -1,11 +1,10 @@
-// useCountdownTimer.js
 import { useState, useEffect } from 'react';
-// สมมติฐาน: useCountdownTimer รับเวลาเริ่มต้นและเริ่มนับทุก 1 วิ
+
 const useCountdownTimer = (initialSeconds) => {
     const [seconds, setSeconds] = useState(initialSeconds);
     
     useEffect(() => {
-        // 🔑 1. ถ้า initialSeconds เป็น 0 หรือไม่ได้เริ่มนับ ให้หยุด
+        // 1. ถ้า initialSeconds เป็น 0 หรือไม่ได้เริ่มนับ ให้หยุด
         if (initialSeconds <= 0) {
             setSeconds(initialSeconds); // ตั้งค่าให้เป็น 0
             return;
@@ -25,7 +24,7 @@ const useCountdownTimer = (initialSeconds) => {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [initialSeconds]); // 🔑 Dependency: เริ่มนับใหม่เมื่อค่าเริ่มต้นเปลี่ยนไป
+    }, [initialSeconds]); // เริ่มนับใหม่เมื่อค่า initialSeconds เปลี่ยนไป
 
     return seconds;
 }

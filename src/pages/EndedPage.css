@@ -1,99 +1,73 @@
-.ended-div-text {
-    text-align: left;
-    width: 55%;
-    padding-top: 3rem;
-}
-.ended-div-text > h1{
-    font-size: 3rem;
-}
+
 .ended-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
+    padding: 3rem;
     background-color: #f8f9fa; 
     margin-bottom: 2rem;
+    margin-top: 2rem;
+    border-radius: 30px;
 }
 
 .ended-container-card {
-    /* Responsive Grid: แสดง Card ให้อัตโนมัติตามความกว้าง */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; 
     gap: 30px;
-    max-width: 900px;
     width: 100%;
 }
 
-
-/* ------------------------------------------- /
-/ 🖼️ Card and Image Styles (UX/UI) /
-/ ------------------------------------------- */
 .ended-card {
-border: 1px solid #d4d4d4;
-border-radius: 12px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-padding: 15px;
-display: flex;
-flex-direction: column;
-transition: box-shadow 0.3s, transform 0.3s;
+    border-radius: 2rem;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s, transform 0.3s;
 }
+
 .ended-card-absolute {
     position: absolute;
     padding: 15px 15px;
 }
-.card-status-sold {
+.ended-card-status-ended {
     position: relative;
     background-color: #00D9FF;
-    padding: 8px 18px;
+    padding: 0.5rem 1.5rem;
     border-radius: 15px;
 }
 .ended-card:hover {
-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-transform: translateY(-5px);
+    box-shadow: 10px 10px 15px 7px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
 }
 /* ✅ Fixed Image Size 150x150 and object-fit: cover */
 .ended-card-img {
-width: 250px;
-height: 230px;
-object-fit: cover;
-border-radius: 8px;
-margin: 0 auto 15px auto;
-display: block;
+    width: 250px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
 }
 
 .ended-card-des {
-text-align: left;
-font-size: 0.95rem;
-color: #929292;
-flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
+    text-align: left;
+    font-size: 1rem;
+    color: #929292;
+    flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
 }
 
 .ended-card-des p {
-margin: 4px 0;
+    margin: 5px 0;
 }
 
-.ended-card-button {
-display: flex;
-align-items: center;
-justify-content: end;
-margin-top: 15px;
-padding-top: 10px;
-border-top: 1px dashed #eee;
+/* mobile size */
+@media (min-width: 375px) and (max-width: 768px) {
+  .ended-container-card{
+    grid-template-columns: 1fr;
+  }
 }
-
-
-/* Bid Now Button */
-.button {
-padding: 8px 15px;
-background-color: #53B2FF;
-color: white;
-text-decoration: none;
-border-radius: 20px;
-font-weight: bold;
-font-size: 0.9rem;
-transition: background-color 0.3s;
-}
-
-.button:hover {
-background-color: #0056b3;
+@media (min-width: 769px) and (max-width: 1000px) {
+  .ended-container-card{
+    grid-template-columns: 1fr 1fr;
+  }
 }

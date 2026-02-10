@@ -9,7 +9,6 @@ export const useError = () => useContext(ErrorContext);
 
 // 3. Component Provider (ตัวจ่ายข้อมูล)
 export const ErrorProvider = ({ children }) => {
-    console.log('Error start...')
   const [errorMsg, setErrorMsg] = useState(null);
 
   const clearError = () => {

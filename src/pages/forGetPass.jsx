@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./forgetpass.css";
+import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function ForgetPasswordPage() {
+  const { setError } = useError()
   const [currentEmail, setcurrentEmail] = useState("");
 
   // 🔑 (1) แยก Service ออกไปด้านนอก
@@ -19,7 +22,7 @@ function ForgetPasswordPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auction/forgot-password",
+        `${API_URL}/api/auction/forgot-password`,
         {
           method: "POST",
           headers: {
@@ -40,7 +43,17 @@ function ForgetPasswordPage() {
 
       return await response.json();
     } catch (error) {
-      throw error;
+      let errorMessage =
+        "forgot password failed";
+
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage)
     }
   };
 
@@ -58,16 +71,26 @@ function ForgetPasswordPage() {
       console.log("Sended Email successfully:", data);
       alert("Sended Email successfully");
     } catch (error) {
-      console.error("Send Email Error:", error.message);
-      alert(`Error: ${error.message}`);
+      let errorMessage =
+        "Send email failed, Plese try again later";
+
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      setError(errorMessage)
     }
   };
   return (
     <>
-      <div className="forget-password-div-text">
+      
+      <div className="forget-password-container">
+        <div className="forget-password-div-text">
         <h1>Forget Password</h1>
       </div>
-      <div className="forget-password-container">
         <form onSubmit={handleSubmit}>
           <label htmlFor="Input Email" className="input-forgot">
             <input

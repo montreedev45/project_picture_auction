@@ -4,10 +4,12 @@ import view1 from "../assets/view1-ai-gen.png";
 import view2 from "../assets/view2-ai-gen.png";
 import axios from "axios";
 import LikeButton from "./LikeButton";
+import { useError } from "../components/ErrorContext";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function UpcomingPage() {
+  const {setError} = useError()
   const [products, setProducts] = useState([]); // State สำหรับจัดการสินค้า
-  const [error, setError] = useState(null); // State สำหรับจัดการข้อผิดพลาด
   const [loading, setLoading] = useState(true); // State สำหรับจัดการสถานะการโหลด
 
   // ----------------------------------------------------------------
@@ -21,8 +23,8 @@ function UpcomingPage() {
       setError(null);
       setLoading(true);
       try {
-        const API_URL = `http://localhost:5000/api/auction/products`;
-        const res = await axios.get(API_URL);
+        const URL = `${API_URL}/api/auction/products`;
+        const res = await axios.get(URL);
         const apiProducts = res.data.products || [];
 
         // Tech Stack: คัดลอก Array และ Object เพื่อ Immutability
@@ -31,11 +33,16 @@ function UpcomingPage() {
         }));
 
         setProducts(initialData);
-      } catch (err) {
-        const errorMsg =
-          err.response?.data?.message || "Failed to connect to server.";
-
-        setError(errorMsg); // แก้ไข: ตั้งค่า Error State
+      } catch (error) {
+        let errorMessage = "fetch products failed, Pless check server"
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          errorMessage = error.response.data.message;
+        }
+        setError(errorMessage);
         setProducts([]); // setProducts ให้เป็น Array เปล่าเสมอ
       } finally {
         setLoading(false); // ต้องปิด Loading เสมอ ไม่ว่าจะสำเร็จหรือผิดพลาด
@@ -58,7 +65,7 @@ function UpcomingPage() {
       <div className="upcoming-container">
         <div className="upcoming-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = `http://localhost:5000/images/products/${product.pro_imgurl}` ;
+            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}` ;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
             return (

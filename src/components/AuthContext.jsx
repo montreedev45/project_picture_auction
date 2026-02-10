@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 const AuthContext = createContext(null);
 
@@ -10,9 +11,12 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); // 💡 State สำหรับรอการตรวจสอบ Token/Profile
   const initialToken = localStorage.getItem("jwt");
   const initialUserId = localStorage.getItem("acc_id");
+  const initialUsername = localStorage.getItem("acc_username")
 
   const [token, setToken] = useState(initialToken);
   const [userId, setUserId] = useState(initialUserId);
+  const [username, setUsername] = useState(initialUsername);
+
   const [isLoggedIn, setIsLoggedIn] = useState(!!initialToken);
   const navigate = useNavigate();
 
@@ -28,8 +32,8 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const API_URL = `http://localhost:5000/api/auction/users/${currentUserId}`;
-      const res = await axios.get(API_URL, {
+      const URL = `${API_URL}/api/auction/users/${currentUserId}`;
+      const res = await axios.get(URL, {
         headers: { Authorization: `Bearer ${currentToken}` },
       });
 
@@ -37,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 
       // สร้าง URL รูปภาพที่สมบูรณ์
       const profilePicUrl = user.acc_profile_pic
-        ? `http://localhost:5000/images/profiles/${user.acc_profile_pic}`
+        ? `${API_URL}/images/profiles/${user.acc_profile_pic}`
         : null;
 
       // 🔑 เก็บข้อมูล Profile และ URL รูปภาพ
@@ -65,7 +69,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // 💡 Tech Stack: ใช้ API checkToken เพื่อตรวจสอบความถูกต้องของ Token
       await axios.post(
-        `http://localhost:5000/api/auction/checkToken`,
+        `${API_URL}/api/auction/checkToken`,
         {},
         { headers: { Authorization: `Bearer ${currentToken}` } }
       );
@@ -106,16 +110,18 @@ export const AuthProvider = ({ children }) => {
   // 4. Auth Actions
   // ----------------------------------------------------------------
 
-  const login = async (jwtToken, accId, profileData) => {
+  const login = async (jwtToken, accId, username,profileData) => {
     //console.log(profileData);
     localStorage.setItem("jwt", jwtToken);
     localStorage.setItem("acc_id", accId);
+    localStorage.setItem("acc_username", username)
     setIsLoggedIn(true);
     setToken(jwtToken);
     setUserId(accId);
+    setUsername(username);
 
     const profilePicUrl = profileData.acc_profile_pic
-      ? `http://localhost:5000/images/profiles/${profileData.acc_profile_pic}`
+      ? `${API_URL}/images/profiles/${profileData.acc_profile_pic}`
       : null; // 🔑 FIX: อัปเดต userProfile State ทันทีด้วยข้อมูลที่ได้รับ พร้อม URL
 
     setUserProfile({
