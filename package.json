@@ -13,7 +13,7 @@
     "@iconify/react": "^6.0.2",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/vite": "^4.1.17",
-    "axios": "^1.12.2",
+    "axios": "^1.13.5",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "react": "^19.1.1",

@@ -15,7 +15,7 @@ function Footer() {
         <div className="footer-container-contact">
           <h4>Contact & Location</h4>
           <ul>
-            <li>123/45 ถนนศิลปะดิจิทัล, เขตซอฟต์แวร์, กรุงเทพฯ 10100</li>
+            <li>123/45  กรุงเทพฯ 10100</li>
             <li>support@auction.com</li>
             <li>+66 (0) 2 XXXX XXXX</li>
           </ul>

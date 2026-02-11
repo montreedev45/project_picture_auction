@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import io, { Socket } from "socket.io-client";
+
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 const SOCKET_SERVER_URL = API_URL;
 
 function Navbar() {
+  const navigate = useNavigate()
   const { isLoggedIn, logout, userProfile, fetchUserProfile } = useAuth(); // ⬅️ ดึงสถานะและฟังก์ชันจาก Context
   //console.log('userProfile : ',userProfile)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,10 +18,11 @@ function Navbar() {
   const [notification, setNotification] = useState([]);
   const [showReddot, setShowReddot] = useState(false);
   const [menuList, setMenulist] = useState(false);
+  const [textSearch , setTextSearch] = useState("")
 
   const location = useLocation();
   const currentPath = location.pathname;
-  const pathsToHideInputSearch = ["/search"];
+  const pathsToHideInputSearch = ["/search", "/login", "/SignUp"];
   const shouldHideInputSearch = pathsToHideInputSearch.includes(currentPath);
   const acc_id = localStorage.getItem("acc_id");
   const token = localStorage.getItem("jwt");
@@ -88,7 +91,14 @@ function Navbar() {
 
   }, [showReddot]);
 
+  const handleSearch = (e) => {
+    setTextSearch(e.target.value)
+  }
 
+
+  const searchWithText = () => {
+    navigate(`/search?pro_name_input=${textSearch}`)
+  }
 
   // ใส่ไว้นอกฟังก์ชันรับ Socket
   useEffect(() => {
@@ -278,12 +288,26 @@ function Navbar() {
         {!shouldHideInputSearch && (
           <div className="navbar-center">
             <div className="search-input-wrapper">
-              <input type="text" className="navbar-search" />
-              <Icon icon="mdi:magnify" className="search-icon-overlay" />
+              <input type="text" className="navbar-search" value={textSearch} onChange={handleSearch} onKeyDown={(e) => e.key === "Enter" && searchWithText()}/>
+              <Icon icon="mdi:magnify" className="search-icon-overlay"  style={{cursor: "pointer"}} onClick={searchWithText}/>
             </div>
           </div>
         )}
-        <div className="navbar-right">{authButtons}</div>
+        <div className="navbar-right">
+          {isLoggedIn && (
+            <div className="icon-container">
+              <Icon
+                icon="mdi-bell"
+                className="mdi-bell"
+                onClick={handleNotification}
+                style={{ marginRight: "1rem", fontSize: "2.5rem" }}
+              ></Icon>
+              {showReddot ? <span className="red-dot"></span> : ""}
+              {notificationBox}
+
+              <span>{userProfile?.acc_coin}</span>
+            </div>
+          )}{authButtons}</div>
         <div className="logo-menu-list">
           <Icon
             className="icons-menu-list"

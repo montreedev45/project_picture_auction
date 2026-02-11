@@ -31,17 +31,16 @@
 nav {
   display: grid;
   grid-template-columns: auto;
-  gap: 30px;
 
-  padding: 10px 20px;
   background: none;
   padding: 2rem;
+  padding-bottom: 0;
   backdrop-filter: blur(2px);
   color: #fff;
   width: 100%;
   & ul {
+    padding: 0;
     width: 100%;
-    height: 100%;
 
     display: flex;
     align-items: center;
@@ -59,7 +58,8 @@ nav {
       }
     }
     & .navbar-center {
-      width: 100%;
+      padding: 0 2rem;
+      width: 80%;
       position: relative;
 
       & .search-input-wrapper input {
@@ -74,17 +74,19 @@ nav {
       & .search-input-wrapper .search-icon-overlay {
         position: absolute;
         color: #858282;
-        right: 6px;
+        right: 40px;
         top: 5px;
         font-size: 22px;
       }
     }
     & .navbar-right {
+      justify-content: end;
       width: 100%;
-      display: block;
+      display: flex;
     }
     & .logo-menu-list {
-      width: 10%;
+      position: absolute;
+      right: 31px;
       & .icons-menu-list {
         display: none;
       }
@@ -168,7 +170,7 @@ nav {
 .link-login {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
 
   & .sign-in-text {
     margin: 0 20px;
@@ -179,7 +181,7 @@ nav {
     }
   }
   & .sign-up-btn {
-    margin: 0 20px;
+    margin-left: 20px;
     text-decoration: none;
     font-size: 20px;
     & .sign-page {
@@ -230,25 +232,22 @@ nav {
 
 .icon-profile {
   padding: 0;
-  width: 70px;
-  height: 70px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  font-size: 3rem;
+  font-size: 2rem;
   color: #ffffff;
   cursor: pointer;
   background-color: #b3b3b3;
 }
 
 .footer-container {
-  background-color: aqua;
-  width: 100%;
-  background: none;
+  padding: 3rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   text-align: left;
-  width: 100%;
   overflow: hidden;
-  background-color: aqua;
+  background-color: rgb(247, 247, 247);
 }
 
 .layout-main {
@@ -261,7 +260,7 @@ nav {
 }
 
 .dropdown {
-  top: 130px;
+  top: 120px;
   border-radius: 5px;
   background-color: #ffffff;
   border: 2px solid #bdbdbd;
@@ -298,13 +297,13 @@ nav {
 }
 
 .red-dot{
-  width: 15px;
-  height: 15px;
+  width: 5px;
+  height: 5px;
   border-radius: 100%;
   background-color: #ff0000;
   position: absolute;
-  top: 8px;
-  left: 30px;
+  top: 15px;
+  left: 20px;
 }
 
 .icon-container{
@@ -315,13 +314,14 @@ nav {
 
   & span{
     padding: 10px;
+    margin-right: 1rem;
   }
 }
 
 .notification-container{
   position: absolute;
   top: 80px;
-  right: 210px;
+  right: 110px;
   background-color: #ffffff;
   width: 300px;
   height: 350px;
@@ -359,6 +359,12 @@ nav {
 
 @media (min-width: 378px) and (max-width: 1000px) {
   .footer-container {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    padding: 2rem;
+    align-items: center;
+  }
+
+  .icon-container > span{
+    margin-right: 2rem;
   }
 }

@@ -240,7 +240,7 @@ function HomePage() {
       {/* Vibe container */}
       <section className="Page-layout">
         <div className="cover-card-3">
-          <h2 class="main-topic">Your Vibe</h2>
+          <h2 className="main-topic">Your Vibe</h2>
           <div className="card-box">
             <div className="box">
               <div className="menu-pic">
