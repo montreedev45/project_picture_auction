@@ -7,22 +7,22 @@
     font-size: 3rem;
 }
 .mywinning-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
-    background-color: #f8f9fa; 
-    margin-bottom: 2rem;
-    border-radius: 2rem;
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 1rem;
+  margin: 3rem;
 }
 
 .mywinning-container-card {
-    /* Responsive Grid: แสดง Card ให้อัตโนมัติตามความกว้าง */
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; 
-    gap: 30px;
-    max-width: 900px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  max-width: 900px;
 }
 
 
@@ -55,12 +55,12 @@ transform: translateY(-5px);
 }
 /* ✅ Fixed Image Size 150x150 and object-fit: cover */
 .mywinning-card-img {
-width: 250px;
-height: 230px;
-object-fit: cover;
-border-radius: 8px;
-margin: 0 auto 15px auto;
-display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0 auto 15px auto;
+    display: block;
 }
 
 .mywinning-card-des {
@@ -75,12 +75,11 @@ margin: 4px 0;
 }
 
 .mywinning-card-button {
-display: flex;
-align-items: center;
-justify-content: end;
-margin-top: 15px;
-padding-top: 10px;
-border-top: 1px dashed #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    border-top: 1px dashed #eee;
 }
 
 
@@ -101,26 +100,26 @@ background-color: #0056b3;
 }
 
 
-
-@media (min-width: 375px) and (max-width: 600px) {
-
-    .mywinning-container{
-        padding: 2rem;
-    }
-    .mywinning-container-card {
-        grid-template-columns: 1fr;
-    }
-
-    .mywinning-card{
-        margin-bottom: 2rem;
-    }
+@media screen and (min-width: 150px) and (max-width: 768px) {
+  .mywinning-container {
+    max-width: 450px;
+    transition: max-width 0.2s ease;
+  }
+  .mywinning-container-card {
+    grid-template-columns: 1fr;
+  }
 }
 
-@media (min-width: 601px) and (max-width: 900px) {
-    .mywinning-container-card {
-        grid-template-columns: 1fr 1fr ;
-    }
-    .mywinning-card{
-        margin: 0.5rem;
-    }
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .mywinning-container-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .mywinning-card {
+    width: 100%;
+  }
 }
+

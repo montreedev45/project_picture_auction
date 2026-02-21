@@ -19,8 +19,8 @@ function EndedPage() {
       setError(null);
       setLoading(true);
       try {
-        const API_URL = `${API_URL}/api/auction/products`;
-        const res = await axios.get(API_URL);
+        const URL = `${API_URL}/api/auction/products`;
+        const res = await axios.get(URL);
         const apiProducts = res.data.products || [];
 
         // Tech Stack: คัดลอก Array และ Object เพื่อ Immutability

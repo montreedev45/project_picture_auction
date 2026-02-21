@@ -233,9 +233,6 @@ function ProfileSettingPage() {
 
   return (
     <>
-      <div className="profile-setting-div-text">
-        <h1>Profile Setting</h1>
-      </div>
       <div className="profile-setting-container">
         <form
           className="profile-setting-container-form"

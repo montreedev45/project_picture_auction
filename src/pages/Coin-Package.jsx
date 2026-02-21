@@ -36,8 +36,8 @@ function CoinPackage() {
 
   const style = {
     color: {color: '#141414ff'},
-    coinContainer: {width: 'auto', padding: '20px',margin:'30px', backgroundColor: '#be5454e3', display: 'flex', justifyContent: 'center',flexWrap: 'wrap',flexDirection: 'row', borderRadius: '20px', marginBottom: '50px'},
-    coinPacket: {textAlign: 'center', border: '3px solid #b3acacff', borderRadius: '20px', padding: '20px', width:'150px', margin: '15px'}
+    coinContainer: {width: 'auto', padding: '20px',margin:'30px', backgroundColor: '#fcfcfc', display: 'flex', justifyContent: 'center',flexWrap: 'wrap',flexDirection: 'row', borderRadius: '20px', marginBottom: '50px', marginTop: "3rem"},
+    coinPacket: {textAlign: 'center', border: '3px solid rgb(192, 191, 191)', borderRadius: '20px', padding: '20px', width:'150px', margin: '15px'}
   }
   return (
     <>

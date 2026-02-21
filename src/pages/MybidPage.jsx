@@ -64,9 +64,7 @@ function MybidPage() {
 
   return (
     <>
-      <div className="mybid-div-text">
-        <h1>My bids Page</h1>
-      </div>
+
       <div className="mybid-container">
         <div className="mybid-container-card">
           {filteredProducts.map((product) => {
@@ -89,7 +87,7 @@ function MybidPage() {
                   src={imageSource}
                   alt={product.pro_name}
                 />
-                <div className="mybid-edcard-des">
+                <div className="mybid-card-des">
                   <p>title : {product.pro_name}</p>
                   <p>bid price : {product.pro_price}</p>
                   <p>time remanding : {product.pro_time}</p>

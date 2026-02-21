@@ -158,7 +158,6 @@ function DashBoard({ onAuthAction }) {
     <div className="body-dash">
       <div className="container-dash">
         <div className="pieChart-dash">
-          <h2>User DashBoard</h2>
           <div className="dropdown-dashBoard">
             <select selected={dropdown} onChange={(e)=> setDropdown(e.target.value)}>
               <option value="January">January</option>

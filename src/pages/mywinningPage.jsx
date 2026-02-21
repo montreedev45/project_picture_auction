@@ -65,9 +65,6 @@ function MywinningPage() {
 
   return (
     <>
-      <div className="mywinning-div-text">
-        <h1>My Winning Page</h1>
-      </div>
       {filteredProducts && filteredProducts.length > 0 && (
         <div className="mywinning-container">
           <div className="mywinning-container-card">

@@ -89,7 +89,7 @@ function LoginPage() {
           <span className="text-place">Email or Username</span>
         </div>
 
-        <div className="div-password">
+        <div className="div-password-sign">
           <Icon className="icon-password" icon="mdi:lock-outline" />
           <input
             className="input-password"

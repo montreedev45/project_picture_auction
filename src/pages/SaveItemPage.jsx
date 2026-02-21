@@ -59,9 +59,6 @@ function SaveItemPage() {
 
   return (
     <>
-      <div className="saveitem-div-text">
-        <h1>Save Item Page</h1>
-      </div>
       {filteredProducts && filteredProducts.length > 0 && (
         <div className="saveitem-container">
           <div className="saveitem-container-card">
@@ -74,8 +71,8 @@ function SaveItemPage() {
 
               return (
                 <div className="saveitem-card" key={product.pro_id}>
-                  <div className="mybid-card-absolute">
-                    <span className={`mybid-card-status-${statusClass}`}>
+                  <div className="saveitem-card-absolute">
+                    <span className={`saveitem-card-status-${statusClass}`}>
                       {product.pro_status}
                     </span>
                   </div>

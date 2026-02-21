@@ -4,17 +4,10 @@ import axios from "axios";
 import LikeButton from "./LikeButton";
 import "./HomePage.css";
 import myImage1 from "../assets/Mountain.jpg";
-import myImage2 from "../assets/Lake.jpg";
-import myImage3 from "../assets/Beach.jpg";
 import myImage4 from "../assets/Nature.jpg";
 import view1 from "../assets/view1-ai-gen.png";
 import view2 from "../assets/view2-ai-gen.png";
 import { Icon } from "@iconify/react";
-import img1 from "../assets/person1.jpg";
-import img2 from "../assets/person2.jpg";
-import img3 from "../assets/person3.jpg";
-import img4 from "../assets/person4.jpg";
-import img5 from "../assets/davin-fake.jpg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -192,7 +185,7 @@ function HomePage() {
         <h1>Picture Auction</h1>
         <p>The Real-time Digital Art Bidding Platform</p>
         <Link to="/upcoming" className="button-view">
-          View Live Auctions
+          View More
         </Link>
       </div>
       <div className="homepage-container">
@@ -313,7 +306,7 @@ function HomePage() {
         <Slider {...settings}>
           {usersToFilter.map((user) => {
             const profilePicUrl = user.acc_profile_pic
-              ? `http://localhost:5000/images/profiles/${user.acc_profile_pic}`
+              ? `${API_URL}/images/profiles/${user.acc_profile_pic}`
               : null;
             return (
               <div className="card-artis">

@@ -77,9 +77,6 @@ function UpdatePasswordPage() {
   };
   return (
     <>
-      <div className="update-password-div-text">
-        <h1>Update Password</h1>
-      </div>
       <div className="update-password-container">
         <form onSubmit={handleSubmit}>
           <input

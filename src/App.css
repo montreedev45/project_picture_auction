@@ -321,9 +321,9 @@ nav {
 .notification-container{
   position: absolute;
   top: 80px;
-  right: 110px;
+  right: 60px;
   background-color: #ffffff;
-  width: 300px;
+  width: 250px;
   height: 350px;
   padding: 1.5rem;
   border-radius: 0.5rem;
@@ -356,6 +356,23 @@ nav {
   background-color: #4ca3eb;
 }
 
+button {
+    font-size: 1rem;
+    color: #ffffff;
+    padding: 10px 25px;
+    background-color: #53B2FF;
+    letter-spacing: 0.8px;
+    font-weight: 400;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    margin: 1.5rem 0;
+}
+
+.icon-heart{
+  background-color: #ffffff;
+  padding: 5px;
+}
 
 @media (min-width: 378px) and (max-width: 1000px) {
   .footer-container {

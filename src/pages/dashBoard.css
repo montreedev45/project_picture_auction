@@ -1,123 +1,138 @@
-:root{
- --light-purple: #b4beff;
- --light-pink:#ffb4d5;
- --lignt-with: #ffd4c4:
+:root {
+  --light-purple: #b4beff;
+  --light-pink: #f7bce5;
+  --light-white: #ffd4c4;
 }
 
+/* ---------- Layout ---------- */
 .body-dash {
-  height: 150vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: "Mooli", sans-serif;
+  margin-top: 3rem;
 }
 
-.body-dash .container-dash {
-  width: 100%;
-  height: 100%;
-
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 70px;
+.container-dash {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---------- Header ---------- */
+
+.dropdown-dashBoard {
+  background-color: aliceblue;
+  padding: 0 0.5rem;
+  border-radius: 1rem;
+  margin-top: 2rem;
+  font-size: 16px;
+  position: absolute;
+  right: 90px;
+}
+
+.dropdown-dashBoard select {
+  background-color: transparent;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  outline: none;
+  border: none;
+}
+
+/* ---------- Pie Chart ---------- */
+.pieChart-dash {
+  background-color: var(--light-pink);
+  max-width: 600px;
+  width: 100%;
+  height: 300px;
+  border-radius: 30px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  outline: gray solid 2px;
+  color: #fff;
+  margin-bottom: 4rem;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.pieChart-dash .pie {
+  grid-column: 1 / 2;
+  height: 100%;
+}
+
+.pieChart-dash .slicer {
+  grid-column: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  color: gray;
+  text-align: start;
+  padding-left: 50px;
+}
+
+.pieChart-dash .slicer label {
+  display: flex;
   align-items: center;
   justify-content: start;
-  margin-top: 320px;
-  position: relative;
-  & h2 {
-    margin-top: -65%;
-    font-size: 40px;
-    left: 0;
-    position: absolute;
-  }
-  & .dropdown-dashBoard {
-    background-color: #fff;
-    padding: 0 0.5rem;
-    border-radius: 1rem;
-    margin-top: -70%;
-    font-size: 40px;
-    left: 350px;
-    position: absolute;
-
-    & select {
-      background-color: transparent;
-      padding: 0.8rem 1rem;
-      font-size: 1.2rem;
-      outline: none;
-      border: none;
-      
-    }
-  }
-  & .pieChart-dash {
-    background-color: #ffb4d5;
-    width: 600px;
-    height: 300px;
-    border-radius: 30px;
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    outline: gray solid 2px;
-    color: #ffff;
-    position: relative;
-    & .pie {
-      width: 100%;
-      height: 100%;
-    }
-    & .slicer {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      color: gray;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-     
-      & label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        left: 50px
-      }
-
-      & .dash-box {
-        position: relative;
-        cursor: pointer;
-        margin: 10px;
-        width: 25px;
-        height: 25px;
-        background-color: #ffd4c4;
-        &input {
-          border: none;
-          background: #b4beff;
-        }
-      }
-    }
-  }
-  label span {
-    position: absolute;
-    left: 10px;
-    top: 14px;
-    font-size: 20px;
-    pointer-events: none;
-    color: #FFFF;
-    transition: 0.3s;
 }
-  /* End-Pie chart */
 
-  /* Barchart */
-  & .barChacrt-dash {
-    background-color: #b4beff;
-    width: 600px;
-    height: 300px;
-    border-radius: 30px;
-    padding: 20px;
-    outline: gray solid 2px;
+.dash-box {
+  position: relative;
+  cursor: pointer;
+  margin: 10px;
+  width: 25px;
+  height: 25px;
+  background-color: var(--light-white);
+}
+
+/* ---------- Bar Chart ---------- */
+.barChacrt-dash {
+  background-color: var(--light-purple);
+  width: 600px;
+  height: 300px;
+  border-radius: 30px;
+  padding: 20px;
+  outline: gray solid 2px;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+  margin-bottom: 3rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .pieChart-dash {
+    grid-template-columns: 1fr;
+    height: auto;
+    max-width: 350px;
+    transform: scale(0.9);
+    margin-bottom: 3rem;
   }
 
-  /* End-barchart */
+  .pieChart-dash .pie {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    height: 300px;
+  }
+
+  .pieChart-dash .slicer {
+    padding-top: 3.5rem;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    padding-left: 0;
+  }
+
+  .pieChart-dash .slicer label {
+    justify-content: center;
+  }
+
+  .dropdown-dashBoard {
+    bottom: 170px;
+  }
+
+  .barChacrt-dash {
+    max-width: 350px;
+    margin-bottom: 4rem;
+    transform: scale(0.9);
+  }
 }

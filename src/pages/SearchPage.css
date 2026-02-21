@@ -1,87 +1,105 @@
-
 .search-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
-    background-color: #f8f9fa; 
-    margin-bottom: 2rem;
-    margin-top: 4rem;
-    border-radius: 2rem;
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 1rem;
+  margin: 3rem;
 }
 
 .search-container-card {
-    /* Responsive Grid: แสดง Card ให้อัตโนมัติตามความกว้าง */
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; 
-    gap: 30px;
-    max-width: 900px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  max-width: 900px;
 }
-
 
 /* ------------------------------------------- /
 / 🖼️ Card and Image Styles (UX/UI) /
 / ------------------------------------------- */
 .search-card {
-border: 1px solid #d4d4d4;
-border-radius: 12px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-padding: 15px;
-display: flex;
-flex-direction: column;
-transition: box-shadow 0.3s, transform 0.3s;
+  border: 1px solid #d4d4d4;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  transition:
+    box-shadow 0.3s,
+    transform 0.3s;
 }
-
-.search-card:hover {
-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-transform: translateY(-5px);
+.search-card-absolute {
+  position: absolute;
+  padding: 15px 15px;
 }
-/* ✅ Fixed Image Size 150x150 and object-fit: cover */
-.search-card-img {
-width: 250px;
-height: 230px;
-object-fit: cover;
-border-radius: 8px;
-margin: 0 auto 15px auto;
-display: block;
+.search-card-status-ended {
+  position: relative;
+  background-color: #ff0004;
+  padding: 8px 18px;
+  border-radius: 15px;
 }
-
-.search-card-des {
-text-align: left;
-font-size: 0.95rem;
-color: #929292;
-flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
+.search-card-status-upcoming {
+  position: relative;
+  background-color: #70fa46;
+  padding: 8px 18px;
+  border-radius: 15px;
 }
-
-.search-card-des p {
-margin: 4px 0;
+.search-card-status-sold {
+  position: relative;
+  background-color: #ffc65c;
+  padding: 8px 18px;
+  border-radius: 15px;
 }
 
 .search-card-button {
-display: flex;
-align-items: center;
-justify-content: end;
-margin-top: 15px;
-padding-top: 10px;
-border-top: 1px dashed #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed #eee;
 }
 
+.search-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+/* ✅ Fixed Image Size 150x150 and object-fit: cover */
+.search-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0 auto 15px auto;
+  display: block;
+}
+
+.search-card-des {
+  text-align: left;
+  font-size: 0.95rem;
+  color: #929292;
+  flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
+}
+
+.search-card-des p {
+  margin: 4px 0;
+}
 
 /* Bid Now Button */
 .button {
-padding: 8px 15px;
-background-color: #53B2FF;
-color: white;
-text-decoration: none;
-border-radius: 20px;
-font-weight: bold;
-font-size: 0.9rem;
-transition: background-color 0.3s;
+  padding: 8px 15px;
+  background-color: #53b2ff;
+  color: white;
+  text-decoration: none;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
 }
 
 .button:hover {
-background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .search-input-wrapper-page {
@@ -107,39 +125,50 @@ background-color: #0056b3;
   outline: none;
 }
 .search-icon-overlay-page {
-  position: absolute; 
-  right: 20px;    
-  top: 50%;   
-  transform: translateY(-50%); 
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 40px;
   color: #666;
   cursor: pointer;
 }
 .search-icon-filter-page {
-  position: absolute; 
-  right: -45px;    
-  top: 50%;   
-  transform: translateY(-50%); 
+  position: absolute;
+  right: -45px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 40px;
   color: #666;
   cursor: pointer;
 }
 
-.criteria-container{
+.criteria-container {
   background-color: #fff;
   padding: 20px;
   margin-top: 30px;
   border-radius: 20px;
 }
 
-@media (min-width:378px) and (max-width:600px){
-  .search-container-card{
+@media screen and (min-width: 150px) and (max-width: 768px) {
+  .search-container {
+    max-width: 450px;
+    transition: max-width 0.2s ease;
+  }
+  .search-container-card {
     grid-template-columns: 1fr;
   }
 }
 
-@media (min-width:601px) and (max-width:900px){
-  .search-container-card{
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .search-container-card {
+    display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .search-card {
+    width: 100%;
   }
 }

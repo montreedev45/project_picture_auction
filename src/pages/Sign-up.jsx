@@ -5,6 +5,7 @@ import { useError } from "../components/ErrorContext";
 
 import "./Sign-up.css";
 import { Icon } from "@iconify/react";
+
 const API_URL = import.meta.env.VITE_BACKEND_URL
 
 function SignUp() {
@@ -84,7 +85,7 @@ function SignUp() {
         <div className="div-password">
           <Icon className="icon-password" icon="mdi:lock-outline" />
           <input
-            className="input-password"
+            className="input-password-up"
             type={inputType}
             id="password"
             name="password"
@@ -103,9 +104,9 @@ function SignUp() {
         </div>
 
         <div className="div-password">
-          <Icon className="icon-firstname" icon="mdi:lock-outline" />
+          <Icon className="icon-password" icon="mdi:lock-outline" />
           <input
-            className="input-password"
+            className="input-password-up"
             type={inputConfirmType}
             id="password-2"
             name="password-2"
@@ -136,7 +137,7 @@ function SignUp() {
         </div>
 
         <div className="div-lastname">
-          <Icon className="icon-firstname" icon="gravity-ui:person-fill" />
+          <Icon className="icon-lastname" icon="gravity-ui:person-fill" />
           <input
             className="input-lastname"
             type="text"
@@ -150,7 +151,7 @@ function SignUp() {
         </div>
 
         <div className="div-email">
-          <Icon className="icon-firstname" icon="gravity-ui:envelope" />
+          <Icon className="icon-email" icon="gravity-ui:envelope" />
           <input
             className="input-email"
             type="text"
@@ -164,7 +165,7 @@ function SignUp() {
         </div>
 
         <div className="div-phone">
-          <Icon className="icon-firstname" icon="gravity-ui:handset" />
+          <Icon className="icon-phone" icon="gravity-ui:handset" />
           <input
             className="input-phone"
             type="text"
@@ -178,7 +179,7 @@ function SignUp() {
         </div>
 
         <div className="div-address">
-          <Icon className="icon-firstname" icon="gravity-ui:house" />
+          <Icon className="icon-address" icon="gravity-ui:house" />
           <input
             className="input-address"
             type="text"

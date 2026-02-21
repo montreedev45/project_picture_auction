@@ -1,73 +1,114 @@
 
 .ended-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 3rem;
-    background-color: #f8f9fa; 
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-    border-radius: 30px;
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 1rem;
+  margin: 3rem;
 }
 
 .ended-container-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; 
-    gap: 30px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  max-width: 900px;
 }
 
 .ended-card {
-    border-radius: 2rem;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08);
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    transition: box-shadow 0.3s, transform 0.3s;
+border: 1px solid #d4d4d4;
+border-radius: 12px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+padding: 15px;
+display: flex;
+flex-direction: column;
+transition: box-shadow 0.3s, transform 0.3s;
 }
-
 .ended-card-absolute {
     position: absolute;
     padding: 15px 15px;
 }
 .ended-card-status-ended {
     position: relative;
-    background-color: #00D9FF;
-    padding: 0.5rem 1.5rem;
+    background-color: #ff0004;
+    padding: 8px 18px;
     border-radius: 15px;
 }
+
 .ended-card:hover {
-    box-shadow: 10px 10px 15px 7px rgba(0, 0, 0, 0.12);
-    transform: translateY(-5px);
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+transform: translateY(-5px);
 }
 /* ✅ Fixed Image Size 150x150 and object-fit: cover */
 .ended-card-img {
-    width: 250px;
-    height: 230px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 1rem;
-    margin-bottom: 1rem;
+    border-radius: 8px;
+    margin: 0 auto 15px auto;
+    display: block;
 }
 
 .ended-card-des {
-    text-align: left;
-    font-size: 1rem;
-    color: #929292;
-    flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
+text-align: left;
+font-size: 0.95rem;
+color: #929292;
+flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
 }
 
 .ended-card-des p {
-    margin: 5px 0;
+margin: 4px 0;
 }
 
-/* mobile size */
-@media (min-width: 375px) and (max-width: 768px) {
-  .ended-container-card{
+.ended-card-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    border-top: 1px dashed #eee;
+}
+
+
+/* Bid Now Button */
+.button {
+padding: 8px 15px;
+background-color: #53B2FF;
+color: white;
+text-decoration: none;
+border-radius: 20px;
+font-weight: bold;
+font-size: 0.9rem;
+transition: background-color 0.3s;
+}
+
+.button:hover {
+background-color: #0056b3;
+}
+
+
+@media screen and (min-width: 150px) and (max-width: 768px) {
+  .ended-container {
+    max-width: 450px;
+    transition: max-width 0.2s ease;
+  }
+  .ended-container-card {
     grid-template-columns: 1fr;
   }
 }
-@media (min-width: 769px) and (max-width: 1000px) {
-  .ended-container-card{
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .ended-container-card {
+    display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .ended-card {
+    width: 100%;
   }
 }
+

@@ -16,14 +16,16 @@
 
 .button-view {
   display: inline-block;
-  padding: 10px 25px;
+  padding: 15px 25px;
   margin-top: 20px;
   background-color: #53b2ff;
   color: white;
   text-decoration: none;
   border-radius: 25px;
   font-weight: bold;
-  transition: background-color 0.3s, transform 0.2s;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
 }
 
 .button-view:hover {
@@ -32,22 +34,24 @@
 }
 
 .homepage-container {
+  width: 90%;
+  max-width: 1000px;
+  transition: max-width 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
+  padding: 2rem;
   background-color: #f8f9fa;
-  margin-bottom: 2rem;
+  border-radius: 1rem;
+  margin: 0 3rem 3rem 3rem;
 }
 
 .homepage-container-card {
   /* Responsive Grid: แสดง Card ให้อัตโนมัติตามความกว้าง */
   display: grid;
-
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 30px;
+  gap: 2rem;
   max-width: 900px;
-  box-sizing: border-box;
 }
 
 /* @media screen and (min-width: 367px) and(max-width : 567px) {
@@ -64,7 +68,9 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.3s, transform 0.3s;
+  transition:
+    box-shadow 0.3s,
+    transform 0.3s;
 }
 .card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -209,7 +215,6 @@
 /* Vibe container */
 .section-2 {
   height: 90vh;
-  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 20px;
@@ -222,9 +227,24 @@
     gap: 30px;
     max-width: 900px;
     box-sizing: border-box;
+    transition: max-width 0.3s ease;
+  }
+
+  .text-box {
+    width: 100%;
+    height: 100%;
+    padding: 100px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
   }
 }
 @media screen and (min-width: 150px) and (max-width: 768px) {
+  .homepage-container {
+    max-width: 450px;
+    transition: max-width 0.2s ease;
+  }
   .homepage-container-card {
     display: grid;
     grid-template-columns: 1fr;
@@ -315,12 +335,8 @@
     grid-template-columns: 1fr;
     height: 150vh;
   }
-  /* .images-show {
-    width: 100%;
-    height: 100%;
-  } */
-  Slider {
-  }
+
+
   .card-artis {
     width: 100%;
     height: 100%;
@@ -331,19 +347,17 @@
     justify-content: center;
 
     & .animate-image {
-      width: 250px;
-      height: 250px;
-      margin-top: -30%;
+      width: 400px;
+      height: 400px;
     }
   }
 }
 
 .text-box {
-  width: 100%;
   height: 100%;
-  padding: 100px;
+  padding: 50px;
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
   & h2 {
@@ -361,11 +375,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
   height: 100%;
+  padding: 50px;
   & img {
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    min-width: 320px;
+    min-height: 300px;
+    max-height: 400px;
   }
 }
 
@@ -552,9 +568,4 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* responsive */
-
-.slide-profile {
 }

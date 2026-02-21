@@ -110,7 +110,7 @@ const LikeButton = ({ productId, initialLikeCount, userHasLiked }) => {
   const heartStrokeColor = isLiked ? "#FF4081" : "#848484";
 
   return (
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-1 like-button">
       <button className="icon-heart" onClick={handleToggleLike}>
         <HeartIcon
           size="30"

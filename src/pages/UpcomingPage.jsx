@@ -59,9 +59,6 @@ function UpcomingPage() {
 
   return (
     <>
-      <div className="upcoming-div-text">
-        <h1>Upcoming Auction Page</h1>
-      </div>
       <div className="upcoming-container">
         <div className="upcoming-container-card">
           {filteredProducts.map((product) => {
@@ -69,23 +66,23 @@ function UpcomingPage() {
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
             return (
-              <div className="card" key={product.pro_id}>
-                <div className="card-absolute">
-                  <span className={`card-status-${product.pro_status}`}>
+              <div className="upcoming-card" key={product.pro_id}>
+                <div className="upcoming-card-absolute">
+                  <span className={`upcoming-card-status-${product.pro_status}`}>
                     {product.pro_status}
                   </span>
                 </div>
                 <img
-                  className="card-img"
+                  className="upcoming-card-img"
                   src={imageSource}
                   alt={product.pro_name}
                 />
-                <div className="card-des">
+                <div className="upcoming-card-des">
                   <p>title : {product.pro_name}</p>
                   <p>bid price : {product.pro_price}</p>
                   <p>time remanding : {product.pro_time}</p>
                 </div>
-                <div className="card-button">
+                <div className="upcoming-card-button">
                   <div>
                     <LikeButton
                       productId={product.pro_id}

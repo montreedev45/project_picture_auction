@@ -18,11 +18,17 @@
   align-items: center;
   padding: 80px 20px;
   background-color: #ffffff;
+  margin-top: 3rem;
   margin-bottom: 300px;
 }
 
 .profile-setting-container-form {
+  gap: 10px;
   width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .div-img {
@@ -209,6 +215,10 @@ form > .profile-div-password > .input-password:focus {
   background-color: #299fff;
 }
 
+.button-submit{
+  font-weight: bold;
+  padding: 15px 25px;
+}
 
 .profile-pic-preview {
     /* กำหนดขนาดที่ชัดเจน */
@@ -238,6 +248,9 @@ form > .profile-div-password > .input-password:focus {
     padding: 2.5rem 0;
   }
 
+  .profile-setting-container-form {
+      gap: 20px;
+  }
   .profile-div-username, .profile-div-firstname, .profile-div-lastname, .profile-div-email, .profile-div-phone, .profile-div-address{
     padding: 0;
   }

@@ -1,7 +1,6 @@
 .login-container {
   width: 100%;
-  max-width: 500px;
-  min-width: 250px;
+  max-width: 450px;
   margin-top: 50px;
   margin-bottom: 200px;
   border-radius: 8px;
@@ -10,9 +9,10 @@
   justify-content: center;
   box-shadow: 5px 5px 5px #53b2ff;
   background-color: #ffff;
+  padding: 1rem;
 }
 h1 {
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 form {
@@ -53,7 +53,7 @@ form > .div-username > .input-username:focus {
   color: #000;
 }
 
-form > .div-password {
+form > .div-password-sign {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,12 +61,12 @@ form > .div-password {
   padding: 0px 20px;
   width: 100%;
 }
-form > .div-password > .icon-password {
+form > .div-password-sign > .icon-password {
   color: #d4d4d4;
   font-size: 40px;
   padding-right: 10px;
 }
-form > .div-password > .input-password {
+form > .div-password-sign > .input-password {
   width: 80%;
   border-radius: 10px;
   border: 3px solid #d4d4d4;
@@ -75,7 +75,7 @@ form > .div-password > .input-password {
   font-size: 20px;
   caret-color: transparent;
 }
-form > .div-password > .input-password:focus {
+form > .div-password-sign > .input-password:focus {
   border-color: #d4d4d4;
   outline: none;
   color: #000;
@@ -118,7 +118,7 @@ form > .button-submit:hover {
   box-shadow: 5px 5px 50px #53b2ff;
 }
 
-.div-password .showeyeslog {
+.div-password-sign .showeyeslog {
   font-size: 25px;
   position: absolute;
   right: 70px; /* เว้นระยะห่างจากขอบขวา 15px */
@@ -131,7 +131,7 @@ form > .button-submit:hover {
   cursor: pointer;
   transition: 0.2s;
 }
-.div-password .showeyeslog:hover {
+.div-password-sign .showeyeslog:hover {
   color: #000;
   transition: 0.3s;
 }
@@ -155,12 +155,12 @@ form > .button-submit:hover {
   transition: 0.3s;
   color: #000;
 }
-.div-password {
+.div-password-sign {
   margin-top: 20px;
   position: relative;
   color: #000;
 }
-.div-password .pass-place {
+.div-password-sign .pass-place {
   position: absolute;
   left: 110px;
   font-size: 20px;
@@ -181,12 +181,48 @@ form > .button-submit:hover {
 }
 
 
-@media (min-width: 901px) and (max-width: 1440px) {
+@media (min-width: 350px) and (max-width: 500px) {
+.login-container {
+  max-width: 350px;
+  transition: 0.2s;
+
 
 }
-@media (min-width: 901px) and (max-width: 1440px) {
-
+.div-username > .text-place {
+  position: absolute;
+  left: 90px;
+  font-size: 20px;
+  pointer-events: none;
+  color: #d4d4d4;
+  transition: 0.3s;
 }
-@media (min-width: 901px) and (max-width: 1440px) {
+
+ .div-password-sign > .pass-place {
+  position: absolute;
+  left: 90px;
+  font-size: 20px;
+  pointer-events: none;
+  color: #d4d4d4;
+  transition: 0.3s;
+}
+
+
+.div-password-sign .showeyeslog {
+  font-size: 25px;
+  position: absolute;
+  right: 50px; /* เว้นระยะห่างจากขอบขวา 15px */
+  top: 50%; /* เลื่อนลงมา 50% ของความสูง */
+  transform: translateY(
+    -50%
+  ); /* ดึงกลับขึ้นไปครึ่งหนึ่งของความสูง span เพื่อจัดกึ่งกลางแนวตั้ง */
+  color: #9a9898;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.div-password-sign .showeyeslog:hover {
+  color: #000;
+  transition: 0.3s;
+}
 
 }

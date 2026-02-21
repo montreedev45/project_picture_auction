@@ -183,22 +183,22 @@ function SearchPage() {
 
             return (
               <div className="search-card" key={product.pro_id}>
-                <div className="card-absolute">
-                  <span className={`card-status-${product.pro_status}`}>
+                <div className="search-card-absolute">
+                  <span className={`search-card-status-${product.pro_status}`}>
                     {product.pro_status}
                   </span>
                 </div>
                 <img
-                  className="card-img"
+                  className="search-card-img"
                   src={imageSource}
                   alt={product.pro_name}
                 />
-                <div className="card-des">
+                <div className="search-card-des">
                   <p>title : {product.pro_name}</p>
                   <p>bid price : {product.pro_price}</p>
                   <p>time remanding : {product.pro_time}</p>
                 </div>
-                <div className="card-button">
+                <div className="search-card-button">
                   <Link
                     to={`/auction-detail/${product.pro_id}`}
                     className="button"
