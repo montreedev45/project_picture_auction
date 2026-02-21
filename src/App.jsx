@@ -17,7 +17,7 @@ const MybidPage = lazy(() => import("./pages/MybidPage"));
 const Page404 = lazy(() => import("./pages/PageError404"));
 const Page500 = lazy(() => import("./pages/PageError500"));
 const SaveItemPage = lazy(() => import("./pages/SaveItemPage"));
-const MywinningPage = lazy(() => import("./pages/temp"));
+const MywinningPage = lazy(() => import("./pages/MywinningPage"));
 const SearchPage = lazy(() => import("./pages/SearchPage"));
 const DashBoard = lazy(() => import("./pages/UserDashboard"));
 const ProfileSettingPage = lazy(() => import("./pages/ProfileSettingPage"));
