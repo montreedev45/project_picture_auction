@@ -1,4 +1,4 @@
-import { useState, useEffect, Profiler } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import LikeButton from "./LikeButton";
@@ -95,8 +95,11 @@ function HomePage() {
   // ----------------------------------------------------------------
   // 2. Business Logic: Handler สำหรับการกด Like/Unlike
   // ----------------------------------------------------------------
-  const currentUserId = localStorage.getItem("acc_id");
-  const userHasLiked = products.likes?.includes(currentUserId);
+const currentUserId = localStorage.getItem("acc_id");
+
+const userHasLiked = Array.isArray(products)
+  ? products.some(p => p.likes?.includes(currentUserId))
+  : false;
 
   // ----------------------------------------------------------------
   // 3. Filtering และ Conditional Rendering Logic

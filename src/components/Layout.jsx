@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavbarError from "./NavbarError";
 import Navbar from "./Navbar";
 import { useLocation } from "react-router-dom";
@@ -17,7 +17,6 @@ function Layout({ children }) {
   const pathsToHideFooter = ["/login", "/SignUp", "/Page404", "/Page500"];
   const shouldHideFooter = pathsToHideFooter.includes(currentPath);
 
-  // Navbar scrollY
   const [fix, setFix] = useState(false);
 
   function setFixed() {
@@ -27,8 +26,11 @@ function Layout({ children }) {
       setFix(false);
     }
   }
-  window.addEventListener("scroll", setFixed);
-  // end nav scrollY
+
+  useEffect(() => {
+    window.addEventListener("scroll", setFixed);
+    return () => window.removeEventListener("scroll", setFixed);
+  }, []);
   return (
     <>
       <div className="layout-container">

@@ -85,11 +85,6 @@ function Navbar() {
     };
   }, []); // [] มั่นใจว่ารันแค่ครั้งเดียวตอน Mount
 
-  useEffect(() => {6
-    console.log("fetchProfile starting...");
-    fetchUserProfile(token, acc_id);
-
-  }, [showReddot]);
 
   const handleSearch = (e) => {
     setTextSearch(e.target.value)
@@ -102,8 +97,6 @@ function Navbar() {
 
   // ใส่ไว้นอกฟังก์ชันรับ Socket
   useEffect(() => {
-    console.log("showReddot", showReddot);
-    console.log("ค่า notification อัปเดตแล้ว:", notification);
   }, [notification]); // ฟังก์ชันนี้จะทำงานทุกครั้งที่ notification เปลี่ยนค่า
 
   const handleAccountClick = () => {
@@ -316,60 +309,6 @@ function Navbar() {
           />
         </div>
       </ul>
-      {/* <div className="navbar-left">
-        <Link to="/" className="navbar-brand">
-          <Icon className="icon-logo" icon="mdi:gavel" /> Picture Auction
-        </Link>
-      </div>
-      // {!shouldHideInputSearch && (
-      //   <div className="navbar-center">
-      //     <div className="search-input-wrapper">
-      //       <input type="text" className="navbar-search" />
-      //       <Icon icon="mdi:magnify" className="search-icon-overlay" />
-      //     </div>
-      //   </div>
-      // )}
-
-      // <div className="navbar-right">
-      //   <div
-      //     style={{
-      //       marginRight: "2rem",
-      //       fontSize: "2rem",
-      //       display: "flex",
-      //       justifyContent: "space-between",
-      //       alignItems: "center",
-      //       fontWeight: "bold",
-      //     }}
-      //   >
-      //     {isLoggedIn && (
-      //       <div className="icon-container">
-      //         <Icon
-      //           icon="mdi-bell"
-      //           className="mdi-bell"
-      //           onClick={handleNotification}
-      //           style={{ marginRight: "1rem", fontSize: "3rem" }}
-      //         ></Icon>
-      //         {showReddot ? <span className="red-dot"></span> : ""}
-      //         {notificationBox}
-
-      //         <Icon
-      //           icon="mdi-coin"
-      //           style={{ marginRight: "1rem", fontSize: "3rem" }}
-      //         ></Icon>
-      //         <span>{userProfile?.acc_coin}</span>
-      //       </div>
-      //     )}
-      //   </div>
-      //   {authButtons}
-      // </div>
-      // <div className="navbar-right">{authButtons}</div>
-      // <div className="logo-menu-list">
-      //   <Icon
-      //     className="icons-menu-list"
-      //     onClick={handleAccountClick}
-      //     icon="mage:dash-menu"
-      //   />
-      // </div> */}
     </nav>
   );
 }
