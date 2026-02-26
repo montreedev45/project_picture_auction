@@ -11,11 +11,11 @@ import { Icon } from "@iconify/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loading from "../components/Loading";
 
 import "../index.css";
 import { useError } from "../components/ErrorContext";
-const API_URL = import.meta.env.VITE_BACKEND_URL
-
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function HomePage() {
   const { setError } = useError();
@@ -48,7 +48,7 @@ function HomePage() {
                 return {
                   ...product,
                 };
-              }
+              },
             );
             setProducts(productsArray);
           } else {
@@ -74,7 +74,7 @@ function HomePage() {
           }
         }
       } catch (error) {
-        let errorMessage = "fetch products failed, Pless check server"
+        let errorMessage = "fetch products failed, Pless check server";
         if (
           error.response &&
           error.response.data &&
@@ -95,11 +95,11 @@ function HomePage() {
   // ----------------------------------------------------------------
   // 2. Business Logic: Handler สำหรับการกด Like/Unlike
   // ----------------------------------------------------------------
-const currentUserId = localStorage.getItem("acc_id");
+  const currentUserId = localStorage.getItem("acc_id");
 
-const userHasLiked = Array.isArray(products)
-  ? products.some(p => p.likes?.includes(currentUserId))
-  : false;
+  const userHasLiked = Array.isArray(products)
+    ? products.some((p) => p.likes?.includes(currentUserId))
+    : false;
 
   // ----------------------------------------------------------------
   // 3. Filtering และ Conditional Rendering Logic
@@ -113,13 +113,11 @@ const userHasLiked = Array.isArray(products)
   const productsToFilter = Array.isArray(products) ? products : [];
   const filteredProducts = productsToFilter.filter(
     (product) =>
-      product.pro_status === "processing" || product.pro_status === ""
+      product.pro_status === "processing" || product.pro_status === "",
   );
 
   // UX/UI: แสดงสถานะ Loading ก่อน
-  if (loading) {
-    return <div className="loading-state">Loading Auction Products...</div>; // ใส่ Loading Component ของคุณที่นี่
-  }
+  if (loading) return <Loading text="Loading..." />;
 
   // 💡 UX/UI: แสดง No Data Found
   if (filteredProducts.length === 0) {
@@ -181,9 +179,6 @@ const userHasLiked = Array.isArray(products)
   ];
   return (
     <>
-      <div className="bg-red rounded-xl shadow-2xl p-6 w-80 mx-auto mt-10">
-        test tailwind
-      </div>
       <div className="div-text">
         <h1>Picture Auction</h1>
         <p>The Real-time Digital Art Bidding Platform</p>
@@ -223,7 +218,7 @@ const userHasLiked = Array.isArray(products)
                   <div>
                     <LikeButton
                       productId={product.pro_id}
-                      initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
+                      initialLikeCount={product.likes?.length ?? 0}
                       userHasLiked={isSaved}
                     />
                   </div>

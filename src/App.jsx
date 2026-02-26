@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import { ErrorProvider } from "./components/ErrorContext";
 import "./index.css";
 import "./App.css";
+import Loading from "./components/Loading";
 
 /* -------- Lazy Load Pages -------- */
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -33,7 +34,7 @@ function App() {
       <ErrorProvider>
         <AuthProvider>
           <Layout>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading text="Loading page..." />}>
               <Routes>
 
                 {/* --- Public Routes --- */}

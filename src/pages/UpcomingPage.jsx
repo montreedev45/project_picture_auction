@@ -5,10 +5,11 @@ import view2 from "../assets/view2-ai-gen.png";
 import axios from "axios";
 import LikeButton from "./LikeButton";
 import { useError } from "../components/ErrorContext";
-const API_URL = import.meta.env.VITE_BACKEND_URL
+import Loading from "../components/Loading";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function UpcomingPage() {
-  const {setError} = useError()
+  const { setError } = useError();
   const [products, setProducts] = useState([]); // State สำหรับจัดการสินค้า
   const [loading, setLoading] = useState(true); // State สำหรับจัดการสถานะการโหลด
 
@@ -34,7 +35,7 @@ function UpcomingPage() {
 
         setProducts(initialData);
       } catch (error) {
-        let errorMessage = "fetch products failed, Pless check server"
+        let errorMessage = "fetch products failed, Pless check server";
         if (
           error.response &&
           error.response.data &&
@@ -52,9 +53,11 @@ function UpcomingPage() {
     fecth_products();
   }, []);
 
+  if (loading) return <Loading text="Loading..." />;
+
   const productsToFilter = Array.isArray(products) ? products : [];
   const filteredProducts = productsToFilter.filter(
-    (product) => product.pro_status === "upcoming"
+    (product) => product.pro_status === "upcoming",
   );
 
   return (
@@ -62,13 +65,15 @@ function UpcomingPage() {
       <div className="upcoming-container">
         <div className="upcoming-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}` ;
+            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
             return (
               <div className="upcoming-card" key={product.pro_id}>
                 <div className="upcoming-card-absolute">
-                  <span className={`upcoming-card-status-${product.pro_status}`}>
+                  <span
+                    className={`upcoming-card-status-${product.pro_status}`}
+                  >
                     {product.pro_status}
                   </span>
                 </div>
@@ -86,7 +91,7 @@ function UpcomingPage() {
                   <div>
                     <LikeButton
                       productId={product.pro_id}
-                      initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
+                      initialLikeCount={product.likes?.length ?? 0}
                       userHasLiked={isSaved}
                     />
                   </div>

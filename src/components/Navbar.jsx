@@ -12,7 +12,6 @@ const SOCKET_SERVER_URL = API_URL;
 function Navbar() {
   const navigate = useNavigate()
   const { isLoggedIn, logout, userProfile, fetchUserProfile } = useAuth(); // ⬅️ ดึงสถานะและฟังก์ชันจาก Context
-  //console.log('userProfile : ',userProfile)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationOpen, setIsNotification] = useState(false);
   const [notification, setNotification] = useState([]);
@@ -36,13 +35,7 @@ function Navbar() {
     const socket = io(SOCKET_SERVER_URL);
 
     const handleNotification = (data) => {
-      console.log("starting... on winner");
       const recieved_socket = data.notification;
-      console.log("recieved_socket:", recieved_socket);
-      console.log(
-        "recieved array",
-        recieved_socket?.[0]?.acc_id === Number(acc_id),
-      );
 
       const latestSocketData = recieved_socket?.[0];
       const socketAccId = Number(latestSocketData?.acc_id);

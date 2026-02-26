@@ -5,7 +5,8 @@ import view2 from "../assets/view2-ai-gen.png";
 import axios from "axios";
 import LikeButton from "./LikeButton";
 import { useError } from "../components/ErrorContext";
-const API_URL = import.meta.env.VITE_BACKEND_URL
+import Loading from "../components/Loading";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function MywinningPage() {
   const { setError } = useError();
@@ -16,51 +17,49 @@ function MywinningPage() {
   // 2. Business Logic: Handler สำหรับการกด Like/Unlike
   // ----------------------------------------------------------------
   const currentUserId = localStorage.getItem("acc_id");
-  const userHasLiked = products.likes?.includes(currentUserId);
   const token = localStorage.getItem("jwt");
 
   const fecth_products = async () => {
-      setError(null);
-      setLoading(true); // ตั้งค่า Loading เป็น true ก่อนเริ่ม Fetch
-      try {
-        const URL = `${API_URL}/api/auction/products`;
-        const res = await axios.get(URL, {
-          headers: { Authorization: `Bearer ${token}` },
-          params: { acc_id: currentUserId, is_time_sensitive: true },
-        });
-        const apiProducts = res.data.products || [];
+    setError(null);
+    setLoading(true); // ตั้งค่า Loading เป็น true ก่อนเริ่ม Fetch
+    try {
+      const URL = `${API_URL}/api/auction/products`;
+      const res = await axios.get(URL, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { acc_id: currentUserId, is_time_sensitive: true },
+      });
+      const apiProducts = res.data.products || [];
 
-        // Tech Stack: คัดลอก Array และ Object เพื่อ Immutability
-        const initialData = apiProducts.map((product) => ({
-          ...product,
-        }));
+      // Tech Stack: คัดลอก Array และ Object เพื่อ Immutability
+      const initialData = apiProducts.map((product) => ({
+        ...product,
+      }));
 
-        setProducts(initialData);
-      } catch (error) {
-        let errorMessage = "fetch products failed, Pless check server";
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) { 
-          errorMessage = error.response.data.message;
-        }
-        setError(errorMessage);
-        setProducts([]); // setProducts ให้เป็น Array เปล่าเสมอ
-      } finally {
-        setLoading(false); // ต้องปิด Loading เสมอ ไม่ว่าจะสำเร็จหรือผิดพลาด
+      setProducts(initialData);
+    } catch (error) {
+      let errorMessage = "fetch products failed, Pless check server";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
       }
-    };
-    
-  useEffect(() => {
-    
+      setError(errorMessage);
+      setProducts([]); // setProducts ให้เป็น Array เปล่าเสมอ
+    } finally {
+      setLoading(false); // ต้องปิด Loading เสมอ ไม่ว่าจะสำเร็จหรือผิดพลาด
+    }
+  };
 
+  useEffect(() => {
     fecth_products();
   }, []);
 
+  if (loading) return <Loading text="Loading..." />;
   const productsToFilter = Array.isArray(products) ? products : [];
   const filteredProducts = productsToFilter.filter(
-    (product) => product.pro_status === "ended"
+    (product) => product.pro_status === "ended",
   );
 
   return (
@@ -80,7 +79,7 @@ function MywinningPage() {
                 <div className="mywinning-card" key={product.pro_id}>
                   <div className="mywinning-card-absolute">
                     <span className={`mywinning-card-status-${statusClass}`}>
-                      {product.pro_status == "ended" && (<span>winning</span>)}
+                      {product.pro_status == "ended" && <span>winning</span>}
                     </span>
                   </div>
                   <img
@@ -97,7 +96,7 @@ function MywinningPage() {
                     <div>
                       <LikeButton
                         productId={product.pro_id}
-                        initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
+                        initialLikeCount={product.likes?.length ?? 0}
                         userHasLiked={isSaved}
                       />
                     </div>

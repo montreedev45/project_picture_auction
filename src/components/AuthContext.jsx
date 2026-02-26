@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 const AuthContext = createContext(null);
@@ -108,9 +109,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // -------- loading gate --------
-  if (loading) {
-    return <div>Loading auth...</div>;
-  }
+if (loading) return <Loading text="Checking authentication..." />;
 
   return (
     <AuthContext.Provider

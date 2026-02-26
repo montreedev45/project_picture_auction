@@ -5,7 +5,8 @@ import axios from "axios";
 import LikeButton from "./LikeButton";
 import { useError } from "../components/ErrorContext";
 import { useAuth } from "../components/AuthContext";
-const API_URL = import.meta.env.VITE_BACKEND_URL
+import Loading from "../components/Loading";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function MybidPage() {
   const { setError } = useError();
@@ -26,7 +27,7 @@ function MybidPage() {
       try {
         const URL = `${API_URL}/api/auction/products`;
         const res = await axios.get(URL, {
-          params: { page: "mybid", userId: currentUserId }
+          params: { page: "mybid", userId: currentUserId },
         });
         const apiProducts = res.data.products || [];
 
@@ -57,14 +58,16 @@ function MybidPage() {
     fecth_products();
   }, []);
 
+  if (loading) return <Loading text="Loading..." />;
+
   const productsToFilter = Array.isArray(products) ? products : [];
   const filteredProducts = productsToFilter.filter(
-    (product) => product.pro_status === "processing" || product.pro_status === "ended"
+    (product) =>
+      product.pro_status === "processing" || product.pro_status === "ended",
   );
 
   return (
     <>
-
       <div className="mybid-container">
         <div className="mybid-container-card">
           {filteredProducts.map((product) => {
@@ -93,16 +96,18 @@ function MybidPage() {
                   <p>time remanding : {product.pro_time}</p>
                 </div>
                 <div className="mybid-card-button">
-                  {product.pro_status === "processing" && <Link
-                    to={`/auction-detail/${product.pro_id}`}
-                    className="button"
-                  >
-                    Bid Now
-                  </Link>}
+                  {product.pro_status === "processing" && (
+                    <Link
+                      to={`/auction-detail/${product.pro_id}`}
+                      className="button"
+                    >
+                      Bid Now
+                    </Link>
+                  )}
                   <div>
                     <LikeButton
                       productId={product.pro_id}
-                      initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
+                      initialLikeCount={product.likes?.length ?? 0}
                       userHasLiked={isSaved}
                     />
                   </div>

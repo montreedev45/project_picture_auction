@@ -29,7 +29,6 @@ function LoginPage() {
 
     try {
       const URL = `${API_URL}/api/auction/login`;
-  console.log("API_URL", API_URL)
 
       const res = await axios.post(URL, formData);
 

@@ -5,17 +5,18 @@ import { Icon } from "@iconify/react";
 import { useError } from "../components/ErrorContext";
 import LikeButton from "./LikeButton";
 import axios from "axios";
-const API_URL = import.meta.env.VITE_BACKEND_URL
+import Loading from "../components/Loading";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function SearchPage() {
   const location = useLocation();
-  const urlParams = new URLSearchParams(location.search)
-  const initialSearch = urlParams.get('pro_name_input')
+  const urlParams = new URLSearchParams(location.search);
+  const initialSearch = urlParams.get("pro_name_input");
 
   const { setError } = useError();
   const [products, setProducts] = useState([]);
   const [filterCriteria, setfilterCriteria] = useState({
-    pro_name_input: initialSearch || '',
+    pro_name_input: initialSearch || "",
     statuses: [], // Array สำหรับ Checkbox/Multi-select (Status)
   });
   const [loading, setLoading] = useState(true);
@@ -67,7 +68,9 @@ function SearchPage() {
     } finally {
       setLoading(false);
     }
-  },[filterCriteria]);
+  }, [filterCriteria]);
+
+  if (loading) return <Loading text="Loading..." />;
 
   useEffect(() => {
     fecth_products();
@@ -208,7 +211,7 @@ function SearchPage() {
                   <div>
                     <LikeButton
                       productId={product.pro_id}
-                      initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
+                      initialLikeCount={product.likes?.length ?? 0}
                       userHasLiked={isSaved}
                     />
                   </div>

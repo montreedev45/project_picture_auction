@@ -7,7 +7,8 @@ import io from "socket.io-client";
 import useCountdownTimer from "../components/useCountdownTimer";
 import { useError } from "../components/ErrorContext";
 import { useAuth } from "../components/AuthContext";
-const API_URL = import.meta.env.VITE_BACKEND_URL
+import Loading from "../components/Loading";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SOCKET_SERVER_URL = API_URL;
 let socket = null;
@@ -23,7 +24,7 @@ function formatSecondsToTime(totalSeconds) {
   const hours = String(Math.floor(remainingSeconds / 3600)).padStart(2, "0");
   const minutes = String(Math.floor((remainingSeconds % 3600) / 60)).padStart(
     2,
-    "0"
+    "0",
   );
   const seconds = String(remainingSeconds % 60).padStart(2, "0");
   return `${hours} : ${minutes} : ${seconds}`;
@@ -43,10 +44,9 @@ function AuctionDetailPage() {
   const [currentBidPrice, setCurrentBidPrice] = useState(0);
   const [bidHistory, setBidHistory] = useState([]);
 
-
   useEffect(() => {
-    fetchUserProfile(token, userId)
-  }, [bidHistory])
+    fetchUserProfile(token, userId);
+  }, [bidHistory]);
   // ------------------------------------------------------------------
   // useEffect 1: จัดการ Socket Connection และ Real-Time Update
   // ------------------------------------------------------------------
@@ -68,7 +68,6 @@ function AuctionDetailPage() {
 
     // 4. Listener สำหรับการอัปเดตข้อมูลทั้งหมด จาก broadcast ที่ส่งมา
     socket.on("auction_update", (data) => {
-
       if (data.product) {
         setProduct(data.product);
       }
@@ -97,12 +96,9 @@ function AuctionDetailPage() {
         // ใช้ Promise.allSettled เพื่อยิง api พร้อมกัน
         const [productResult, historyResult] = await Promise.allSettled([
           axios.get(`${API_URL}/api/auction/product/${id}`),
-          axios.get(
-            `${API_URL}/api/auction/products/${id}/history`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          ),
+          axios.get(`${API_URL}/api/auction/products/${id}/history`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
         ]);
 
         // เมื่อใช้ Promise.allSettled ต้องเช็ค status ด้วย
@@ -115,7 +111,7 @@ function AuctionDetailPage() {
           console.error("Product fetch failed:", productResult.reason);
           setError(
             productResult.reason?.response?.data?.message ||
-              `Failed to fetch product ${id}.`
+              `Failed to fetch product ${id}.`,
           );
         }
 
@@ -189,10 +185,10 @@ function AuctionDetailPage() {
   };
 
   const handleKeyDown = (event) => {
-  if (event.key === 'Enter') {
-    auctionProducts();
-  }
-};
+    if (event.key === "Enter") {
+      auctionProducts();
+    }
+  };
 
   // ------------------------------------------------------------------
   // Rendering Logic (Timer and Data Access)
@@ -218,7 +214,7 @@ function AuctionDetailPage() {
 
   // 5. เรียกใช้ Hook นับถอยหลัง (ใช้เวลาที่เหลือจริง ถ้า Auction Active)
   const countdownFromHook = useCountdownTimer(
-    isAuctionActive ? initialSeconds : 0
+    isAuctionActive ? initialSeconds : 0,
   );
 
   // 6. แสดงผล: ถ้า Active ใช้ค่าจาก Hook ถ้าไม่ Active ใช้ค่า initialSeconds (เวลาเต็ม/0)
@@ -230,9 +226,7 @@ function AuctionDetailPage() {
     ? `${API_URL}/images/products/${product.pro_imgurl}`
     : "";
 
-  if (loading) {
-    return <div className="auction-container-loading">กำลังโหลด...</div>;
-  }
+  if (loading) return <Loading text="Loading auction..." />;
 
   if (!product) {
     return (
@@ -261,11 +255,11 @@ function AuctionDetailPage() {
             <p>Time Remaining : {countdownDisplay}</p>
             <p>
               Current Bid : &nbsp;<Icon icon="mdi-coin"></Icon> &nbsp;
-              {product.pro_price.toLocaleString('en-US') || "100"}
+              {product.pro_price.toLocaleString("en-US") || "100"}
             </p>{" "}
             <p>
               Min Increment : &nbsp;<Icon icon="mdi-coin"></Icon> &nbsp;
-              {product.pro_min_increment.toLocaleString('en-US')}{" "}
+              {product.pro_min_increment.toLocaleString("en-US")}{" "}
             </p>
             <input
               type="text"
@@ -285,7 +279,11 @@ function AuctionDetailPage() {
             <ul className="auction-ui-history">
               {historyData.map((bid, index) => (
                 <li key={index}>
-                  <p>user {bid.acc_id} -- $ {bid.bidAmount.toLocaleString('en-US')}</p><p>{new Date(bid.createdAt).toLocaleTimeString()}</p>
+                  <p>
+                    user {bid.acc_id} -- ${" "}
+                    {bid.bidAmount.toLocaleString("en-US")}
+                  </p>
+                  <p>{new Date(bid.createdAt).toLocaleTimeString()}</p>
                 </li>
               ))}
             </ul>

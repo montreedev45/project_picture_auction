@@ -5,7 +5,8 @@ import view2 from "../assets/view2-ai-gen.png";
 import axios from "axios";
 import LikeButton from "./LikeButton";
 import { useError } from "../components/ErrorContext";
-const API_URL = import.meta.env.VITE_BACKEND_URL
+import Loading from "../components/Loading";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function SaveItemPage() {
   const { setError } = useError();
@@ -52,9 +53,11 @@ function SaveItemPage() {
     fecth_products();
   }, []);
 
+  if (loading) return <Loading text="Loading..." />;
+
   const productsToFilter = Array.isArray(products) ? products : [];
   const filteredProducts = productsToFilter.filter(
-    (product) => product.likes?.includes(currentUserId) ?? false
+    (product) => product.likes?.includes(currentUserId) ?? false,
   );
 
   return (
@@ -90,7 +93,7 @@ function SaveItemPage() {
                     <div>
                       <LikeButton
                         productId={product.pro_id}
-                        initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
+                        initialLikeCount={product.likes?.length ?? 0}
                         userHasLiked={isSaved}
                       />
                     </div>

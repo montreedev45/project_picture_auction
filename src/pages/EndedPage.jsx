@@ -3,8 +3,8 @@ import "./EndedPage.css";
 import axios from "axios";
 import { useError } from "../components/ErrorContext";
 import LikeButton from "./LikeButton";
-const API_URL = import.meta.env.VITE_BACKEND_URL
-
+import Loading from "../components/Loading";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function EndedPage() {
   const { setError } = useError();
@@ -30,7 +30,7 @@ function EndedPage() {
 
         setProducts(initialData);
       } catch (error) {
-        let errorMessage = "fetch products failed, Pless check server"
+        let errorMessage = "fetch products failed, Pless check server";
         if (
           error.response &&
           error.response.data &&
@@ -48,6 +48,8 @@ function EndedPage() {
     fecth_products();
   }, []);
 
+  if (loading) return <Loading text="Loading..." />;
+
   // ----------------------------------------------------------------
   // 2. Business Logic: Handler สำหรับการกด Like/Unlike
   // ----------------------------------------------------------------
@@ -59,7 +61,7 @@ function EndedPage() {
   // ----------------------------------------------------------------
   const productsToFilter = Array.isArray(products) ? products : [];
   const filteredProducts = productsToFilter.filter(
-    (product) => product.pro_status === "ended"
+    (product) => product.pro_status === "ended",
   );
 
   return (
@@ -67,7 +69,7 @@ function EndedPage() {
       <div className="ended-container">
         <div className="ended-container-card">
           {filteredProducts.map((product) => {
-            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}` ;
+            const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
             return (
               <div className="ended-card" key={product.pro_id}>
@@ -89,7 +91,7 @@ function EndedPage() {
                 <div>
                   <LikeButton
                     productId={product.pro_id}
-                    initialLikeCount={product.likes.length} // นับจำนวน Like จาก Array
+                    initialLikeCount={product.likes?.length ?? 0}
                     userHasLiked={isSaved}
                   />
                 </div>
