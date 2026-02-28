@@ -214,11 +214,10 @@
 }
 /* Vibe container */
 .section-2 {
-  height: 90vh;
   display: grid;
+  padding: 2rem;
   grid-template-columns: 1fr 1fr;
-  padding: 20px;
-  background-color: #fff;
+  background-color: #e9e9e9;
 }
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .homepage-container-card {
@@ -232,12 +231,15 @@
 
   .text-box {
     width: 100%;
-    height: 100%;
-    padding: 100px;
     display: flex;
     align-items: start;
     justify-content: center;
     flex-direction: column;
+  }
+
+  .animate-text{
+    height: 250px !important;
+    overflow: auto;
   }
 }
 @media screen and (min-width: 150px) and (max-width: 768px) {
@@ -333,7 +335,10 @@
   .section-2 {
     display: grid;
     grid-template-columns: 1fr;
-    height: 150vh;
+    height: 780px;
+    min-width: 350px;
+    padding: 0;
+    padding-bottom:2rem;
   }
 
 
@@ -345,24 +350,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem !important;
+  }
 
-    & .animate-image {
-      width: 400px;
-      height: 400px;
-    }
+  .animate-image{
+    height: 300px !important;
+    width: 300px !important;
   }
 }
 
 .text-box {
-  height: 100%;
-  padding: 50px;
+  padding: 2rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  overflow: auto;
+  
+
   & h2 {
-    padding: 0;
-    margin: -50px 0 0 0;
+    padding-top: 1.5rem;
+    margin: 0;
   }
 }
 
@@ -376,13 +385,12 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 50px;
-  & img {
-    width: 100%;
-    min-width: 320px;
-    min-height: 300px;
-    max-height: 400px;
-  }
+  padding: 2rem;
+
+}
+.animate-image{
+      width: 70%;
+    min-width: 300px;
 }
 
 /* Card Artis */
@@ -535,13 +543,14 @@
 }
 /* Slide page */
 .animate-text {
+  width: 80%;
+  height: 350px;
+  overflow: auto;
   animation: text-appier both;
   animation-timeline: view();
   animation-range: entry 20% cover 100px;
 }
 .animate-image {
-  width: 100%;
-  height: 100%;
   animation: image-slide;
   animation-timeline: view();
 }

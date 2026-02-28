@@ -283,7 +283,7 @@ function HomePage() {
       </section>
       <div className="section-2">
         <div className="text-box">
-          <h2 className="animate-text">Oil Picture Auction</h2>
+          <h2>Oil Picture Auction</h2>
           <p className="animate-text">
             Our oil paintings capture timeless beauty with rich textures and
             vibrant colors, making each piece a unique treasure for collectors."
