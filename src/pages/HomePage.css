@@ -60,49 +60,63 @@
 /* ------------------------------------------- /
 / 🖼️ Card and Image Styles (UX/UI) /
 / ------------------------------------------- */
-.card {
-  background-color: white;
-  border: 1px solid #d4d4d4;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  transition:
-    box-shadow 0.3s,
-    transform 0.3s;
+.homepage-card {
+border: 1px solid #d4d4d4;
+border-radius: 12px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+padding: 15px;
+display: flex;
+flex-direction: column;
+transition: box-shadow 0.3s, transform 0.3s;
 }
-.card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
+.homepage-card-absolute {
+    position: absolute;
+    padding: 15px 15px;
+}
+.homepage-card-status-processing {
+    position: relative;
+    background-color: #ffcc00;
+    padding: 8px 18px;
+    border-radius: 15px;
+}
+.homepage-card-status-ended {
+    position: relative;
+    background-color: #ff0004;
+    padding: 8px 18px;
+    border-radius: 15px;
+}
+
+.homepage-card:hover {
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+transform: translateY(-5px);
 }
 /* ✅ Fixed Image Size 150x150 and object-fit: cover */
-.card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-  margin: 0 auto 15px auto;
-  display: block;
+.homepage-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0 auto 15px auto;
+    display: block;
 }
 
-.card-des {
-  text-align: left;
-  font-size: 0.95rem;
-  color: #929292;
-  flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
+.homepage-card-des {
+text-align: left;
+font-size: 0.95rem;
+color: #929292;
+flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
 }
 
-.card-des p {
-  margin: 4px 0;
+.homepage-card-des p {
+margin: 4px 0;
 }
 
-.card-button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 15px;
-  border-top: 1px dashed #eee;
+.homepage-card-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    border-top: 1px dashed #eee;
 }
 
 /* Bid Now Button */
@@ -121,12 +135,6 @@
   background-color: #0056b3;
 }
 
-.card-status-processing {
-  position: relative;
-  background-color: #ffcc00;
-  padding: 8px 18px;
-  border-radius: 15px;
-}
 
 .icon-heart {
   background-color: #fff;
@@ -150,6 +158,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    overflow: hidden;
     & .main-topic {
       font-size: 35px;
       font-weight: bolder;

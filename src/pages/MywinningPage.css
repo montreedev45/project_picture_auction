@@ -44,7 +44,7 @@ transition: box-shadow 0.3s, transform 0.3s;
 }
 .mywinning-card-status-ended {
     position: relative;
-    background-color: #FFD700;
+    background-color: #1eff00;
     padding: 8px 18px;
     border-radius: 15px;
 }

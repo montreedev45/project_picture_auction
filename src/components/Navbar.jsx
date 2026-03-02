@@ -99,7 +99,9 @@ function Navbar() {
 
   const handleLogout = () => {
     logout();
+    setMenulist(false)
     setIsMenuOpen(false);
+    
   };
 
   const handleNotification = () => {
@@ -168,7 +170,7 @@ function Navbar() {
         <div className="dropdown">
           <Link className="Link" to="/" onClick={() => setIsMenuOpen(false)}>
             <Icon icon="mdi:gavel" className="Link-icon" />
-            Auction
+            HomePage
           </Link>
 
           <Link
@@ -177,7 +179,7 @@ function Navbar() {
             onClick={() => setIsMenuOpen(false)}
           >
             <Icon icon="mdi:user" className="Link-icon" />
-            Profile Setting
+            Profile
           </Link>
           <Link
             className="Link"
@@ -185,7 +187,7 @@ function Navbar() {
             onClick={() => setIsMenuOpen(false)}
           >
             <Icon icon="ix:piechart-filled" className="Link-icon" />
-            Dash Board
+            DashBoard
           </Link>
           <Link
             className="Link"
@@ -193,7 +195,7 @@ function Navbar() {
             onClick={() => setIsMenuOpen(false)}
           >
             <Icon icon="mdi:gavel" className="Link-icon" />
-            My Bids
+            My Bid
           </Link>
           <Link
             className="Link"
@@ -201,7 +203,7 @@ function Navbar() {
             onClick={() => setIsMenuOpen(false)}
           >
             <Icon icon="healthicons:award-trophy" className="Link-icon" />
-            My Winning
+            My Win
           </Link>
           <Link
             className="Link"
@@ -209,17 +211,18 @@ function Navbar() {
             onClick={() => setIsMenuOpen(false)}
           >
             <Icon icon="iconoir:star-solid" className="Link-icon" />
-            Save Item
+            My Save
           </Link>
           <Link
             className="Link"
             to="/update-password"
             onClick={() => setIsMenuOpen(false)}
           >
-            <Icon icon="" className="Link-icon" />
-            Update Password
+            <Icon icon="mdi:key" className="Link-icon" />
+            New Password
           </Link>
-          <Link className="Link" to="/coin-packet">
+          <Link className="Link" to="/coin-packet" onClick={() => setIsMenuOpen(false)}>
+            <Icon icon="bitcoin-icons:bitcoin-circle-filled" width="34" height="22" className="Link-icon" />
             Coin Packet
           </Link>
           <Link className="Link" to="/homepage" onClick={handleLogout}>
@@ -235,14 +238,6 @@ function Navbar() {
     </div>
   ) : (
     <div className="auth-group">
-      <div className="link-login">
-        <Link to="/login" className="nav-button sign-in-text">
-          <h4 className="sign-page">sign in</h4>
-        </Link>
-        <Link to="/SignUp" className="nav-button sign-up-btn">
-          <h4 className="sign-page">Sign Up</h4>
-        </Link>
-      </div>
 
       {menuList && (
         <div className="dropdown">

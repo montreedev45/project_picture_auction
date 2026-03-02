@@ -294,16 +294,17 @@ nav {
 
 .mdi-bell {
   cursor: pointer;
+  font-size: 2rem !important;
 }
 
 .red-dot{
-  width: 5px;
-  height: 5px;
+  width: 10px;
+  height: 10px;
   border-radius: 100%;
   background-color: #ff0000;
   position: absolute;
-  top: 15px;
-  left: 20px;
+  top: 5px;
+  left: 25px;
 }
 
 .icon-container{
@@ -313,7 +314,7 @@ nav {
   position: relative;
 
   & span{
-    padding: 10px;
+    padding: 5px;
     margin-right: 1rem;
   }
 }
@@ -380,8 +381,23 @@ button {
     padding: 2rem;
     align-items: center;
   }
-
+  
   .icon-container > span{
     margin-right: 2rem;
   }
+}
+
+@media (min-width: 378px) and (max-width: 770px) {
+  
+  .red-dot{
+  top: 3px;
+  left: 20px;
+}
+
+}
+@media (min-width: 771px) {
+    .red-dot{
+  top: 30px;
+  left: 20px;
+}
 }

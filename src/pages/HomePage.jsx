@@ -191,24 +191,28 @@ function HomePage() {
           {filteredProducts.map((product) => {
             const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
+
+            const statusClass = product.pro_status
+                ? product.pro_status.toLowerCase()
+                : "default";
             return (
-              <div className="card" key={product.pro_id}>
-                <div className="card-absolute">
-                  <span className={`card-status-${product.pro_status}`}>
+              <div className="homepage-card" key={product.pro_id}>
+                <div className="homepage-card-absolute">
+                  <span className={`homepage-card-status-${statusClass}`}>
                     {product.pro_status}
                   </span>
                 </div>
                 <img
-                  className="card-img"
+                  className="homepage-card-img"
                   src={imageSource}
                   alt={product.pro_name}
                 />
-                <div className="card-des">
+                <div className="homepage-edcard-des">
                   <p>title : {product.pro_name}</p>
                   <p>bid price : {product.pro_price}</p>
                   <p>time remanding : {product.pro_time}</p>
                 </div>
-                <div className="card-button">
+                <div className="homepage-card-button">
                   <Link
                     to={`/auction-detail/${product.pro_id}`}
                     className="button"

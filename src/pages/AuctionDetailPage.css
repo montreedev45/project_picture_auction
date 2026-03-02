@@ -147,6 +147,7 @@
     grid-row: 2/3;
     border-radius: 0 0 30px 30px;
     padding: 3rem;
+    padding-top: 1rem;
   }
   .auction-container-bidDetail-placeBid-top {
     margin-bottom: 1rem;

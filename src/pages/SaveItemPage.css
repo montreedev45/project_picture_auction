@@ -48,6 +48,12 @@ transition: box-shadow 0.3s, transform 0.3s;
     padding: 8px 18px;
     border-radius: 15px;
 }
+.saveitem-card-status-processing {
+    position: relative;
+    background-color: #ffcc00;
+    padding: 8px 18px;
+    border-radius: 15px;
+}
 
 .saveitem-card:hover {
 box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
