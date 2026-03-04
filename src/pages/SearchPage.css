@@ -55,10 +55,10 @@
 }
 
 .search-card-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px dashed #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dashed #eee;
 }
 
 .search-card:hover {
@@ -68,10 +68,9 @@
 /* ✅ Fixed Image Size 150x150 and object-fit: cover */
 .search-card-img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 8px;
-  margin: 0 auto 15px auto;
   display: block;
 }
 

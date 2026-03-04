@@ -1,10 +1,10 @@
 .upcoming-div-text {
-    text-align: left;
-    width: 55%;
-    padding-top: 3rem;
+  text-align: left;
+  width: 55%;
+  padding-top: 3rem;
 }
-.upcoming-div-text > h1{
-    font-size: 3rem;
+.upcoming-div-text > h1 {
+  font-size: 3rem;
 }
 .upcoming-container {
   width: 90%;
@@ -19,13 +19,12 @@
 }
 
 .upcoming-container-card {
-    /* Responsive Grid: แสดง Card ให้อัตโนมัติตามความกว้าง */
+  /* Responsive Grid: แสดง Card ให้อัตโนมัติตามความกว้าง */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   max-width: 900px;
 }
-
 
 /* ------------------------------------------- /
 / 🖼️ Card and Image Styles (UX/UI) /
@@ -65,10 +64,10 @@
 }
 
 .upcoming-card-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px dashed #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dashed #eee;
 }
 
 .upcoming-card:hover {
@@ -78,10 +77,9 @@
 /* ✅ Fixed Image Size 150x150 and object-fit: cover */
 .upcoming-card-img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 8px;
-  margin: 0 auto 15px auto;
   display: block;
 }
 
@@ -112,14 +110,14 @@
   background-color: #0056b3;
 }
 
-@media (min-width:378px) and (max-width:600px){
-    .upcoming-container-card{
-        grid-template-columns: 1fr;
-    }
+@media (min-width: 378px) and (max-width: 600px) {
+  .upcoming-container-card {
+    grid-template-columns: 1fr;
+  }
 }
 
-@media (min-width:601px) and (max-width:900px){
-    .upcoming-container-card{
-        grid-template-columns: 1fr 1fr;
-    }
+@media (min-width: 601px) and (max-width: 900px) {
+  .upcoming-container-card {
+    grid-template-columns: 1fr 1fr;
+  }
 }

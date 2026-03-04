@@ -1,10 +1,10 @@
 .saveitem-div-text {
-    text-align: left;
-    width: 55%;
-    padding-top: 3rem;
+  text-align: left;
+  width: 55%;
+  padding-top: 3rem;
 }
-.saveitem-div-text > h1{
-    font-size: 3rem;
+.saveitem-div-text > h1 {
+  font-size: 3rem;
 }
 .saveitem-container {
   width: 90%;
@@ -25,84 +25,83 @@
   max-width: 900px;
 }
 
-
 /* ------------------------------------------- /
 / 🖼️ Card and Image Styles (UX/UI) /
 / ------------------------------------------- */
 .saveitem-card {
-border: 1px solid #d4d4d4;
-border-radius: 12px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-padding: 15px;
-display: flex;
-flex-direction: column;
-transition: box-shadow 0.3s, transform 0.3s;
+  border: 1px solid #d4d4d4;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  transition:
+    box-shadow 0.3s,
+    transform 0.3s;
 }
 .saveitem-card-absolute {
-    position: absolute;
-    padding: 15px 15px;
+  position: absolute;
+  padding: 15px 15px;
 }
 .saveitem-card-status-ended {
-    position: relative;
-    background-color: #ff0004;
-    padding: 8px 18px;
-    border-radius: 15px;
+  position: relative;
+  background-color: #ff0004;
+  padding: 8px 18px;
+  border-radius: 15px;
 }
 .saveitem-card-status-processing {
-    position: relative;
-    background-color: #ffcc00;
-    padding: 8px 18px;
-    border-radius: 15px;
+  position: relative;
+  background-color: #ffcc00;
+  padding: 8px 18px;
+  border-radius: 15px;
 }
 
 .saveitem-card:hover {
-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
 }
 /* ✅ Fixed Image Size 150x150 and object-fit: cover */
 .saveitem-card-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    margin: 0 auto 15px auto;
-    display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
 }
 
 .saveitem-card-des {
-text-align: left;
-font-size: 0.95rem;
-color: #929292;
-flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
+  text-align: left;
+  font-size: 0.95rem;
+  color: #929292;
+  flex-grow: 1; /* ส่วนรายละเอียดขยายเต็มพื้นที่ */
 }
 
 .saveitem-card-des p {
-margin: 4px 0;
+  margin: 4px 0;
 }
 
 .mywinning-card-button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 15px;
-    border-top: 1px dashed #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  border-top: 1px dashed #eee;
 }
-
 
 /* Bid Now Button */
 .button {
-padding: 8px 15px;
-background-color: #53B2FF;
-color: white;
-text-decoration: none;
-border-radius: 20px;
-font-weight: bold;
-font-size: 0.9rem;
-transition: background-color 0.3s;
+  padding: 8px 15px;
+  background-color: #53b2ff;
+  color: white;
+  text-decoration: none;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
 }
 
 .button:hover {
-background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 @media screen and (min-width: 150px) and (max-width: 768px) {
