@@ -238,7 +238,14 @@ function Navbar() {
     </div>
   ) : (
     <div className="auth-group">
-
+ <div className="link-login">
+        <Link to="/login" className="nav-button sign-in-text">
+          <h4 className="sign-page">sign in</h4>
+        </Link>
+        <Link to="/SignUp" className="nav-button sign-up-btn">
+          <h4 className="sign-page">Sign Up</h4>
+        </Link>
+      </div>
       {menuList && (
         <div className="dropdown">
           <Link className="Link" to="/login" onClick={() => setMenulist(false)}>

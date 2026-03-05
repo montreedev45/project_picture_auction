@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import "./UpcomingPage.css";
-import view1 from "../assets/view1-ai-gen.png";
-import view2 from "../assets/view2-ai-gen.png";
 import axios from "axios";
 import LikeButton from "./LikeButton";
 import { useError } from "../components/ErrorContext";
 import Loading from "../components/Loading";
+import NoItems from "../components/NoItems";
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function UpcomingPage() {
@@ -64,7 +63,8 @@ function UpcomingPage() {
     <>
       <div className="upcoming-container">
         <div className="upcoming-container-card">
-          {filteredProducts.map((product) => {
+          {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => {
             const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
@@ -98,7 +98,10 @@ function UpcomingPage() {
                 </div>
               </div>
             );
-          })}
+          })
+          ): (
+            <NoItems text="no upcoming item"/>
+          )}
         </div>
       </div>
     </>

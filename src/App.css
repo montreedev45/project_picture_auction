@@ -160,7 +160,6 @@ nav {
 
 .layout-container {
   width: 100%;
-  background-image: url(./assets/Auction.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -248,6 +247,7 @@ nav {
   text-align: left;
   overflow: hidden;
   background-color: rgb(247, 247, 247);
+  margin-top: 85px;
 }
 
 .layout-main {

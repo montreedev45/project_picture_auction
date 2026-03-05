@@ -170,13 +170,7 @@ function HomePage() {
   {
   }
   const usersToFilter = Array.isArray(users) ? users : [];
-
-  const loopPic = [
-    { image1: "../assets/Mountain.jpg" },
-    { image2: "../assets/Lake.jpg" },
-    { image3: "../assets/Beach.jpg" },
-    { image4: "../assets/Nature.jpg" },
-  ];
+  
   return (
     <>
       <div className="div-text">

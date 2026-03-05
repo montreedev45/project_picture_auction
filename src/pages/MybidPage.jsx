@@ -6,6 +6,7 @@ import LikeButton from "./LikeButton";
 import { useError } from "../components/ErrorContext";
 import { useAuth } from "../components/AuthContext";
 import Loading from "../components/Loading";
+import NoItems from "../components/NoItems";
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function MybidPage() {
@@ -70,7 +71,8 @@ function MybidPage() {
     <>
       <div className="mybid-container">
         <div className="mybid-container-card">
-          {filteredProducts.map((product) => {
+          {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => {
             const imageSource = `${API_URL}/images/products/${product.pro_imgurl}`;
             const isSaved = product.likes?.includes(currentUserId) ?? false;
 
@@ -114,7 +116,10 @@ function MybidPage() {
                 </div>
               </div>
             );
-          })}
+          })
+          ) : (
+            <NoItems text="no bid item"/>
+          )}
         </div>
       </div>
     </>
